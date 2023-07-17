@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -6,13 +8,19 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   public appPages = [
-    { title: 'Inbox', url: '/folder/inbox', icon: 'mail' },
-    { title: 'Outbox', url: '/folder/outbox', icon: 'paper-plane' },
-    { title: 'Favorites', url: '/folder/favorites', icon: 'heart' },
-    { title: 'Archived', url: '/folder/archived', icon: 'archive' },
-    { title: 'Trash', url: '/folder/trash', icon: 'trash' },
-    { title: 'Spam', url: '/folder/spam', icon: 'warning' },
+    { title: 'Progreso', url: '/progreso', icon: 'bar-chart' },
+    { title: 'Metas', url: '/metas', icon: 'ribbon' },
+    { title: 'Personas', url: '/personas', icon: 'accessibility' },
+    { title: 'Transacciones', url: '/transacciones', icon: 'cash' }
   ];
-  public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-  constructor() {}
+
+  currentFolder: string = "";
+
+  constructor(private router: Router) {
+    router.events.pipe(filter(event => event instanceof NavigationEnd))
+    .subscribe((event) => {
+        console.log('URL: ', (event as NavigationEnd).urlAfterRedirects);
+        this.currentFolder = (event as NavigationEnd).urlAfterRedirects.substring(1)
+    })
+}
 }
