@@ -25,9 +25,8 @@ div.content {
         margin-top: 1rem;
         width: 60vw;
         max-width: 600px;
-        min-width: 220px;       
+        min-width: 220px;
     }
-
     button.buscar {
         margin-top: 12px;
         padding: 10px 18px;
@@ -38,12 +37,16 @@ div.content {
         background-color: var(--primary-200);
         color: var(--primary-300);
     }
-
     strong.version {
         color: var(--bg-300);
     }
-
     strong.church {
         color: var(--bg-300);
+    }
+}
+
+@supports (-webkit-touch-callout: none) {
+    strong.church {
+        letter-spacing: -1px;
     }
 }

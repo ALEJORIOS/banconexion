@@ -1,21 +1,67 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>Transacciones</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Transacciones</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Transacciones</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <ion-header collapse="condense">
+        <ion-toolbar>
+            <ion-title size="large">Transacciones</ion-title>
+        </ion-toolbar>
+    </ion-header>
 
-  <div id="container">
-    <strong class="capitalize">Transacciones</strong>
-    <!-- <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p> -->
-  </div>
+    <div id="container">
+        <section>
+            <ion-button class="option" id="open-modal" expand="block">Nueva Transacción</ion-button>
+            <ion-button class="option" id="open-modal" expand="block">Descargar</ion-button>
+        </section>
+    </div>
+
+    <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+        <ng-template>
+            <ion-header>
+                <ion-toolbar>
+                    <ion-buttons slot="start">
+                        <ion-button (click)="cancel()">Cancelar</ion-button>
+                    </ion-buttons>
+                    <ion-title>Nueva transacción</ion-title>
+                    <ion-buttons slot="end">
+                        <ion-button (click)="confirm()" [strong]="true">Confirmar</ion-button>
+                    </ion-buttons>
+                </ion-toolbar>
+            </ion-header>
+            <div class="content-body">
+                <form>
+                    <label for="type">Tipo de Documento</label>
+                    <select id="type">
+                        <option>Seleccione el Tipo de Documento</option>
+                        <option value="CC">Cédula de Ciudadanía</option>
+                        <option value="TI">Tarjeta de Identidad</option>
+                        <option value="CE">Cédula de Extranjería</option>
+                        <option value="PP">Pasaporte</option>
+                    </select>
+                    <label for="document">Número de Documento</label>
+                    <input type="number" id="document" placeholder="Ingrese el Número de Documento">
+                    <label for="value">Valor</label>
+                    <input type="number" id="value" placeholder="Ingrese la cantidad a abonar">
+                    <div id="donation">
+                        <ion-toggle>Donación</ion-toggle>
+                    </div>
+                    <ion-searchbar placeholder="Buscar Feligrés" [debounce]="200" (ionInput)="handleInput($event)"></ion-searchbar>
+                    <div class="list">
+                        <ion-list>
+                            <ion-item *ngFor="let result of results">
+                                <ion-label>{{ result }}</ion-label>
+                            </ion-item>
+                        </ion-list>
+                    </div>
+                </form>
+            </div>
+
+        </ng-template>
+    </ion-modal>
 </ion-content>
