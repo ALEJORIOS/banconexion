@@ -49,13 +49,13 @@
                     <label for="value">Valor</label>
                     <input type="number" id="value" placeholder="Ingrese la cantidad a abonar">
                     <div id="donation">
-                        <ion-toggle>Donación</ion-toggle>
+                        <ion-toggle checked="false" (ionChange)="donationState($event)">Donación</ion-toggle>
                     </div>
-                    <ion-searchbar placeholder="Buscar Feligrés" [debounce]="200" (ionInput)="handleInput($event)"></ion-searchbar>
-                    <div class="list">
+                    <ion-searchbar *ngIf="donation" placeholder="Buscar Feligrés" [debounce]="200" (ionInput)="handleInput($event)"></ion-searchbar>
+                    <div *ngIf="donation" class="list">
                         <ion-list>
-                            <ion-item *ngFor="let result of results">
-                                <ion-label>{{ result }}</ion-label>
+                            <ion-item *ngFor="let person of resultPeople">
+                                <ion-label>{{ person.name }}</ion-label>
                             </ion-item>
                         </ion-list>
                     </div>
