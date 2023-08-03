@@ -12,6 +12,7 @@ import { MetasComponent } from './metas/metas.component';
 import { PersonasComponent } from './personas/personas.component';
 import { TransaccionesComponent } from './transacciones/transacciones.component';
 import { InicioComponent } from './inicio/inicio.component';
+import { ComponentsModule } from '../components/components.module';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { InicioComponent } from './inicio/inicio.component';
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    FolderPageRoutingModule
+    FolderPageRoutingModule,
+    ComponentsModule
   ],
   declarations: [
     FolderPage,
