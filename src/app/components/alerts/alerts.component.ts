@@ -18,6 +18,7 @@ export class AlertsComponent  implements OnInit {
 export class AlertsMethods {
   private _message: string = "";
   private _type: "error" | "warning" | "info" | "success" = "error";
+  private _show: boolean = false;
 
   constructor() {}
 
@@ -35,5 +36,13 @@ export class AlertsMethods {
 
   public set type(newType) {
     this._type = newType;
+  }
+
+  public get show(): boolean {
+    return this._show;
+  }
+
+  public set show(newVisibility) {
+    this._show = newVisibility;
   }
 }
