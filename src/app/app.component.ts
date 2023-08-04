@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
+import { StoreService } from './services/store.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -16,11 +17,13 @@ export class AppComponent {
 
   currentFolder: string = "";
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private storeService: StoreService) {
     router.events.pipe(filter(event => event instanceof NavigationEnd))
     .subscribe((event) => {
-        console.log('URL: ', (event as NavigationEnd).urlAfterRedirects);
         this.currentFolder = (event as NavigationEnd).urlAfterRedirects.substring(1)
     })
-}
+    if(localStorage.getItem("userData")) {
+      storeService.userData.set(JSON.parse(localStorage.getItem("userData") || ""))
+    }
+  }
 }

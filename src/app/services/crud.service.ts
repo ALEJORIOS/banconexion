@@ -13,4 +13,12 @@ export class CrudService {
   searchDocument(document: string, type: string) {
     return this.http.get<any>(`${this.base_url}/user`, {params: {document, type}});
   }
+
+  searchAllUsers() {
+    return this.http.get<any>(`${this.base_url}/all-users`)
+  }
+
+  payment(requestBody: any) {
+    return this.http.post<any>(`${this.base_url}/payment`, requestBody)
+  }
 }

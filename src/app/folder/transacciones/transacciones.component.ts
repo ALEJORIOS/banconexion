@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
+import { CrudService } from 'src/app/services/crud.service';
+import { StoreService } from 'src/app/services/store.service';
 
 @Component({
   selector: 'app-transacciones',
@@ -19,16 +21,43 @@ export class TransaccionesComponent  implements OnInit {
   value: FormControl = new FormControl(null, Validators.required);
   donation: FormControl = new FormControl(false, Validators.required);
 
-  constructor() { }
+  constructor(private crudService: CrudService, private storeService: StoreService) { }
 
-  ngOnInit() {}
+  public peopleData: any = [];
+
+  public resultPeople: any;
+
+  ngOnInit() {
+    this.crudService.searchAllUsers().subscribe({
+      next: (res) => {
+        this.peopleData = res;
+        this.resultPeople = this.peopleData;
+      }
+    })
+  }
 
   cancel() {
     this.modal.dismiss(null, 'cancel');
   }
 
   confirm() {
-    this.modal.dismiss(this.name, 'confirm');
+    console.log('>> ', this.storeService.userData())
+    const requestBody: any = {
+      type: `${this.documentType.value}`,
+      document: `${this.documentNumber.value}`,
+      value: this.value.value,
+      donation: 0,
+      authorizedBy: {
+        type: this.storeService.userData()[0].DOCUMENT_TYPE,
+        document: this.storeService.userData()[0].DOCUMENT
+      }
+    }
+
+    this.crudService.payment(requestBody).subscribe({
+      next: (res) => {
+        this.modal.dismiss(this.name, 'confirm');
+      }
+    })
   }
 
   onWillDismiss(event: Event) {
@@ -38,29 +67,11 @@ export class TransaccionesComponent  implements OnInit {
     }
   }
 
-  public peopleData = [
-    {name: 'Nicole', document: 10, type: "CC"},
-    {name: 'Alejandro', document: 10, type: "CC"},
-    {name: 'Sebastian', document: 10, type: "CC"},
-    {name: 'Luisa', document: 10, type: "CC"},
-    {name: 'Sofía', document: 10, type: "CC"},
-    {name: 'Diego', document: 10, type: "CC"},
-    {name: 'Laura', document: 10, type: "CC"},
-    {name: 'Luis Ángel', document: 10, type: "CC"},
-    {name: 'Germán', document: 10, type: "CC"},
-    {name: 'Sofía', document: 10, type: "CC"},
-    {name: 'Luna', document: 10, type: "CC"},
-    {name: 'Arturo', document: 10, type: "CC"},
-    {name: 'Viviana', document: 10, type: "CC"},
-    {name: 'Wilson', document: 10, type: "CC"},
-    {name: 'Zaira', document: 10, type: "CC"}
-  ];
-
-  public resultPeople: any = this.peopleData;
+  
 
   handleInput(event: any) {
     const nameQuery = event.target.value.toLowerCase();
-    this.resultPeople = this.peopleData.filter((d) => d.name.toLowerCase().indexOf(nameQuery) > -1);
+    this.resultPeople = this.peopleData.filter((d: any) => d.name.toLowerCase().indexOf(nameQuery) > -1);
   }
 
   selectName() {
@@ -69,6 +80,11 @@ export class TransaccionesComponent  implements OnInit {
 
   donationState(event: Event) {
     this.donation.setValue((event as CustomEvent).detail.checked);
+  }
+
+  selectPerson(person: any) {
+    this.documentType.setValue(person.DOCUMENT_TYPE);
+    this.documentNumber.setValue(person.DOCUMENT);
   }
 
 }

@@ -2,6 +2,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertsMethods } from './../../components/alerts/alerts.component';
 import { Component, OnInit } from '@angular/core';
 import { CrudService } from 'src/app/services/crud.service';
+import { Router } from '@angular/router';
+import { StoreService } from 'src/app/services/store.service';
 
 @Component({
   selector: 'app-inicio',
@@ -16,7 +18,7 @@ export class InicioComponent  implements OnInit {
   enableButton: boolean = true;
   showLoadingText: boolean = false;
 
-  constructor(private crudService: CrudService) { }
+  constructor(private crudService: CrudService, private router: Router, private storeService: StoreService) { }
 
   ngOnInit() {}
 
@@ -27,7 +29,12 @@ export class InicioComponent  implements OnInit {
     if(this.checkError()) {
       this.crudService.searchDocument(this.document.value || "", this.type.value || "").subscribe({
         next: (res) => {
-          console.log('res: ', res)
+          this.storeService.userData.set(res);
+          localStorage.setItem("userData", JSON.stringify(res));
+          this.router.navigate(["progreso"]);
+          setTimeout(() => {
+            location.reload();
+          }, 500);
         }
       })
     };
