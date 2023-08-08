@@ -1,0 +1,33 @@
+<!-- <ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>inicio</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">inicio</ion-title>
+    </ion-toolbar>
+  </ion-header>
+</ion-content> -->
+<div class="content">
+    <img class="logo" src="assets/logo.webp">
+    <h2 class="title">Banconexión</h2>
+    <h3 class="subtitle">Conexión Divina 2024</h3>
+    <input type="number" placeholder="Número de Documento" [formControl]="document" (focus)="cleanAlert()">
+    <select [formControl]="type" (focus)="cleanAlert()">
+    <option value="">Tipo de Documento</option>
+    <option value="CC">Cédula de Ciudadanía</option>
+    <option value="TI">Tarjeta de Identidad</option>
+    <option value="CE">Cédula de Extranjería</option>
+    <option value="PP">Pasaporte</option>
+  </select>
+    <button class="buscar" [disabled]="!enableButton" (click)="change()">Buscar</button>
+    <alert *ngIf="alert.show" [type]="alert.type">{{ alert.message }}</alert>
+    <strong class="version">Versión 0.0.0</strong><br>
+    <strong class="church">Iglesia Cristiana Cuadrangular</strong>
+    <strong class="church">En Espíritu y en Verdad</strong>
+
+    <i *ngIf="showLoadingText">Cargando...</i>
+</div>

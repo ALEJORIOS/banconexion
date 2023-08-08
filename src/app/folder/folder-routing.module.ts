@@ -6,21 +6,12 @@ import { InicioComponent } from './inicio/inicio.component';
 import { MetasComponent } from './metas/metas.component';
 import { PersonasComponent } from './personas/personas.component';
 import { TransaccionesComponent } from './transacciones/transacciones.component';
-import { ProgresoComponent } from './progreso/progreso.component';
 
 const routes: Routes = [
   {
     path: '',
     redirectTo: "/inicio",
     pathMatch: "full"
-  },
-  {
-    path: 'inicio',
-    component: InicioComponent
-  },
-  {
-    path: 'progreso',
-    component: ProgresoComponent
   },
   {
     path: 'metas',
@@ -33,7 +24,17 @@ const routes: Routes = [
   {
     path: 'transacciones',
     component: TransaccionesComponent
+  },
+  {
+    path: 'progreso',
+    loadChildren: () => import('./progreso/progreso.module').then( m => m.ProgresoPageModule)
+  },
+  {
+    path: 'inicio',
+    loadChildren: () => import('./inicio/inicio.module').then( m => m.InicioPageModule)
   }
+
+
 ];
 
 @NgModule({

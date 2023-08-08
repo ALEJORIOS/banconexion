@@ -1,16 +1,17 @@
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AlertsMethods } from './../../components/alerts/alerts.component';
 import { Component, OnInit } from '@angular/core';
-import { CrudService } from 'src/app/services/crud.service';
+import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
+import { AlertsMethods } from 'src/app/components/alerts/alerts.component';
+import { CrudService } from 'src/app/services/crud.service';
 import { StoreService } from 'src/app/services/store.service';
 
 @Component({
   selector: 'app-inicio',
-  templateUrl: './inicio.component.html',
-  styleUrls: ['./inicio.component.scss'],
+  templateUrl: './inicio.page.html',
+  styleUrls: ['./inicio.page.scss'],
 })
-export class InicioComponent  implements OnInit {
+export class InicioPage {
 
   alert = new AlertsMethods();
   document = new FormControl("", Validators.required);
@@ -18,9 +19,7 @@ export class InicioComponent  implements OnInit {
   enableButton: boolean = true;
   showLoadingText: boolean = false;
 
-  constructor(private crudService: CrudService, private router: Router, private storeService: StoreService) { }
-
-  ngOnInit() {}
+  constructor(private crudService: CrudService, private storeService: StoreService, private router: NavController) { }
 
   login(): void {
     this.cleanAlert();
@@ -31,10 +30,13 @@ export class InicioComponent  implements OnInit {
         next: (res) => {
           this.storeService.userData.set(res);
           localStorage.setItem("userData", JSON.stringify(res));
-          this.router.navigate(["/progreso"]);
+          this.router.navigateRoot(["/progreso"]);
         }
       })
     };
+  }
+  change() {
+    this.router.navigateRoot("/progreso");
   }
   
   checkError(): boolean {
