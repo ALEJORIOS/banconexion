@@ -6,9 +6,14 @@ import { Injectable } from '@angular/core';
 })
 export class CrudService {
 
-  base_url: string = "http://192.168.0.105:3600";
+  // base_url: string = "http://192.168.0.105:3600";
+  base_url: string = "http://192.168.0.23:3600";
 
   constructor(private http: HttpClient) { }
+
+  checkMaintenance() {
+    return this.http.get<any>(`${this.base_url}/check-maintenance`);
+  }
 
   searchDocument(document: string, type: string) {
     return this.http.get<any>(`${this.base_url}/user`, {params: {document, type}});

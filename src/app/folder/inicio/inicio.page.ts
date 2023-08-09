@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
-import { AlertsMethods } from 'src/app/components/alerts/alerts.component';
+import { map } from 'rxjs';
 import { CrudService } from 'src/app/services/crud.service';
 import { StoreService } from 'src/app/services/store.service';
 
@@ -13,54 +12,85 @@ import { StoreService } from 'src/app/services/store.service';
 })
 export class InicioPage {
 
-  alert = new AlertsMethods();
+  alertMessage: string = "";
   document = new FormControl("", Validators.required);
   type = new FormControl("", Validators.required);
   enableButton: boolean = true;
   showLoadingText: boolean = false;
+  maintenance: boolean | null = null;
+
+  @ViewChild("errorToast") errorToast!: HTMLIonToastElement;
 
   constructor(private crudService: CrudService, private storeService: StoreService, private router: NavController) { }
 
+  ionViewDidEnter() {
+    this.crudService.checkMaintenance()
+    .pipe(map(res => {
+      return res[0].VALUE === "1" ? true : false
+    }))
+    .subscribe({
+      next: (res) => {
+        this.maintenance = res;
+      },
+      error: () => {
+        this.alertMessage = "Ocurrió un error inesperado";
+        this.errorToast.present();
+        this.maintenance = true;
+        console.error("Ocurrió un error al intentar verificar si la aplicación está en mantenimiento");
+      }
+    })
+  }
+
   login(): void {
-    this.cleanAlert();
     this.showLoadingText = true;
     this.enableButton = false;
-    if(this.checkError()) {
-      this.crudService.searchDocument(this.document.value || "", this.type.value || "").subscribe({
-        next: (res) => {
-          this.storeService.userData.set(res);
-          localStorage.setItem("userData", JSON.stringify(res));
-          this.router.navigateRoot(["/progreso"]);
-        }
-      })
-    };
-  }
-  change() {
-    this.router.navigateRoot("/progreso");
+    if(this.maintenance !== null) {
+      if(this.maintenance) {
+        this.alertMessage = "Estamos en mantenimiento, intente nuevamente más tarde";
+        this.errorToast.present();
+        this.showLoadingText = false;
+        this.enableButton = true;
+      }else{
+        if(this.checkError()) {
+          this.crudService.searchDocument(this.document.value || "", this.type.value || "").subscribe({
+            next: (res) => {
+              this.storeService.userData.set(res);
+              localStorage.setItem("userData", JSON.stringify(res));
+              console.log('User: ', res);
+              this.router.navigateRoot(["/progreso"]);
+            },
+            error: (err) => {
+              console.error("Ocurrió un error: ", err);
+              this.alertMessage = "Ocurrió un error, intente nuevamente";
+              this.errorToast.present();
+              this.showLoadingText = false;
+              this.enableButton = true;
+            }
+          })
+        };
+      }
+    }else{
+      setTimeout(() => {
+        this.login();
+      }, 100);
+    }
   }
   
   checkError(): boolean {
     if(this.document.invalid) {
-      this.alert.message = "Introduza su número de documento";
-      this.alert.type = "error";
-      this.alert.show = true;
+      this.alertMessage = "Introduza su número de documento";
+      this.errorToast.present();
       this.showLoadingText = false;
       this.enableButton = true;
       return false;
     }else if(this.type.invalid) {
-      this.alert.message = "Seleccione su tipo de documento";
-      this.alert.type = "error";
-      this.alert.show = true;
+      this.alertMessage = "Seleccione su tipo de documento";
       this.showLoadingText = false;
       this.enableButton = true;
       return false;
     }else{
       return true;
     }
-  }
-  
-  cleanAlert() {
-    this.alert.show = false;
   }
 
 }
