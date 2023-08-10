@@ -1,0 +1,52 @@
+#container {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    .camperCard {
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+        box-shadow: 0 0 4px #a0a0a0;
+        padding: 12px;
+        border-radius: 8px;
+        .camperData {
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #C0C0C0;
+            .campistLabel {
+                font-size: 1rem;
+            }
+            .campistName {
+                font-size: clamp(10px, 5vw, 1.6rem);
+                font-family: "InterBold";
+                line-height: 2.2rem;
+            }
+            .campistDocumentAge {
+                font-size: 1.1rem;
+                line-height: 2rem;
+            }
+            .camperArea {
+                font-size: 1.1rem;
+                b {
+                    color: var(--primary-100);
+                }
+            }
+        }
+        .camperProgress {
+            display: grid;
+            place-content: center;
+            padding-left: 12px;
+            progress {
+                -webkit-appearance: none;
+                &::-webkit-progress-value {
+                    background-color: var(--primary-100);
+                    border-radius: 6px;
+                }
+                &::-webkit-progress-bar {
+                    background-color: #F0F0F0;
+                    border-radius: 6px;
+                }
+            }
+        }
+    }
+}

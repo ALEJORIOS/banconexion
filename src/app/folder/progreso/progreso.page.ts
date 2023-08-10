@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { StoreService } from 'src/app/services/store.service';
 
 @Component({
   selector: 'app-progreso',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProgresoPage implements OnInit {
 
-  constructor() { }
+  campersData: any = [];
+  constructor(private storeService: StoreService) { }
 
   ngOnInit() {
+    this.campersData = this.storeService.userData();
+    console.log('>>> ', this.campersData)
   }
+
+  
 
 }
