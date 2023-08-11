@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { CrudService } from 'src/app/services/crud.service';
 
 @Component({
   selector: 'app-personas',
@@ -7,8 +8,37 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PersonasComponent  implements OnInit {
 
-  constructor() { }
+  campersData: any = [];
+  alertMessage: string = "";
+  @ViewChild("errorToast") errorToast!: HTMLIonToastElement;
 
-  ngOnInit() {}
+  constructor(private crudService: CrudService) { }
+
+  ngOnInit() {
+    this.crudService.searchAllUsers().subscribe({
+      next: (res) => {
+        console.log('res: ', res);
+        this.campersData = res;
+      },
+      error: (err) => {
+        console.error(err);
+        this.alertMessage = "Ocurrió un error cargando los datos";
+        this.errorToast.present();
+      }
+    })
+  }
+
+  refresh() {
+    this.crudService.searchAllUsers().subscribe({
+      next: (res) => {
+        this.campersData = res;
+      },
+      error: (err) => {
+        console.error(err);
+        this.alertMessage = "Ocurrió un error cargando los datos";
+        this.errorToast.present();
+      }
+    })
+  }
 
 }

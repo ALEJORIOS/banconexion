@@ -1,0 +1,42 @@
+#container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px;
+    .actionButton {
+        width: 100%;
+        padding: 12px;
+        font-size: 1.2rem;
+        color: white;
+        background-color: var(--primary-100);
+        border-radius: 8px;
+        &:disabled {
+            background-color: var(--primary-200);
+        }
+    }
+    .camperCard {
+        display: flex;
+        flex-direction: column;
+        box-shadow: 0 0 4px #a0a0a0;
+        padding: 12px;
+        border-radius: 8px;
+        .campistLabel {
+            font-size: 1rem;
+        }
+        .campistName {
+            font-size: clamp(10px, 5vw, 1.8rem);
+            font-family: "InterBold";
+            line-height: 2.2rem;
+        }
+        .campistDocument {
+            font-size: 1.1rem;
+        }
+        .campistArea {
+            font-size: 1.1rem;
+            b {
+                color: var(--primary-100);
+            }
+            margin-bottom: 8px;
+        }
+    }
+}

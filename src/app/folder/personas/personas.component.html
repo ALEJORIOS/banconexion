@@ -15,7 +15,18 @@
   </ion-header>
 
   <div id="container">
-    <strong class="capitalize">Personas</strong>
-    <!-- <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p> -->
+    <button class="actionButton" (click)="refresh()">
+      Actualizar
+    </button>
+    <button class="actionButton">
+      Registrar Campista
+    </button>
+    <div *ngFor="let campist of campersData" class="camperCard">
+      <span class="campistLabel">Campista</span>
+      <span class="campistName">{{ campist.NAME }}</span>
+      <span class="campistDocument">{{ campist.DOCUMENT_TYPE }} {{ campist.DOCUMENT }}</span>
+      <span class="campistArea">Área de <b>{{ campist.AREA | titlecase }}</b></span>
+    </div>
   </div>
 </ion-content>
+<ion-toast #errorToast [message]="alertMessage" [duration]="3000" icon="close-circle-outline"></ion-toast>
