@@ -22,8 +22,8 @@
                 <span class="campistName">{{ camper.NAME }}</span>
                 <span class="campistDocumentAge">{{ camper.DOCUMENT_TYPE }} {{ camper.DOCUMENT }} - {{ camper.AGE }} {{ camper.AGE === 1 ? "año" : "años" }}</span>
                 <span class="camperArea">Área de <b>{{ camper.AREA | titlecase }}</b></span>
-                <span class="reached">Balance: {{ camper.BALANCE | currency:'':'symbol-narrow':'1.0-0':'co' }}</span>
-                <span class="reached">Meta: {{ camper?.TOTAL | currency:'CAD':'symbol-narrow':'1.0-0':'co' }}</span>
+                <span class="reached">Balance: <b>{{ camper.BALANCE | currency:'':'symbol-narrow':'1.0-0':'co' }}</b></span>
+                <span class="reached">Meta: <b>{{ camper?.TOTAL | currency:'CAD':'symbol-narrow':'1.0-0':'co' }}</b></span>
             </section>
             <section class="camperProgress">
                 <span class="successPercentage">{{ (camper.BALANCE / camper?.TOTAL) | percent }}</span>
