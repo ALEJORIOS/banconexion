@@ -91,6 +91,5 @@ export class InicioPage {
     }else{
       return true;
     }
-  }
-
+  } 
 }

@@ -13,18 +13,24 @@
             <ion-title size="large">Progreso</ion-title>
         </ion-toolbar>
     </ion-header>
-
+    
     <div id="container">
+        <button class="refresh" [disabled]="loadingBalance" (click)="refresh()">Actualizar</button>
         <div *ngFor="let camper of campersData" class="camperCard">
             <section class="camperData">
                 <span class="campistLabel">Campista</span>
                 <span class="campistName">{{ camper.NAME }}</span>
                 <span class="campistDocumentAge">{{ camper.DOCUMENT_TYPE }} {{ camper.DOCUMENT }} - {{ camper.AGE }} {{ camper.AGE === 1 ? "año" : "años" }}</span>
                 <span class="camperArea">Área de <b>{{ camper.AREA | titlecase }}</b></span>
+                <span class="reached">Balance: {{ camper.BALANCE | currency:'':'symbol-narrow':'1.0-0':'co' }}</span>
+                <span class="reached">Meta: {{ camper?.TOTAL | currency:'CAD':'symbol-narrow':'1.0-0':'co' }}</span>
             </section>
             <section class="camperProgress">
-                <progress value="30" max="100"></progress>
+                <span class="successPercentage">{{ (camper.BALANCE / camper?.TOTAL) | percent }}</span>
+                <progress [ngClass]="{'fullfilled': camper.BALANCE >= camper?.TOTAL}" [value]="(camper.BALANCE / camper?.TOTAL) * 100" max="100"></progress>
+                <span class="progressLabel">Progreso</span>
             </section>
         </div>
     </div>
 </ion-content>
+<ion-toast #errorToast [message]="alertMessage" [duration]="3000" icon="close-circle-outline"></ion-toast>
