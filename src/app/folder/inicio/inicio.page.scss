@@ -37,15 +37,21 @@ div.content {
         border-radius: 20px;
         background-color: var(--primary-200);
         color: var(--primary-300);
+        margin-bottom: 8px;
         &:disabled {
             background-color: var(--primary-200-50);
         }
-    }
-    strong.version {
-        color: var(--bg-300);
+
     }
     strong.church {
+        font-family: "InterThin";
         color: var(--bg-300);
+    }
+    i.hide {
+        visibility: hidden;
+    }
+    i.show {
+        visibility: visible;
     }
 }
 

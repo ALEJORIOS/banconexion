@@ -4,16 +4,16 @@
     <h3 class="subtitle">Conexión Divina 2024</h3>
     <input type="number" placeholder="Número de Documento" [formControl]="document">
     <select [formControl]="type">
-    <option value="">Tipo de Documento</option>
-    <option value="CC">Cédula de Ciudadanía</option>
-    <option value="TI">Tarjeta de Identidad</option>
-    <option value="CE">Cédula de Extranjería</option>
-    <option value="PP">Pasaporte</option>
-  </select>
+      <option value="">Tipo de Documento</option>
+      <option value="CC">Cédula de Ciudadanía</option>
+      <option value="TI">Tarjeta de Identidad</option>
+      <option value="CE">Cédula de Extranjería</option>
+      <option value="PP">Pasaporte</option>
+    </select>
     <button class="buscar" [disabled]="!enableButton" (click)="login()">Buscar</button>
     <strong class="church">Iglesia Cristiana Cuadrangular</strong>
     <strong class="church">En Espíritu y En Verdad</strong>
+    <i [ngClass]="{'hide': !showLoadingText, 'show': showLoadingText}">Cargando...</i>
 
-    <i *ngIf="showLoadingText">Cargando...</i>
-</div>
+  </div>
 <ion-toast #errorToast [message]="alertMessage" [duration]="3000" icon="close-circle-outline"></ion-toast>

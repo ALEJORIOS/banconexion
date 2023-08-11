@@ -27,7 +27,7 @@
             </section>
             <section class="camperProgress">
                 <span class="successPercentage">{{ (camper.BALANCE / camper?.TOTAL) | percent }}</span>
-                <progress [ngClass]="{'fullfilled': camper.BALANCE >= camper?.TOTAL}" [value]="(camper.BALANCE / camper?.TOTAL) * 100" max="100"></progress>
+                <progress [ngClass]="{'fullfilled': camper.BALANCE >= camper?.TOTAL}" [value]="(camper.BALANCE / camper?.TOTAL || 1) * 100" max="100"></progress>
                 <span class="progressLabel">Progreso</span>
             </section>
         </div>

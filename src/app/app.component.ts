@@ -12,7 +12,8 @@ export class AppComponent {
     { title: 'Progreso', url: '/progreso', icon: 'bar-chart' },
     { title: 'Metas', url: '/metas', icon: 'ribbon' },
     { title: 'Personas', url: '/personas', icon: 'accessibility' },
-    { title: 'Transacciones', url: '/transacciones', icon: 'cash' }
+    { title: 'Transacciones', url: '/transacciones', icon: 'cash' },
+    { title: 'Salir', url: '/inicio', icon: 'home' }
   ];
 
   currentFolder: string = "";

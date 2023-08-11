@@ -44,6 +44,7 @@ export class InicioPage {
   login(): void {
     this.showLoadingText = true;
     this.enableButton = false;
+    this.errorToast.dismiss();
     if(this.maintenance !== null) {
       if(this.maintenance) {
         this.alertMessage = "Estamos en mantenimiento, intente nuevamente más tarde";
@@ -54,10 +55,17 @@ export class InicioPage {
         if(this.checkError()) {
           this.crudService.searchDocument(this.document.value || "", this.type.value || "").subscribe({
             next: (res) => {
-              this.storeService.userData.set(res);
-              localStorage.setItem("userData", JSON.stringify(res));
-              console.log('User: ', res);
-              this.router.navigateRoot(["/progreso"]);
+              if(res.length === 0) {
+                this.showLoadingText = false;
+                this.enableButton = true;
+                this.alertMessage = "Documento incorrecto"
+                this.errorToast.present();
+              }else{
+                console.log('User: ', res);
+                this.storeService.userData.set(res);
+                localStorage.setItem("userData", JSON.stringify(res));
+                this.router.navigateRoot(["/progreso"]);
+              }
             },
             error: (err) => {
               console.error("Ocurrió un error: ", err);
@@ -85,6 +93,7 @@ export class InicioPage {
       return false;
     }else if(this.type.invalid) {
       this.alertMessage = "Seleccione su tipo de documento";
+      this.errorToast.present();
       this.showLoadingText = false;
       this.enableButton = true;
       return false;
