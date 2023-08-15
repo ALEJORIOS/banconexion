@@ -18,7 +18,7 @@
     <button class="actionButton" (click)="refresh()">
       Actualizar
     </button>
-    <button class="actionButton">
+    <button class="actionButton" id="open-modal">
       Registrar Campista
     </button>
     <div *ngFor="let campist of campersData" class="camperCard">
@@ -30,3 +30,33 @@
   </div>
 </ion-content>
 <ion-toast #errorToast [message]="alertMessage" [duration]="3000" icon="close-circle-outline"></ion-toast>
+
+<ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+  <ng-template>
+      <ion-header>
+          <ion-toolbar>
+              <ion-buttons slot="start">
+                  <ion-button (click)="cancel()">Cancelar</ion-button>
+              </ion-buttons>
+              <ion-title>Nueva transacción</ion-title>
+              <ion-buttons slot="end">
+                  <ion-button (click)="confirm()" [strong]="true">Confirmar</ion-button>
+              </ion-buttons>
+          </ion-toolbar>
+      </ion-header>
+      <div class="content-body">
+          <form [formGroup]="newUser">
+              <label for="type">Tipo de Documento</label>
+              <select id="type" formControlName="documentType">
+                  <option value="">Seleccione el Tipo de Documento</option>
+                  <option value="CC">Cédula de Ciudadanía</option>
+                  <option value="TI">Tarjeta de Identidad</option>
+                  <option value="CE">Cédula de Extranjería</option>
+                  <option value="PP">Pasaporte</option>
+              </select>
+              <label for="document">Número de Documento</label>
+              <input type="number" id="document" placeholder="Ingrese el Número de Documento" formControlName="document">
+          </form>
+      </div>
+  </ng-template>
+</ion-modal>
