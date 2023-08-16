@@ -21,7 +21,9 @@ export class PersonasComponent  implements OnInit {
     document: ['', Validators.required],
     name: ['', Validators.required],
     age: [0],
-    transport: [0]
+    transport: [true],
+    area: ['', Validators.required],
+    agreeTerms: [false]
   })
 
   constructor(private crudService: CrudService, private fb: FormBuilder) { }
@@ -55,13 +57,45 @@ export class PersonasComponent  implements OnInit {
 
   // Modal Crear Usuario
 
-
   cancel() {
     this.modal.dismiss(null, 'cancel');
   }
 
   confirm() {
-    console.log('Confirmación');
+    if(this.checkErrors()) {
+      this.crudService.register
+    }
+  }
+
+  checkErrors(): boolean {
+    let result: boolean = true;
+    this.errorToast.dismiss();
+    if(!this.newUser.controls.agreeTerms.value) {
+      this.alertMessage = "Es necesario aceptar los términos y condiciones para continuar"
+      this.errorToast.present();
+      result = false;
+    }
+    if(this.newUser.controls.area.invalid) {
+      this.alertMessage = "El área es obligatoria"
+      this.errorToast.present();
+      result = false;
+    } 
+    if(this.newUser.controls.document.invalid) {
+      this.alertMessage = "El documento es obligatorio"
+      this.errorToast.present();
+      result = false;
+    } 
+    if(this.newUser.controls.documentType.invalid) {
+      this.alertMessage = "El tipo de documento es obligatorio"
+      this.errorToast.present();
+      result = false;
+    } 
+    if(this.newUser.controls.name.invalid) {
+      this.alertMessage = "El nombre es obligatorio"
+      this.errorToast.present();
+      result = false;
+    }
+    return result;
   }
 
   onWillDismiss(event: Event) {

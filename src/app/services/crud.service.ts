@@ -30,4 +30,8 @@ export class CrudService {
   getFees() {
     return this.http.get<any>(`${this.base_url}/fees`);
   }
+
+  register(requestBody: any) {
+    return this.http.post<any>(`${this.base_url}/register`, requestBody);
+  }
 }

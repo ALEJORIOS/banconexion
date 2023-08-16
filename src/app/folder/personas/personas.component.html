@@ -38,7 +38,7 @@
               <ion-buttons slot="start">
                   <ion-button (click)="cancel()">Cancelar</ion-button>
               </ion-buttons>
-              <ion-title>Nueva transacción</ion-title>
+              <ion-title>Registro</ion-title>
               <ion-buttons slot="end">
                   <ion-button (click)="confirm()" [strong]="true">Confirmar</ion-button>
               </ion-buttons>
@@ -46,17 +46,44 @@
       </ion-header>
       <div class="content-body">
           <form [formGroup]="newUser">
-              <label for="type">Tipo de Documento</label>
-              <select id="type" formControlName="documentType">
-                  <option value="">Seleccione el Tipo de Documento</option>
-                  <option value="CC">Cédula de Ciudadanía</option>
-                  <option value="TI">Tarjeta de Identidad</option>
-                  <option value="CE">Cédula de Extranjería</option>
-                  <option value="PP">Pasaporte</option>
-              </select>
-              <label for="document">Número de Documento</label>
-              <input type="number" id="document" placeholder="Ingrese el Número de Documento" formControlName="document">
+            <label for="name">Nombre</label>
+            <input type="text" id="name" placeholder="Nombre Completo" formControlName="name">
+            <label for="type">Tipo de Documento</label>
+            <select id="type" formControlName="documentType">
+                <option value="">Seleccione el Tipo de Documento</option>
+                <option value="CC">Cédula de Ciudadanía</option>
+                <option value="TI">Tarjeta de Identidad</option>
+                <option value="CE">Cédula de Extranjería</option>
+                <option value="PP">Pasaporte</option>
+            </select>
+            <label for="document">Número de Documento</label>
+            <input type="number" id="document" placeholder="Ingrese el Número de Documento" formControlName="document">
+            <label for="age">Edad</label>
+            <input type="number" name="age" id="age" placeholder="Edad">
+            <label for="area">Área</label>
+            <select id="area" formControlName="area">
+              <option value="">Seleccione el Área</option>
+              <option value="ALB">Alabanza</option>
+              <option value="CRE">Crecimiento</option>
+              <option value="CON">Consolidación</option>
+              <option value="DIA">Diaconado</option>
+              <option value="GDP">Granja de Papá</option>
+              <option value="INT">Intercesión</option>
+              <option value="JCR">Jóvenes</option>
+              <option value="MAT">Matrimonios</option>
+              <option value="PRO">Protemplo</option>
+            </select>
+            <label>
+              <ion-checkbox formControlName="transport">Transporte (Bus)</ion-checkbox>
+            </label>
+            <ion-checkbox formControlName="agreeTerms">Está de acuerdo con los términos y condiciones</ion-checkbox>
           </form>
+          <div class="terms">
+            <section>
+              <h6 class="title">Términos y condiciones del Servicio</h6>
+              <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit eveniet mollitia totam libero? Magnam odio accusantium nihil hic nesciunt est officiis, voluptatum sapiente velit, sed asperiores maxime corporis voluptatibus eaque, porro explicabo obcaecati nisi? Cum ratione ullam quaerat distinctio. Quidem natus laborum totam veritatis quae? Sint doloribus voluptatem alias? Consequuntur, mollitia. Sunt quis possimus commodi dicta aliquid praesentium vel doloremque sit maiores explicabo facere tempora, ex magnam dolore cumque dolores, magni consectetur nam doloribus, optio quasi ab aspernatur quo? Exercitationem eligendi ut totam dolor, nulla saepe ipsam libero quo magni, id alias porro sapiente repudiandae excepturi nostrum dolore asperiores molestias quod accusamus blanditiis doloribus. Quae aliquid illo nemo nisi ipsa amet iure, est sint quis, suscipit deleniti nam! Harum delectus qui consequuntur sapiente vero accusamus fugit, dolores sequi rerum cumque illum quis tempore eum. Doloremque eum repudiandae ducimus, in maiores consequuntur minima earum facilis rem nihil minus temporibus esse, nisi obcaecati tenetur neque nemo. Molestiae reprehenderit itaque id, expedita rerum natus ad repellat corporis quasi vitae aut beatae fuga perspiciatis ducimus omnis delectus fugiat sequi incidunt. Aliquid, quia asperiores aperiam soluta excepturi quae voluptas delectus ducimus! Dolorum incidunt ab sapiente quibusdam, officia molestias, praesentium rem modi corporis consectetur accusantium suscipit.</p>
+            </section>
+          </div>
       </div>
   </ng-template>
 </ion-modal>

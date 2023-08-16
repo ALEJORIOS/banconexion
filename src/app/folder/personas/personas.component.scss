@@ -41,10 +41,33 @@
     }
 }
 
+
 .content-body {
     padding: 12px;
     form {
         display: flex;
         flex-direction: column;
+        label {
+            margin-top: 12px;
+        }
+    }
+    div.terms {
+        margin-top: 12px;
+        box-sizing: content-box;
+        border-radius: 8px;
+        box-shadow: 0 0 4px #a0a0a0;
+        padding: 6px;
+        section {
+            height: auto;
+            overflow-y: scroll;
+            max-height: 30dvh;
+            padding: 6px;
+            border-radius: 6px;
+            h6.title {
+                font-family: "InterBold";
+                font-size: 1.3rem;
+                margin-top: 4px;
+            }
+        }
     }
 }
