@@ -36,8 +36,8 @@ export class PersonasComponent  implements OnInit {
       },
       error: (err) => {
         console.error(err);
-        this.alertMessage = "Ocurrió un error cargando los datos";
         this.icon = "close-circle-outline";
+        this.alertMessage = "Ocurrió un error cargando los datos";
         this.errorToast.present();
       }
     })
@@ -50,8 +50,8 @@ export class PersonasComponent  implements OnInit {
       },
       error: (err) => {
         console.error(err);
-        this.alertMessage = "Ocurrió un error cargando los datos";
         this.icon = "close-circle-outline";
+        this.alertMessage = "Ocurrió un error cargando los datos";
         this.errorToast.present();
       }
     })
@@ -64,6 +64,7 @@ export class PersonasComponent  implements OnInit {
   }
 
   confirm() {
+    this.errorToast.dismiss();
     if(this.checkErrors()) {
       const requestBody: any = {
         name: this.newUser.controls.name.value?.toUpperCase(),
@@ -76,14 +77,14 @@ export class PersonasComponent  implements OnInit {
       this.crudService.register(requestBody).subscribe({
         next: (res) => {
           this.modal.dismiss(null, "register");
-          this.alertMessage = "Usuario registrado correctamente";
           this.icon = "checkmark-circle-outline";
+          this.alertMessage = "Usuario registrado correctamente";
           this.errorToast.present();
         },
         error: (err) => {
           console.error(err);
-          this.alertMessage = "Ocurrió un error al intentar registrar este usuario";
           this.icon = "close-circle-outline";
+          this.alertMessage = "Ocurrió un error al intentar registrar este usuario";
           this.errorToast.present();
         }
       })
@@ -105,6 +106,7 @@ export class PersonasComponent  implements OnInit {
   checkErrors(): boolean {
     let result: boolean = true;
     this.errorToast.dismiss();
+    this.icon = "close-circle-outline";
     if(!this.newUser.controls.agreeTerms.value) {
       this.alertMessage = "Es necesario aceptar los términos y condiciones para continuar"
       this.errorToast.present();
@@ -134,7 +136,6 @@ export class PersonasComponent  implements OnInit {
   }
 
   onWillDismiss(event: Event) {
-    console.log('Dismiss: ', event);
     if((event as CustomEvent).detail.role === "register") {
       this.refresh();
     }

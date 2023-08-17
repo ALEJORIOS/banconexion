@@ -31,6 +31,10 @@ export class CrudService {
     return this.http.get<any>(`${this.base_url}/fees`);
   }
 
+  getFailures(skip: number, limit: number) {
+    return this.http.get<any>(`${this.base_url}/failures`, {params: {skip, limit}});
+  }
+
   register(requestBody: any) {
     return this.http.post<any>(`${this.base_url}/register`, requestBody);
   }

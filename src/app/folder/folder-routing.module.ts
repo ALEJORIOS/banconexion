@@ -30,9 +30,11 @@ const routes: Routes = [
   {
     path: 'inicio',
     loadChildren: () => import('./inicio/inicio.module').then( m => m.InicioPageModule)
+  },
+  {
+    path: 'fallas',
+    loadChildren: () => import('./fallas/fallas.module').then( m => m.FallasPageModule)
   }
-
-
 ];
 
 @NgModule({

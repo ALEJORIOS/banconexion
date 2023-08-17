@@ -1,0 +1,54 @@
+#container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px;
+    .actionButton {
+        width: 100%;
+        padding: 12px;
+        font-size: 1.2rem;
+        color: white;
+        background-color: var(--primary-100);
+        border-radius: 8px;
+        &:disabled {
+            background-color: var(--primary-200);
+        }
+    }
+    .failureCard {
+        box-shadow: 0 0 4px #a0a0a0;
+        padding: 12px;
+        border-radius: 8px;
+        .cardHeader {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #F0F0F0;
+            .date {
+                display: flex;
+                flex-direction: column;
+                .hour {
+                    font-family: "InterBold";
+                    color: #303030;
+                    margin-top: 4px;
+                }
+            }
+            .id {
+                font-size: 1.2rem;
+                font-family: "InterThin";
+            }
+        }
+        .cardBody {
+            margin: 8px 0;
+            border-bottom: 1px solid #F0F0F0;
+        }
+        .cardFooter {
+            margin-top: 4px;
+            display: flex;
+            justify-content: space-between;
+            .errno {
+                font-family: "InterBold";
+                color: var(--primary-100);
+            }
+        }
+    }
+}

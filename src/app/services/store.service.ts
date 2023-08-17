@@ -10,7 +10,7 @@ export class StoreService {
   fees: any = signal([]);
 
   constructor(private crudService: CrudService) {
-
+    
   }
 
   getFees() {

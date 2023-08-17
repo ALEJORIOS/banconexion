@@ -1,0 +1,40 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Fallas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+      <ion-toolbar>
+          <ion-title size="large">Fallas</ion-title>
+      </ion-toolbar>
+  </ion-header>
+  
+  <div id="container">
+      <button class="actionButton" (click)="refresh()">Actualizar</button>
+      <div class="failureCard" *ngFor="let fail of failures">
+        <div class="cardHeader">
+          <div class="date">
+            <span>{{ fail.DATE | date: "d 'de' MMMM 'del' YYYY" }}</span>
+            <span class="hour">{{ fail.DATE | date: "h:mm:ss a" }}</span>
+          </div>
+          <span class="id">{{ fail.ID }}</span>
+        </div>
+        <div class="cardBody">
+          {{ fail.ERROR }}
+        </div>
+        <div class="cardFooter">
+          <span>{{ fail.CODE }}</span>
+          <span class="errno">{{ fail.ERRNO }}</span>
+        </div>
+      </div>
+  </div>
+  <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>
+<ion-toast #errorToast [message]="alertMessage" [duration]="3000" icon="close-circle-outline"></ion-toast>
