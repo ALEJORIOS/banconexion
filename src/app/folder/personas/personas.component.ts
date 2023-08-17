@@ -12,6 +12,7 @@ export class PersonasComponent  implements OnInit {
 
   campersData: any = [];
   alertMessage: string = "";
+  icon: string = "";
   @ViewChild("errorToast") errorToast!: HTMLIonToastElement;
   @ViewChild(IonModal) modal!: IonModal;
 
@@ -20,7 +21,7 @@ export class PersonasComponent  implements OnInit {
     documentType: ['', Validators.required],
     document: ['', Validators.required],
     name: ['', Validators.required],
-    age: [0],
+    age: [null],
     transport: [true],
     area: ['', Validators.required],
     agreeTerms: [false]
@@ -31,12 +32,12 @@ export class PersonasComponent  implements OnInit {
   ngOnInit() {
     this.crudService.searchAllUsers().subscribe({
       next: (res) => {
-        console.log('res: ', res);
         this.campersData = res;
       },
       error: (err) => {
         console.error(err);
         this.alertMessage = "Ocurrió un error cargando los datos";
+        this.icon = "close-circle-outline";
         this.errorToast.present();
       }
     })
@@ -50,6 +51,7 @@ export class PersonasComponent  implements OnInit {
       error: (err) => {
         console.error(err);
         this.alertMessage = "Ocurrió un error cargando los datos";
+        this.icon = "close-circle-outline";
         this.errorToast.present();
       }
     })
@@ -63,8 +65,41 @@ export class PersonasComponent  implements OnInit {
 
   confirm() {
     if(this.checkErrors()) {
-      this.crudService.register
+      const requestBody: any = {
+        name: this.newUser.controls.name.value?.toUpperCase(),
+        age: this.newUser.controls.age.value,
+        transport: this.newUser.controls.transport.value,
+        type: this.newUser.controls.documentType.value,
+        document: `${this.newUser.controls.document.value}`,
+        area: this.newUser.controls.area.value
+      }
+      this.crudService.register(requestBody).subscribe({
+        next: (res) => {
+          this.modal.dismiss(null, "register");
+          this.alertMessage = "Usuario registrado correctamente";
+          this.icon = "checkmark-circle-outline";
+          this.errorToast.present();
+        },
+        error: (err) => {
+          console.error(err);
+          this.alertMessage = "Ocurrió un error al intentar registrar este usuario";
+          this.icon = "close-circle-outline";
+          this.errorToast.present();
+        }
+      })
     }
+  }
+
+  cleanModal() {
+    this.newUser.setValue({
+      name: "",
+      documentType: "",
+      document: "",
+      age: null,
+      transport: true,
+      area: "",
+      agreeTerms: false
+    })
   }
 
   checkErrors(): boolean {
@@ -99,10 +134,9 @@ export class PersonasComponent  implements OnInit {
   }
 
   onWillDismiss(event: Event) {
-    console.log('Dismiss');
-    // const ev = event as CustomEvent<OverlayEventDetail<string>>;
-    // if (ev.detail.role === 'confirm') {
-    //   this.message = `Hello, ${ev.detail.data}!`;
-    // }
+    console.log('Dismiss: ', event);
+    if((event as CustomEvent).detail.role === "register") {
+      this.refresh();
+    }
   }
 }

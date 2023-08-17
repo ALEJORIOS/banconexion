@@ -33,7 +33,6 @@ export class StoreService {
     }else if(age < 12) {
       value = +this.fees().filter((fee: any) => fee.ATTRIBUTE === "TARIFA_MENOR")[0].VALUE;
     }else if(age >= 12) {
-      console.log('Fees: ', this.fees());
       value = +this.fees().filter((fee: any) => fee.ATTRIBUTE === "TARIFA_COMPLETA")[0].VALUE;
     }
     // Add transport
