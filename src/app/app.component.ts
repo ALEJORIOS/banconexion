@@ -21,7 +21,7 @@ export class AppComponent {
   constructor(private router: Router, private storeService: StoreService) {
 
     effect(() => {
-      if(this.storeService.userData()[0]?.DOCUMENT === "1032488686") {
+      if(this.storeService.userData()[0]?.DOCUMENT === "1032488686" && this.appPages.find(page => page.title === "Errores") === undefined) {
         this.appPages.splice(-1, 0, { title: 'Errores', url: '/fallas', icon: 'alert-circle' })
       }
     })
