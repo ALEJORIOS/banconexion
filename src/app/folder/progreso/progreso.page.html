@@ -19,15 +19,15 @@
         <div *ngFor="let camper of campersData" class="camperCard">
             <section class="camperData">
                 <span class="campistLabel">Campista</span>
-                <span class="campistName">{{ camper.NAME }}</span>
-                <span class="campistDocumentAge">{{ camper.DOCUMENT_TYPE }} {{ camper.DOCUMENT }} - {{ camper.AGE }} {{ camper.AGE === 1 ? "año" : "años" }}</span>
-                <span class="camperArea">Área de <b>{{ camper.AREA | titlecase }}</b></span>
-                <span class="reached">Balance: <b>{{ camper.BALANCE | currency:'':'symbol-narrow':'1.0-0':'co' }}</b></span>
+                <span class="campistName">{{ camper?.NAME }}</span>
+                <span class="campistDocumentAge">{{ camper?.DOCUMENT_TYPE }} {{ camper?.DOCUMENT }} - {{ camper?.AGE }} {{ camper?.AGE === 1 ? "año" : "años" }}</span>
+                <span class="camperArea">Área de <b>{{ camper?.AREA | titlecase }}</b></span>
+                <span class="reached">Balance: <b>{{ camper?.BALANCE || 0 | currency:'':'symbol-narrow':'1.0-0':'co' }}</b></span>
                 <span class="reached">Meta: <b>{{ camper?.TOTAL | currency:'CAD':'symbol-narrow':'1.0-0':'co' }}</b></span>
             </section>
             <section class="camperProgress">
-                <span class="successPercentage">{{ (camper.BALANCE / camper?.TOTAL) | percent }}</span>
-                <progress [ngClass]="{'fullfilled': camper.BALANCE >= camper?.TOTAL}" [value]="(camper.BALANCE / camper?.TOTAL || 1) * 100" max="100"></progress>
+                <span class="successPercentage">{{ (camper?.BALANCE / camper?.TOTAL) | percent }}</span>
+                <progress [ngClass]="{'fullfilled': camper?.BALANCE >= camper?.TOTAL}" [value]="(camper?.BALANCE / camper?.TOTAL || 1) * 100" max="100"></progress>
                 <span class="progressLabel">Progreso</span>
             </section>
         </div>

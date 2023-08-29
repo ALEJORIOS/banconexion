@@ -23,11 +23,19 @@ export class FallasPage implements OnInit {
     this.refresh();
   }
 
-
   refresh() {
     this.crudService.getFailures(0, 10).subscribe({
       next: (res) => {
         this.failures = res;
+        this.failures = this.failures.map((fail: any) => {
+          let newDate = new Date(fail.DATE);
+          newDate = this.addHours(newDate);
+          return {
+            ...fail,
+            DATE: newDate
+          }
+        });
+        console.log('>>> ', this.failures);
       },
       error: (err) => {
         console.error(err);
@@ -47,12 +55,14 @@ export class FallasPage implements OnInit {
   generateItems() {
     this.crudService.getFailures((++this.currentPage)*10, 10).subscribe({
       next: (res) => {
-        // this.currentPage += 1;
-        console.log('Entro');
         this.failures.push(...res);
-        console.log("failures: ", this.failures);
       }
     })
+  }
+
+  addHours(date: Date) {
+    date.setHours(date.getHours() - 5);
+    return date;
   }
 
 }
