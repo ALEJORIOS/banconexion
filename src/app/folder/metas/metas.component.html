@@ -1,22 +1,59 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>Metas</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Tarifas</ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Metas</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <ion-header collapse="condense">
+        <ion-toolbar>
+            <ion-title size="large">Tarifas</ion-title>
+        </ion-toolbar>
+    </ion-header>
 
-  <div id="container">
-    <div class="card">
-      hola
+    <div id="container">
+        <div class="card transportCard">
+            <img src="assets/img/bus.webp">
+            <div class="info">
+                <span class="title">Transporte</span>
+                <span class="value">{{ fees?.TRANSPORT | currency: "COP":"symbol":"1.0-0" }}</span>
+                <p class="desc">Todo niño mayor de 2 años debe pagar pasaje y ocupar una silla.</p>
+            </div>
+        </div>
+        <div class="card babyCard">
+            <img src="assets/img/baby.webp">
+            <div class="info">
+                <span class="title">Bebés</span>
+                <span class="value">{{ fees?.TARIFA_BEBE | currency: "COP":"symbol":"1.0-0" }}</span>
+                <p class="desc">Bebés entre los 0 y los 2 años.</p>
+            </div>
+        </div>
+        <div class="card kidCard">
+            <img src="assets/img/kid.webp">
+            <div class="info">
+                <span class="title">Niños</span>
+                <span class="value">{{ fees?.TARIFA_NINO | currency: "COP":"symbol":"1.0-0" }}</span>
+                <p class="desc">Niños pequeños entre los 3 y los 5 años.</p>
+            </div>
+        </div>
+        <div class="card minorCard">
+            <img src="assets/img/minor.webp">
+            <div class="info">
+                <span class="title">Menores</span>
+                <span class="value">{{ fees?.TARIFA_MENOR | currency: "COP":"symbol":"1.0-0" }}</span>
+                <p class="desc">Niños entre los 6 y los 11 años.</p>
+            </div>
+        </div>
+        <div class="card completeCard">
+            <img src="assets/img/adult.webp">
+            <div class="info">
+                <span class="title">Tarifa Completa</span>
+                <span class="value">{{ fees?.TARIFA_COMPLETA | currency: "COP":"symbol":"1.0-0" }}</span>
+                <p class="desc">Niños y adultos mayores de 12 años.</p>
+            </div>
+        </div>
     </div>
-  </div>
 </ion-content>
