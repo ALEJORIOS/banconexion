@@ -7,7 +7,7 @@
     overflow: hidden;
     div.card:not(.transportCard) {
         display: grid;
-        grid-template-rows: 1fr 1fr;
+        grid-template-rows: auto 1fr;
         box-shadow: 0 0 4px #a0a0a0;
         border-radius: 8px;
         img {
