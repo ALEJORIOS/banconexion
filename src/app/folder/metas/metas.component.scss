@@ -4,7 +4,8 @@
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto 1fr 1fr;
     gap: 12px;
-    overflow: hidden;
+    overflow: auto;
+    margin-bottom: 44px;
     div.card:not(.transportCard) {
         display: grid;
         grid-template-rows: auto 1fr;
