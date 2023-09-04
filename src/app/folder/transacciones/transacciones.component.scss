@@ -1,5 +1,69 @@
 #container {
     padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 44px;
+    .transactionCard {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        box-shadow: 0 0 4px #a0a0a0;
+        padding: 12px;
+        border-radius: 8px;
+        position: relative;
+        .leftSide{
+            display: flex;
+            flex-direction: column;
+            .transactionActionLabel {
+                color: #a0a0a0;
+                font-size: 14px;
+            }
+            .transactionName {
+                font-size: 1.3rem;
+                font-weight: 600;
+            }
+            .transactionDocument {
+                
+            }
+            .transactionValueInfo {
+                margin-top: 16px;
+                color: #a0a0a0;
+                font-size: 14px;
+            }
+            .transactionValue {
+                font-size: 24px;
+            }
+            
+        }
+        .rightSide {
+            display: flex;
+            flex-direction: column;
+            border-left: 2px solid #f0f0f0;
+            padding-left: 1rem;
+            .transactionAuthorityInfo {
+                color: #a0a0a0;
+                font-size: 14px;
+            }
+            .transactionAuthority {
+                margin-bottom: 8px;
+            }
+            .transactionDateInfo {
+                color: #a0a0a0;
+                font-size: 14px;
+            }
+            .transactionDate {
+                margin-bottom: 8px;
+            }
+            .transactionStatusInfo {
+                color: #a0a0a0;
+                font-size: 14px;
+            }
+            .transactionStatus {
+                font-weight: 600;
+                font-size: 14px;
+            }
+        }
+    }
 }
 
 .content-body {
@@ -27,20 +91,6 @@
             padding-left: 0;
             padding-right: 0;
         }
-    }
-}
-
-section {
-    width: 100%;
-    display: flex;
-    gap: 1rem;
-    justify-content: space-around;
-    .option {
-        display: flex;
-        font-size: 16px;
-        display: block;
-        max-width: 50%;
-        flex-wrap: wrap;
     }
 }
 

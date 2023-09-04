@@ -11,6 +11,7 @@ import { MetasComponent } from './metas/metas.component';
 import { PersonasComponent } from './personas/personas.component';
 import { TransaccionesComponent } from './transacciones/transacciones.component';
 import { ComponentsModule } from '../components/components.module';
+import { TransactionStatusPipe } from '../pipes/transaction-status.pipe';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { ComponentsModule } from '../components/components.module';
     ReactiveFormsModule,
     IonicModule,
     FolderPageRoutingModule,
-    ComponentsModule
+    ComponentsModule,
+    TransactionStatusPipe
   ],
   declarations: [
     FolderPage,

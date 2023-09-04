@@ -21,32 +21,44 @@ export class TransaccionesComponent  implements OnInit {
   value: FormControl = new FormControl(null, Validators.required);
   donation: FormControl = new FormControl(false, Validators.required);
 
+  allUsers: any = [];
+  resultUser: any;
+
   constructor(private crudService: CrudService, private storeService: StoreService) { }
 
-  public peopleData: any = [];
-
-  public resultPeople: any;
+  public transactionsData: any = [];
 
   ngOnInit() {
-    this.crudService.searchAllUsers().subscribe({
-      next: (res) => {
-        this.peopleData = res;
-        this.resultPeople = this.peopleData;
-      }
-    })
+    this.refresh();
+    this.getUsers();
   }
 
   cancel() {
     this.modal.dismiss(null, 'cancel');
   }
 
+  refresh() {
+    this.crudService.searchTransactions(this.storeService.userData()[0].ID).subscribe({
+      next: (res) => {
+        this.transactionsData = res;
+      }
+    })
+  }
+
+  getUsers() {
+    this.crudService.searchAllUsers().subscribe({
+      next: (res) => {
+        this.allUsers = res;
+      }
+    })
+  }
+
   confirm() {
-    console.log('>> ', this.storeService.userData())
     const requestBody: any = {
       type: `${this.documentType.value}`,
       document: `${this.documentNumber.value}`,
       value: this.value.value,
-      donation: 0,
+      donation: this.donation.value ? 1 : 0,
       authorizedBy: {
         type: this.storeService.userData()[0].DOCUMENT_TYPE,
         document: this.storeService.userData()[0].DOCUMENT
@@ -63,15 +75,17 @@ export class TransaccionesComponent  implements OnInit {
   onWillDismiss(event: Event) {
     const ev = event as CustomEvent<OverlayEventDetail<string>>;
     if (ev.detail.role === 'confirm') {
-      this.message = `Hello, ${ev.detail.data}!`;
+      this.refresh();
     }
   }
 
-  
+  cleanModal() {
+
+  }
 
   handleInput(event: any) {
     const nameQuery = event.target.value.toLowerCase();
-    this.resultPeople = this.peopleData.filter((d: any) => d.name.toLowerCase().indexOf(nameQuery) > -1);
+    this.resultUser = this.allUsers.filter((d: any) => d.name.toLowerCase().indexOf(nameQuery) > -1);
   }
 
   selectName() {

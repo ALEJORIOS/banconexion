@@ -17,8 +17,27 @@
     <div id="container">
         <section>
             <ion-button class="option" id="open-modal" expand="block">Nueva Transacción</ion-button>
-            <ion-button class="option" id="open-modal" expand="block">Descargar</ion-button>
         </section>
+        <div *ngFor="let transaction of transactionsData" class="transactionCard">
+            <div class="leftSide">
+                <span class="transactionActionLabel" *ngIf="transaction.DONATION === 0">Abono para</span>
+                <span class="transactionActionLabel" *ngIf="transaction.DONATION === 1">Donación para</span>
+                <span class="transactionName">{{ transaction.NAME }}</span>
+                <span class="transactionDocument">{{ transaction.DOCUMENT_TYPE }} {{ transaction.DOCUMENT }}</span>
+                <span class="transactionValueInfo">Valor</span>
+                <span class="transactionValue">{{ transaction.VALUE | currency:'CAD':'symbol-narrow':'1.0-0':'co' }}</span>
+
+
+            </div>
+            <div class="rightSide">
+                <span class="transactionDateInfo">Fecha y Hora de la transacción</span>
+                <span class="transactionDate">{{ transaction.DATE | date:"dd/MM/YYYY HH:mm" }}</span>
+                <span class="transactionAuthorityInfo">Autorizado por</span>
+                <span class="transactionAuthority">{{ transaction.AUTHORIZED_BY }}</span>
+                <span class="transactionStatusInfo">Estado</span>
+                <span class="transactionStatus" [ngStyle]="{'color': transaction.CONFIRMED === 1 ? '#0077C2' : '#FF0000'}">{{ transaction.CONFIRMED | Status }}</span>
+            </div>
+        </div>
     </div>
 
     <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
@@ -51,10 +70,10 @@
                     <div id="donation">
                         <ion-toggle checked="false" (ionChange)="donationState($event)">Donación</ion-toggle>
                     </div>
-                    <ion-searchbar *ngIf="donation" placeholder="Buscar Feligrés" [debounce]="200" (ionInput)="handleInput($event)"></ion-searchbar>
+                    <ion-searchbar *ngIf="donation" placeholder="Buscar Campista" [debounce]="200" (ionInput)="handleInput($event)"></ion-searchbar>
                     <div *ngIf="donation" class="list">
                         <ion-list>
-                            <ion-item *ngFor="let person of resultPeople">
+                            <ion-item *ngFor="let person of allUsers">
                                 <ion-label (click)="selectPerson(person)">{{ person.NAME }}</ion-label>
                             </ion-item>
                         </ion-list>

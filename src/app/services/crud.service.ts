@@ -22,6 +22,10 @@ export class CrudService {
     return this.http.get<any>(`${this.base_url}/all-users`)
   }
 
+  searchTransactions(id: number) {
+    return this.http.get<any>(`${this.base_url}/filtered-transactions`, {params: {id}});
+  }
+
   payment(requestBody: any) {
     return this.http.post<any>(`${this.base_url}/payment`, requestBody)
   }
