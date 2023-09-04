@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { IonModal } from '@ionic/angular';
 import { CrudService } from 'src/app/services/crud.service';
+import { StoreService } from 'src/app/services/store.service';
 
 @Component({
   selector: 'app-personas',
@@ -22,12 +23,14 @@ export class PersonasComponent  implements OnInit {
     document: ['', Validators.required],
     name: ['', Validators.required],
     age: [null],
+    phone: [null, Validators.required],
     transport: [true],
     area: ['', Validators.required],
-    agreeTerms: [false]
+    agreeTerms: [false],
+    guest: [0]
   })
 
-  constructor(private crudService: CrudService, private fb: FormBuilder) { }
+  constructor(private crudService: CrudService, private fb: FormBuilder, private storeService: StoreService) { }
 
   ngOnInit() {
     this.crudService.searchAllUsers().subscribe({
@@ -65,14 +68,18 @@ export class PersonasComponent  implements OnInit {
 
   confirm() {
     this.errorToast.dismiss();
+    console.log('>>> ', this.storeService.userData());
     if(this.checkErrors()) {
       const requestBody: any = {
         name: this.newUser.controls.name.value?.toUpperCase(),
         age: this.newUser.controls.age.value,
-        transport: this.newUser.controls.transport.value,
+        phone: `${this.newUser.controls.phone.value}`,
+        transport: this.newUser.controls.transport.value ? 1 : 0,
         type: this.newUser.controls.documentType.value,
         document: `${this.newUser.controls.document.value}`,
-        area: this.newUser.controls.area.value
+        area: this.newUser.controls.area.value,
+        guest: this.newUser.controls.guest.value,
+        registered_by: this.storeService.userData()[0].ID
       }
       this.crudService.register(requestBody).subscribe({
         next: (res) => {
@@ -97,9 +104,11 @@ export class PersonasComponent  implements OnInit {
       documentType: "",
       document: "",
       age: null,
+      phone: null,
       transport: true,
       area: "",
-      agreeTerms: false
+      agreeTerms: false,
+      guest: 0
     })
   }
 
@@ -129,6 +138,11 @@ export class PersonasComponent  implements OnInit {
     } 
     if(this.newUser.controls.name.invalid) {
       this.alertMessage = "El nombre es obligatorio"
+      this.errorToast.present();
+      result = false;
+    }
+    if(this.newUser.controls.phone.invalid) {
+      this.alertMessage = "El número de celular es obligatorio"
       this.errorToast.present();
       result = false;
     }
