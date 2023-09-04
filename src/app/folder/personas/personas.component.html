@@ -24,7 +24,8 @@
     <div *ngFor="let campist of campersData" class="camperCard">
       <span class="campistLabel">Campista</span>
       <span class="campistName">{{ campist.NAME }}</span>
-      <span class="campistDocument">{{ campist.DOCUMENT_TYPE }} {{ campist.DOCUMENT }}</span>
+      <span class="campistDocument"><ion-icon name="id-card-outline"></ion-icon> {{ campist.DOCUMENT_TYPE }} {{ campist.DOCUMENT }}</span>
+      <span class="campistPhone"><ion-icon name="call"></ion-icon>+57 {{ campist.PHONE }}</span>
       <span class="campistArea">Área de <b>{{ campist.AREA | titlecase }}</b></span>
     </div>
   </div>
