@@ -14,6 +14,9 @@ export class PersonasComponent  implements OnInit {
   campersData: any = [];
   alertMessage: string = "";
   icon: string = "";
+  editModalOpen: boolean = false;
+  currentCampist: any;
+
   @ViewChild("errorToast") errorToast!: HTMLIonToastElement;
   @ViewChild(IonModal) modal!: IonModal;
 
@@ -28,6 +31,16 @@ export class PersonasComponent  implements OnInit {
     area: ['', Validators.required],
     agreeTerms: [false],
     guest: [0]
+  })
+
+  editUser = this.fb.group({
+    documentType: ['', Validators.required],
+    document: ['', Validators.required],
+    name: ['', Validators.required],
+    age: [0],
+    phone: [0, Validators.required],
+    transport: [true],
+    area: ['', Validators.required],
   })
 
   constructor(private crudService: CrudService, private fb: FormBuilder, private storeService: StoreService) { }
@@ -68,7 +81,6 @@ export class PersonasComponent  implements OnInit {
 
   confirm() {
     this.errorToast.dismiss();
-    console.log('>>> ', this.storeService.userData());
     if(this.checkErrors()) {
       const requestBody: any = {
         name: this.newUser.controls.name.value?.toUpperCase(),
@@ -98,6 +110,35 @@ export class PersonasComponent  implements OnInit {
     }
   }
 
+  confirmEdition() {
+    this.errorToast.dismiss();
+    if(this.checkEditionErrors()) {
+      const requestBody: any = {
+        name: this.editUser.controls.name.value?.toUpperCase(),
+        type: this.editUser.controls.documentType.value,
+        document: `${this.editUser.controls.document.value}`,
+        age: this.editUser.controls.age.value,
+        transport: this.editUser.controls.transport.value ? 1 : 0,
+        area: this.editUser.controls.area.value,
+        phone: `${this.editUser.controls.phone.value}`
+      }
+      this.crudService.edit(requestBody, this.currentCampist.ID).subscribe({
+        next: (res) => {
+          this.icon = "checkmark-circle-outline";
+          this.alertMessage = "Usuario editado correctamente";
+          this.errorToast.present();
+          this.setEditOpen(false);
+        },
+        error: (err) => {
+          console.error(err);
+          this.icon = "close-circle-outline";
+          this.alertMessage = "Ocurrió un error al intentar editar este usuario";
+          this.errorToast.present();
+        }
+      })
+    }
+  }
+
   cleanModal() {
     this.newUser.setValue({
       name: "",
@@ -109,6 +150,30 @@ export class PersonasComponent  implements OnInit {
       area: "",
       agreeTerms: false,
       guest: 0
+    })
+  }
+
+  cleanEditModal() {
+    const areaEquivalent: any = {
+      "ALABANZA": "ALB",
+      "CRECIMIENTO": "CRE",
+      "CONSOLIDACIÓN": "CON",
+      "DIÁCONOS": "DIA",
+      "GRANJA DE PAPÁ": "GDP",
+      "INTERCESIÓN": "INT",
+      "JÓVENES": "JCR",
+      "MATRIMONIOS": "MAT",
+      "PROTEMPLO": "PRO"
+    }
+    areaEquivalent.key
+    this.editUser.setValue({
+      name: this.currentCampist.NAME,
+      documentType: this.currentCampist.DOCUMENT_TYPE,
+      document:   this.currentCampist.DOCUMENT,
+      age: this.currentCampist.AGE,
+      phone: this.currentCampist.PHONE,
+      transport: this.currentCampist.TRANSPORT === 1,
+      area: areaEquivalent[this.currentCampist.AREA]
     })
   }
 
@@ -149,8 +214,51 @@ export class PersonasComponent  implements OnInit {
     return result;
   }
 
+  checkEditionErrors(): boolean {
+    let result: boolean = true;
+    this.errorToast.dismiss();
+    this.icon = "close-circle-outline";
+    if(this.editUser.controls.area.invalid) {
+      this.alertMessage = "El área es obligatoria"
+      this.errorToast.present();
+      result = false;
+    } 
+    if(this.editUser.controls.document.invalid) {
+      this.alertMessage = "El documento es obligatorio"
+      this.errorToast.present();
+      result = false;
+    } 
+    if(this.editUser.controls.documentType.invalid) {
+      this.alertMessage = "El tipo de documento es obligatorio"
+      this.errorToast.present();
+      result = false;
+    } 
+    if(this.editUser.controls.name.invalid) {
+      this.alertMessage = "El nombre es obligatorio"
+      this.errorToast.present();
+      result = false;
+    }
+    if(this.editUser.controls.phone.invalid) {
+      this.alertMessage = "El número de celular es obligatorio"
+      this.errorToast.present();
+      result = false;
+    }
+    return result;
+  }
+
   onWillDismiss(event: Event) {
     if((event as CustomEvent).detail.role === "register") {
+      this.refresh();
+    }
+  }
+
+  setEditOpen(open: boolean, campist?: any) {
+    console.log('Entra');
+    this.editModalOpen = open;
+    if(campist) this.currentCampist = campist;
+    this.cleanEditModal();
+    if(!this.editModalOpen) {
+      console.log('Cierra');
       this.refresh();
     }
   }

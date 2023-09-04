@@ -21,7 +21,8 @@
     <button class="actionButton" id="open-modal" (click)="cleanModal()">
       Registrar Campista
     </button>
-    <div *ngFor="let campist of campersData" class="camperCard">
+    <div *ngFor="let campist of campersData" class="camperCard" (dblclick)="setEditOpen(true, campist)">
+      <div class="edit" (click)="setEditOpen(true, campist)"><ion-icon name="open-outline"></ion-icon></div>
       <span class="campistLabel">Campista</span>
       <span class="campistName">{{ campist.NAME }}</span>
       <span class="campistDocument"><ion-icon name="id-card-outline"></ion-icon> {{ campist.DOCUMENT_TYPE }} {{ campist.DOCUMENT }}</span>
@@ -94,5 +95,57 @@
             </section>
           </div>
       </div>
+  </ng-template>
+</ion-modal>
+
+<ion-modal [isOpen]="editModalOpen" (willDismiss)="onWillDismiss($event)">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+          <ion-buttons slot="start">
+              <ion-button (click)="setEditOpen(false)">Cancelar</ion-button>
+          </ion-buttons>
+          <ion-title>Editar</ion-title>
+          <ion-buttons slot="end">
+              <ion-button (click)="confirmEdition()" [strong]="true">Confirmar</ion-button>
+          </ion-buttons>
+      </ion-toolbar>
+  </ion-header>
+  <div class="content-body">
+    <form [formGroup]="editUser">
+      <label for="name">Nombre</label>
+      <input type="text" id="name" placeholder="Nombre Completo" formControlName="name">
+      <label for="type">Tipo de Documento</label>
+      <select id="type" formControlName="documentType">
+          <option value="">Seleccione el Tipo de Documento</option>
+          <option value="CC">Cédula de Ciudadanía</option>
+          <option value="TI">Tarjeta de Identidad</option>
+          <option value="CE">Cédula de Extranjería</option>
+          <option value="PP">Pasaporte</option>
+      </select>
+      <label for="document">Número de Documento</label>
+      <input type="number" id="document" placeholder="Ingrese el Número de Documento" formControlName="document">
+      <label for="phone">Número de celular (<ion-icon name="logo-whatsapp"></ion-icon>Whatsapp)</label>
+      <input type="number" id="phone" placeholder="Número de celular" formControlName="phone">
+      <label for="age">Edad</label>
+      <input type="number" name="age" id="age" placeholder="Edad" formControlName="age">
+      <label for="area">Área</label>
+      <select id="area" formControlName="area">
+        <option value="">Seleccione el Área</option>
+        <option value="ALB">Alabanza</option>
+        <option value="CRE">Crecimiento</option>
+        <option value="CON">Consolidación</option>
+        <option value="DIA">Diaconado</option>
+        <option value="GDP">Granja de Papá</option>
+        <option value="INT">Intercesión</option>
+        <option value="JCR">Jóvenes</option>
+        <option value="MAT">Matrimonios</option>
+        <option value="PRO">Protemplo</option>
+      </select>
+      <label>
+        <ion-checkbox formControlName="transport">Transporte (Bus)</ion-checkbox>
+      </label>
+    </form>
+</div>
   </ng-template>
 </ion-modal>

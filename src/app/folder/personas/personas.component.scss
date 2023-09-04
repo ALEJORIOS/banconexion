@@ -21,6 +21,15 @@
         box-shadow: 0 0 4px #a0a0a0;
         padding: 12px;
         border-radius: 8px;
+        position: relative;
+        .edit {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            font-size: 1.2rem;
+            color: #a0a0a0;
+
+        }
         .campistLabel {
             font-size: 1rem;
         }

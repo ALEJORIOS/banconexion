@@ -37,4 +37,8 @@ export class CrudService {
   register(requestBody: any) {
     return this.http.post<any>(`${this.base_url}/register`, requestBody);
   }
+
+  edit(requestBody: any, id: number) {
+    return this.http.put<any>(`${this.base_url}/edit-user`, requestBody, {params: {id}})
+  }
 }
