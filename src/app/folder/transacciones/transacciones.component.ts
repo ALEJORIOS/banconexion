@@ -147,12 +147,11 @@ export class TransaccionesComponent  implements OnInit {
   setEditOpen(open: boolean, transaction?: any) {
     if(transaction) this.currentTransaction = transaction;
     this.cleanEditModal();
-    if(open) {
-      console.log('>>> ', this.currentTransaction)
-      this.editAlertInputs[0].value = this.currentTransaction.VALUE;
-      console.log('>>> ', this.editAlertInputs)
+    if(open && transaction.CONFIRMED === 0) {
+      this.openEditmodal = true;
+    }else{
+      this.openEditmodal = false;
     }
-    this.openEditmodal = open;
     if(!this.openEditmodal) {
       this.refresh();
     }

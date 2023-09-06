@@ -28,7 +28,7 @@
                 <span class="transactionValue">{{ transaction.VALUE | currency:'CAD':'symbol-narrow':'1.0-0':'co' }}</span>
             </div>
             <div class="rightSide">
-                <div class="edit" (click)="setEditOpen(true, transaction)">
+                <div *ngIf="transaction.CONFIRMED === 0" class="edit" (click)="setEditOpen(true, transaction)">
                     <ion-icon name="open-outline"></ion-icon>
                 </div>
                 <span class="transactionDateInfo">Fecha y Hora de la transacción</span>

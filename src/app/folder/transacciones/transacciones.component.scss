@@ -39,7 +39,7 @@
             padding-left: 1rem;
             .edit {
                 position: absolute;
-                top: 8px;
+                bottom: 8px;
                 right: 8px;
                 font-size: 1.2rem;
                 color: #a0a0a0;
@@ -122,8 +122,8 @@ ion-toggle {
     .box {
         background-color: #fff;
         border-radius: 8px;
-        width: 60vw;
-        max-width: 280px;
+        width: 70vw;
+        max-width: 320px;
         display: flex;
         flex-direction: column;
         gap: 8px;
@@ -144,7 +144,7 @@ ion-toggle {
             grid-template-columns: 1fr 1fr;
             button {
                 background-color: transparent;
-                height: 33px;
+                height: 44px;
                 border-top: 1px solid #a0a0a050;
                 font-weight: 600;
                 font-size: 1.1rem;
