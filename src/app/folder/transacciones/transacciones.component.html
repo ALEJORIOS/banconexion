@@ -85,4 +85,10 @@
     </ion-modal>
 </ion-content>
 
-<ion-alert [isOpen]="openEditmodal" header="Editar transacción" [buttons]="editAlertButtons" [inputs]="editAlertInputs"></ion-alert>
+<div class="editModal" *ngIf="openEditmodal">
+    <div class="box">
+        <span class="header">Editar transacción</span>
+        <label for="value">Valor<input type="number" id="value"></label>
+        <ion-toggle justify="start" checked="false" (ionChange)="donationState($event)">Donación</ion-toggle>
+    </div>
+</div>
