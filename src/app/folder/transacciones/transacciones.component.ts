@@ -118,9 +118,26 @@ export class TransaccionesComponent  implements OnInit {
     this.donation.setValue((event as CustomEvent).detail.checked);
   }
 
+  donationEditState(event: Event) {
+    this.currentTransaction.DONATION = (event as CustomEvent).detail.checked ? 1 : 0;
+  }
+
   selectPerson(person: any) {
     this.documentType.setValue(person.DOCUMENT_TYPE);
     this.documentNumber.setValue(person.DOCUMENT);
+  }
+
+  edit() {
+    const requestBody: any = {
+      value: this.currentTransaction.VALUE,
+      donation: this.currentTransaction.DONATION
+    }
+    this.crudService.editTransaction(this.currentTransaction.ID, requestBody).subscribe({
+      next: () => {
+        this.refresh();
+        this.setEditOpen(false);
+      }
+    })
   }
 
   cleanEditModal() {

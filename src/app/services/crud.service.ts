@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class CrudService {
 
-  base_url: string = "http://192.168.0.105:3600";
+  base_url: string = "http://192.168.0.23:3600";
 
   constructor(private http: HttpClient) { }
 
@@ -24,6 +24,10 @@ export class CrudService {
 
   searchTransactions(id: number) {
     return this.http.get<any>(`${this.base_url}/filtered-transactions`, {params: {id}});
+  }
+
+  editTransaction(id: number, requestBody: any) {
+    return this.http.put<any>(`${this.base_url}/edit-transaction`, requestBody, {params: {id}});
   }
 
   payment(requestBody: any) {

@@ -121,9 +121,8 @@ ion-toggle {
     place-content: center;
     .box {
         background-color: #fff;
-        padding: 12px;
         border-radius: 8px;
-        width: 50vw;
+        width: 60vw;
         max-width: 280px;
         display: flex;
         flex-direction: column;
@@ -131,7 +130,32 @@ ion-toggle {
         .header {
             font-size: 1.4rem;
             font-weight: 600;
+            padding: 12px;
+            padding-bottom: 0;
         }
-        .actions {}
+        .body {
+            padding: 0 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            button {
+                background-color: transparent;
+                height: 33px;
+                border-top: 1px solid #a0a0a050;
+                font-weight: 600;
+                font-size: 1.1rem;
+            }
+            button.close {
+                border-right: 1px solid #a0a0a050;
+                color: #ff0000;
+            }
+            button.edit {
+                color: var(--ion-color-primary);
+            }
+        }
     }
 }
