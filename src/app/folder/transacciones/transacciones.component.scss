@@ -22,14 +22,18 @@
                 font-size: 1.3rem;
                 font-weight: 600;
             }
-            .transactionDocument {}
+            .transactionDocument {
+                color: #a0a0a0;
+                font-size: 14px;
+            }
             .transactionValueInfo {
                 margin-top: 16px;
                 color: #a0a0a0;
                 font-size: 14px;
             }
             .transactionValue {
-                font-size: 24px;
+                font-size: 1.5rem;
+                font-weight: 600;
             }
         }
         .rightSide {
