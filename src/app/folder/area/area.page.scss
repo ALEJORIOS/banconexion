@@ -1,0 +1,100 @@
+#container {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    .refresh {
+        width: 100%;
+        padding: 12px;
+        font-size: 1.2rem;
+        color: white;
+        background-color: var(--primary-100);
+        border-radius: 8px;
+        &:disabled {
+            background-color: var(--primary-200);
+        }
+    }
+    .camperCard {
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+        box-shadow: 0 0 4px #a0a0a0;
+        padding: 12px;
+        border-radius: 8px;
+        .camperData {
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #C0C0C0;
+            .campistLabel {
+                font-size: 1rem;
+            }
+            .campistName {
+                font-size: clamp(10px, 5vw, 1.6rem);
+                font-family: "InterBold";
+                line-height: 2.2rem;
+            }
+            .campistDocumentAge {
+                font-size: 1.1rem;
+            }
+            .camperArea {
+                font-size: 1.1rem;
+                b {
+                    color: var(--primary-100);
+                }
+                margin-bottom: 8px;
+            }
+            .reached {
+                font-size: 1.1rem;
+                display: flex;
+                align-items: center;
+            }
+        }
+        .camperProgress {
+            display: grid;
+            place-content: center;
+            padding-left: 12px;
+            .successPercentage {
+                text-align: center;
+                font-size: 1.6rem;
+                font-family: "InterBold";
+                color: var(--primary-100);
+            }
+            .confirmedPercentage {
+                text-align: center;
+                font-size: 1.6rem;
+                font-family: "InterBold";
+                color: #69bf51;
+            }
+            .progressLabel {
+                text-align: center;
+                font-size: 1.1rem;
+            }
+            ion-progress-bar::part(track) {
+                background: var(--primary-100);
+            }
+            ion-progress-bar::part(progress) {
+                background: #ffd700;
+            }
+            
+            ion-progress-bar::part(stream) {
+                background-image: radial-gradient(ellipse at center, #e475f3 0%, #e475f3 30%, transparent 30%);
+            }
+            progress {
+                -webkit-appearance: none;
+                &::-webkit-progress-value {
+                    background-color: var(--primary-100);
+                    border-radius: 6px;
+                }
+                &::-webkit-progress-bar {
+                    background-color: #F0F0F0;
+                    border-radius: 6px;
+                }
+            }
+            .fullfilled {
+                &::-webkit-progress-value {
+                    background-color: gold;
+                    border-radius: 6px;
+                }
+            }
+        }
+    }
+}
