@@ -253,12 +253,10 @@ export class PersonasComponent  implements OnInit {
   }
 
   setEditOpen(open: boolean, campist?: any) {
-    console.log('Entra');
     this.editModalOpen = open;
     if(campist) this.currentCampist = campist;
     this.cleanEditModal();
     if(!this.editModalOpen) {
-      console.log('Cierra');
       this.refresh();
     }
   }

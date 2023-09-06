@@ -24,6 +24,28 @@ export class TransaccionesComponent  implements OnInit {
   allUsers: any = [];
   resultUser: any;
 
+  openEditmodal: boolean = false;
+  currentTransaction: any;
+
+  editAlertButtons: any = [
+    {
+      text: 'Cancelar',
+      role: 'cancel', 
+    },
+    {
+      text: 'Editar',
+      role: 'confirm',
+    }
+  ]
+
+  editAlertInputs: any = [
+    {
+      type: 'number',
+      placeholder: "Valor",
+      label: "Valor"
+    }
+  ]
+
   constructor(private crudService: CrudService, private storeService: StoreService) { }
 
   public transactionsData: any = [];
@@ -101,4 +123,21 @@ export class TransaccionesComponent  implements OnInit {
     this.documentNumber.setValue(person.DOCUMENT);
   }
 
+  cleanEditModal() {
+
+  }
+
+  setEditOpen(open: boolean, transaction?: any) {
+    this.openEditmodal = open;
+    if(transaction) this.currentTransaction = transaction;
+    this.cleanEditModal();
+    if(!this.openEditmodal) {
+      this.refresh();
+    }
+    if(this.openEditmodal) {
+      console.log('>>> ', this.currentTransaction)
+      this.editAlertInputs[0].value = this.currentTransaction.VALUE;
+      console.log('>>> ', this.editAlertInputs)
+    }
+  }
 }

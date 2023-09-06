@@ -11,7 +11,7 @@
         padding: 12px;
         border-radius: 8px;
         position: relative;
-        .leftSide{
+        .leftSide {
             display: flex;
             flex-direction: column;
             .transactionActionLabel {
@@ -22,9 +22,7 @@
                 font-size: 1.3rem;
                 font-weight: 600;
             }
-            .transactionDocument {
-                
-            }
+            .transactionDocument {}
             .transactionValueInfo {
                 margin-top: 16px;
                 color: #a0a0a0;
@@ -33,13 +31,19 @@
             .transactionValue {
                 font-size: 24px;
             }
-            
         }
         .rightSide {
             display: flex;
             flex-direction: column;
             border-left: 2px solid #f0f0f0;
             padding-left: 1rem;
+            .edit {
+                position: absolute;
+                top: 8px;
+                right: 8px;
+                font-size: 1.2rem;
+                color: #a0a0a0;
+            }
             .transactionAuthorityInfo {
                 color: #a0a0a0;
                 font-size: 14px;

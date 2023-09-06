@@ -18,7 +18,7 @@
         <section>
             <ion-button class="option" id="open-modal" expand="block">Nueva Transacción</ion-button>
         </section>
-        <div *ngFor="let transaction of transactionsData" class="transactionCard">
+        <div *ngFor="let transaction of transactionsData" class="transactionCard" (dblclick)="setEditOpen(true, transaction)">
             <div class="leftSide">
                 <span class="transactionActionLabel" *ngIf="transaction.DONATION === 0">Abono para</span>
                 <span class="transactionActionLabel" *ngIf="transaction.DONATION === 1">Donación para</span>
@@ -26,10 +26,11 @@
                 <span class="transactionDocument">{{ transaction.DOCUMENT_TYPE }} {{ transaction.DOCUMENT }}</span>
                 <span class="transactionValueInfo">Valor</span>
                 <span class="transactionValue">{{ transaction.VALUE | currency:'CAD':'symbol-narrow':'1.0-0':'co' }}</span>
-
-
             </div>
             <div class="rightSide">
+                <div class="edit" (click)="setEditOpen(true, transaction)">
+                    <ion-icon name="open-outline"></ion-icon>
+                </div>
                 <span class="transactionDateInfo">Fecha y Hora de la transacción</span>
                 <span class="transactionDate">{{ transaction.DATE | date:"dd/MM/YYYY HH:mm" }}</span>
                 <span class="transactionAuthorityInfo">Autorizado por</span>
@@ -83,3 +84,5 @@
         </ng-template>
     </ion-modal>
 </ion-content>
+
+<ion-alert [isOpen]="openEditmodal" header="Editar transacción" [buttons]="editAlertButtons" [inputs]="editAlertInputs"></ion-alert>

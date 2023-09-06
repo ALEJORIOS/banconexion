@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class CrudService {
 
-  base_url: string = "http://192.168.0.23:3600";
+  base_url: string = "http://192.168.0.105:3600";
 
   constructor(private http: HttpClient) { }
 
