@@ -140,13 +140,8 @@ export class TransaccionesComponent  implements OnInit {
     })
   }
 
-  cleanEditModal() {
-
-  }
-
   setEditOpen(open: boolean, transaction?: any) {
     if(transaction) this.currentTransaction = transaction;
-    this.cleanEditModal();
     if(open && transaction.CONFIRMED === 0) {
       this.openEditmodal = true;
     }else{

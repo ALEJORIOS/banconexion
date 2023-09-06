@@ -26,6 +26,10 @@ export class CrudService {
     return this.http.get<any>(`${this.base_url}/filtered-transactions`, {params: {id}});
   }
 
+  searchByArea(area: string) {
+    return this.http.get<any>(`${this.base_url}/area`, {params: {area}})
+  }
+
   editTransaction(id: number, requestBody: any) {
     return this.http.put<any>(`${this.base_url}/edit-transaction`, requestBody, {params: {id}});
   }

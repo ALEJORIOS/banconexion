@@ -34,7 +34,12 @@ const routes: Routes = [
   {
     path: 'fallas',
     loadChildren: () => import('./fallas/fallas.module').then( m => m.FallasPageModule)
+  },
+  {
+    path: 'area/:area',
+    loadChildren: () => import('./area/area.module').then( m => m.AreaPageModule)
   }
+
 ];
 
 @NgModule({
