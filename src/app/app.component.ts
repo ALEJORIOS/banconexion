@@ -13,6 +13,8 @@ export class AppComponent {
     { title: 'Metas', url: '/metas', icon: 'ribbon' },
     { title: 'Personas', url: '/personas', icon: 'accessibility' },
     { title: 'Transacciones', url: '/transacciones', icon: 'cash' },
+    { title: 'Área', url: '/area', icon: 'people' },
+    { title: 'Panel de Control', url: '/panel', icon: 'construct' },
     { title: 'Salir', url: '/inicio', icon: 'home' }
   ];
 

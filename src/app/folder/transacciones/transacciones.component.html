@@ -28,7 +28,7 @@
                 <span class="transactionValue">{{ transaction.VALUE | currency:'CAD':'symbol-narrow':'1.0-0':'co' }}</span>
             </div>
             <div class="rightSide">
-                <div class="edit" (click)="setEditOpen(true, transaction)">
+                <div *ngIf="transaction.CONFIRMED === 0" class="edit" (click)="setEditOpen(true, transaction)">
                     <ion-icon name="open-outline"></ion-icon>
                 </div>
                 <span class="transactionDateInfo">Fecha y Hora de la transacción</span>
@@ -88,7 +88,13 @@
 <div class="editModal" *ngIf="openEditmodal">
     <div class="box">
         <span class="header">Editar transacción</span>
-        <label for="value">Valor<input type="number" id="value"></label>
-        <ion-toggle justify="start" checked="false" (ionChange)="donationState($event)">Donación</ion-toggle>
+        <div class="body">
+            <label>Valor&nbsp;&nbsp;<input type="number" [(ngModel)]="currentTransaction.VALUE"></label>
+            <ion-toggle justify="start" [checked]="currentTransaction.DONATION === 1" (ionChange)="donationEditState($event)">Donación</ion-toggle>
+        </div>
+        <div class="actions">
+            <button class="close" (click)="setEditOpen(false)">Cerrar</button>
+            <button class="edit" (click)="edit()">Editar</button>
+        </div>
     </div>
 </div>
