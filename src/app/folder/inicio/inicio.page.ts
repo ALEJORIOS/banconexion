@@ -61,7 +61,6 @@ export class InicioPage {
                 this.alertMessage = "Documento incorrecto"
                 this.errorToast.present();
               }else{
-                console.log('Entra');
                 this.storeService.userData.set(res);
                 localStorage.setItem("userData", JSON.stringify(res));
                 this.router.navigateRoot(["/progreso"]);
