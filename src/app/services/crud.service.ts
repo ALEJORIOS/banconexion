@@ -17,12 +17,24 @@ export class CrudService {
     return this.http.get<any>(`${this.base_url}/check-maintenance`);
   }
 
+  approveTransactions(ids: number[]) {
+    return this.http.put<any>(`${this.base_url}/transaction-approval`, {ids})
+  }
+
   searchDocument(document: string, type: string) {
     return this.http.get<any>(`${this.base_url}/user`, {params: {document, type}});
+  }
+  
+  loginAdmin(requestBody: any) {
+    return this.http.post<any>(`${this.base_url}/login`, requestBody);
   }
 
   searchAllUsers() {
     return this.http.get<any>(`${this.base_url}/all-users`)
+  }
+
+  allTransactions() {
+    return this.http.get<any>(`${this.base_url}/transactions`);
   }
 
   searchTransactions(id: number) {
@@ -55,5 +67,13 @@ export class CrudService {
 
   edit(requestBody: any, id: number) {
     return this.http.put<any>(`${this.base_url}/edit-user`, requestBody, {params: {id}})
+  }
+
+  exportReport() {
+    return this.http.post<any>(`${this.base_url}/export-report`, null);
+  }
+
+  exportTransactions() {
+    return this.http.post<Blob>(`${this.base_url}/export-transactions`, { observe: 'response', responseType: 'blob'});
   }
 }

@@ -22,6 +22,7 @@ div.content {
         margin: 0;
     }
     input[type=number],
+    input[type=password],
     select {
         margin-top: 1rem;
         width: 60vw;
@@ -41,7 +42,6 @@ div.content {
         &:disabled {
             background-color: var(--primary-200-50);
         }
-
     }
     strong.church {
         font-family: "InterThin";

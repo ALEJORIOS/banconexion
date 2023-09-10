@@ -10,10 +10,12 @@
       <option value="CE">Cédula de Extranjería</option>
       <option value="PP">Pasaporte</option>
     </select>
-    <button class="buscar" [disabled]="!enableButton" (click)="login()">Buscar</button>
+    <input *ngIf="enableAdmin" type="password" placeholder="Contraseña" [formControl]="password">
+    <button *ngIf="!enableAdmin" class="buscar" [disabled]="!enableButton" (click)="login()">Buscar</button>
+    <button *ngIf="enableAdmin" class="buscar" [disabled]="!enableButton" (click)="loginAdmin()">Ingresar</button>
     <strong class="church">Iglesia Cristiana Cuadrangular</strong>
     <strong class="church">En Espíritu y En Verdad</strong>
     <i [ngClass]="{'hide': !showLoadingText, 'show': showLoadingText}">Cargando...</i>
 
-  </div>
+</div>
 <ion-toast #errorToast [message]="alertMessage" [duration]="3000" icon="close-circle-outline"></ion-toast>

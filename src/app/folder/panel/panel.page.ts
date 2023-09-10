@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CrudService } from 'src/app/services/crud.service';
 
 @Component({
   selector: 'app-panel',
@@ -7,13 +8,35 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PanelPage implements OnInit {
 
-  constructor() { }
+  constructor(private crudService: CrudService) { }
 
   ngOnInit() {
   }
 
-  send() {
-    window.open("https://api.whatsapp.com/send/?phone=%2B573188501911&text=Hola&type=phone_number&app_absent=0"); 
+  exportReport() {
+    this.crudService.exportReport().subscribe({
+      next: (res) => {
+        this.downloadFile(res);
+      }
+    })
+  }
+
+  exportTransactions() {
+    this.crudService.exportTransactions().subscribe({
+      next: (res) => {
+        this.downloadFile(res);
+      }
+    })
+  }
+
+  downloadFile(data: any) {
+    let fileName = data.headers.get('Content-Disposition')?.split(';')[1].split('=')[1];
+    let blob:Blob = data.body as Blob;
+    console.log('>>> ', blob)
+    let a = document.createElement('a');
+    a.download=fileName;
+    a.href=window.URL.createObjectURL(blob);
+    a.click();
   }
 
 }

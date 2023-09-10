@@ -32,7 +32,9 @@ export class ProgresoPage {
 
   ionViewDidEnter() {
     this.campersData = this.storeService.userData();
+    console.log('> ', this.campersData);
     this.storeService.getFees();
+    
   }
 
   refresh() {

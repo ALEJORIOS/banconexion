@@ -29,6 +29,8 @@ export class TransaccionesComponent  implements OnInit {
   openEditmodal: boolean = false;
   currentTransaction: any;
 
+  selectedTransactions: any = [];
+
   editAlertButtons: any = [
     {
       text: 'Cancelar',
@@ -48,7 +50,7 @@ export class TransaccionesComponent  implements OnInit {
     }
   ]
 
-  constructor(private crudService: CrudService, private storeService: StoreService) { }
+  constructor(private crudService: CrudService, public storeService: StoreService) { }
 
   public transactionsData: any = [];
 
@@ -65,11 +67,19 @@ export class TransaccionesComponent  implements OnInit {
   }
 
   refresh() {
-    this.crudService.searchTransactions(this.storeService.userData()[0].ID).subscribe({
-      next: (res) => {
-        this.transactionsData = res;
-      }
-    })
+    if(this.storeService.userData()[0].ADMIN === 3) {
+      this.crudService.allTransactions().subscribe({
+        next: (res) => {
+          this.transactionsData = res;
+        }
+      })
+    }else{
+      this.crudService.searchTransactions(this.storeService.userData()[0].ID).subscribe({
+        next: (res) => {
+          this.transactionsData = res;
+        }
+      })
+    }
   }
 
   getUsers() {
@@ -122,6 +132,16 @@ export class TransaccionesComponent  implements OnInit {
     this.resultUser = this.allUsers.filter((d: any) => d.NAME.toLowerCase().indexOf(nameQuery) > -1);
   }
 
+  selectTransaction(id: number, confirmed: boolean) {
+    if(this.storeService.userData()[0].ADMIN === 3 && confirmed === false) {
+      if(this.selectedTransactions.includes(id)) {
+        this.selectedTransactions = this.selectedTransactions.filter((tra: any) => tra !== id);
+      }else{
+        this.selectedTransactions.push(id);
+      }
+    }
+  }
+
   selectName() {
 
   }
@@ -162,6 +182,16 @@ export class TransaccionesComponent  implements OnInit {
     }
     if(!this.openEditmodal) {
       this.refresh();
+      this.selectedTransactions = [];
     }
+  }
+
+  confirmTransactions() {
+    this.crudService.approveTransactions(this.selectedTransactions).subscribe({
+      next: () => {
+        this.refresh();
+        this.selectedTransactions = [];
+      }
+    })
   }
 }

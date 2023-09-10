@@ -17,8 +17,9 @@
     <div id="container">
         <section>
             <ion-button class="option" id="open-modal" expand="block">Nueva Transacción</ion-button>
+            <ion-button *ngIf="storeService.userData()[0].ADMIN === 3" class="option" (click)="confirmTransactions()" [disabled]="selectedTransactions.length === 0" id="open-modal" expand="block">Confirmar transacciones</ion-button>
         </section>
-        <div *ngFor="let transaction of transactionsData" class="transactionCard" (dblclick)="setEditOpen(true, transaction)">
+        <div *ngFor="let transaction of transactionsData" class="transactionCard" [ngClass]="{'selectedCard': selectedTransactions.includes(transaction.ID)}" (click)="selectTransaction(transaction.ID, transaction.CONFIRMED === 1)" (dblclick)="setEditOpen(true, transaction)">
             <div class="leftSide">
                 <span class="transactionActionLabel" *ngIf="transaction.DONATION === 0">Abono para</span>
                 <span class="transactionActionLabel" *ngIf="transaction.DONATION === 1">Donación para</span>

@@ -35,7 +35,6 @@ export class FallasPage implements OnInit {
             DATE: newDate
           }
         });
-        console.log('>>> ', this.failures);
       },
       error: (err) => {
         console.error(err);

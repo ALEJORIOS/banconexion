@@ -15,15 +15,20 @@ export class InicioPage {
   alertMessage: string = "";
   document = new FormControl("", Validators.required);
   type = new FormControl("", Validators.required);
+  password = new FormControl("");
   enableButton: boolean = true;
   showLoadingText: boolean = false;
   maintenance: boolean | null = null;
+  enableAdmin: boolean = false;
+  saveAdminData: any;
 
   @ViewChild("errorToast") errorToast!: HTMLIonToastElement;
 
   constructor(private crudService: CrudService, private storeService: StoreService, private router: NavController) { }
 
   ionViewDidEnter() {
+    localStorage.removeItem("userData");
+    this.storeService.userData.set([]);
     this.crudService.checkMaintenance()
     .pipe(map(res => {
       return res[0].VALUE === "1" ? true : false
@@ -42,6 +47,7 @@ export class InicioPage {
   }
 
   login(): void {
+    this.saveAdminData = [];
     this.showLoadingText = true;
     this.enableButton = false;
     this.errorToast.dismiss();
@@ -61,9 +67,17 @@ export class InicioPage {
                 this.alertMessage = "Documento incorrecto"
                 this.errorToast.present();
               }else{
-                this.storeService.userData.set(res);
-                localStorage.setItem("userData", JSON.stringify(res));
-                this.router.navigateRoot(["/progreso"]);
+                if(res[0].ADMIN > 0) {
+                  this.enableAdmin = true;
+                  this.enableButton = true;
+                  this.showLoadingText = false;
+                  this.saveAdminData = res;
+                }else{
+                  this.enableAdmin = false;
+                  this.storeService.userData.set(res);
+                  localStorage.setItem("userData", JSON.stringify(res));
+                  this.router.navigateRoot(["/progreso"]);
+                }
               }
             },
             error: (err) => {
@@ -81,6 +95,31 @@ export class InicioPage {
         this.login();
       }, 100);
     }
+  }
+
+  loginAdmin() {
+    this.showLoadingText = true;
+    this.enableButton = false;
+    const requestBody: any = {
+      document: this.document.value,
+      type: this.type.value,
+      password: this.password.value
+    }
+    this.crudService.loginAdmin(requestBody).subscribe({
+      next: () => {
+        this.storeService.userData.set(this.saveAdminData);
+        localStorage.setItem("userData", JSON.stringify(this.saveAdminData));
+        this.router.navigateRoot(["/progreso"]);
+        this.showLoadingText = false;
+        this.enableButton = true;
+      },
+      error: () => {
+        this.alertMessage = "Contraseña incorrecta";
+        this.errorToast.present();
+        this.showLoadingText = false;
+        this.enableButton = true;
+      }
+    })
   }
   
   checkError(): boolean {
