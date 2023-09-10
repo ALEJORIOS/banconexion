@@ -74,7 +74,7 @@
                     <ion-searchbar *ngIf="donation" placeholder="Buscar Campista" [debounce]="200" (ionInput)="handleInput($event)"></ion-searchbar>
                     <div *ngIf="donation" class="list">
                         <ion-list>
-                            <ion-item *ngFor="let person of allUsers">
+                            <ion-item *ngFor="let person of resultUser">
                                 <ion-label (click)="selectPerson(person)">{{ person.NAME }}</ion-label>
                             </ion-item>
                         </ion-list>

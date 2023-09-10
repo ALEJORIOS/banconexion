@@ -21,6 +21,8 @@ export class TransaccionesComponent  implements OnInit {
   value: FormControl = new FormControl(null, Validators.required);
   donation: FormControl = new FormControl(false, Validators.required);
 
+  currentPhone: number = 0;
+
   allUsers: any = [];
   resultUser: any;
 
@@ -53,10 +55,13 @@ export class TransaccionesComponent  implements OnInit {
   ngOnInit() {
     this.refresh();
     this.getUsers();
+    this.documentType.disable();
+    this.documentNumber.disable();
   }
 
   cancel() {
     this.modal.dismiss(null, 'cancel');
+    this.cleanModal();
   }
 
   refresh() {
@@ -71,6 +76,7 @@ export class TransaccionesComponent  implements OnInit {
     this.crudService.searchAllUsers().subscribe({
       next: (res) => {
         this.allUsers = res;
+        this.resultUser = this.allUsers;
       }
     })
   }
@@ -88,8 +94,11 @@ export class TransaccionesComponent  implements OnInit {
     }
 
     this.crudService.payment(requestBody).subscribe({
-      next: (res) => {
+      next: () => {
         this.modal.dismiss(this.name, 'confirm');
+
+        const text: string = `Se%20ha%20realizado%20un%20abono%20a%20tu%20nombre%20por%20un%20valor%20de%20%24${this.value.value}%20para%20conexi%C3%B3n%20divina%202024.%20Cada%20vez%20est%C3%A1s%20m%C3%A1s%20cerca%21`;
+        window.open(`https://api.whatsapp.com/send/?phone=%2B57${this.currentPhone}&text=${text}&type=phone_number&app_absent=0`); 
       }
     })
   }
@@ -98,16 +107,19 @@ export class TransaccionesComponent  implements OnInit {
     const ev = event as CustomEvent<OverlayEventDetail<string>>;
     if (ev.detail.role === 'confirm') {
       this.refresh();
+      this.cleanModal();
     }
   }
 
   cleanModal() {
-
+    this.documentType.setValue("");
+    this.documentNumber.setValue("");
+    this.currentPhone = 0;
   }
 
   handleInput(event: any) {
     const nameQuery = event.target.value.toLowerCase();
-    this.resultUser = this.allUsers.filter((d: any) => d.name.toLowerCase().indexOf(nameQuery) > -1);
+    this.resultUser = this.allUsers.filter((d: any) => d.NAME.toLowerCase().indexOf(nameQuery) > -1);
   }
 
   selectName() {
@@ -125,6 +137,7 @@ export class TransaccionesComponent  implements OnInit {
   selectPerson(person: any) {
     this.documentType.setValue(person.DOCUMENT_TYPE);
     this.documentNumber.setValue(person.DOCUMENT);
+    this.currentPhone = person.PHONE;
   }
 
   edit() {

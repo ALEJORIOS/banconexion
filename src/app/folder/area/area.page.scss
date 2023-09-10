@@ -68,27 +68,6 @@
                 text-align: center;
                 font-size: 1.1rem;
             }
-            ion-progress-bar::part(track) {
-                background: var(--primary-100);
-            }
-            ion-progress-bar::part(progress) {
-                background: #ffd700;
-            }
-            
-            ion-progress-bar::part(stream) {
-                background-image: radial-gradient(ellipse at center, #e475f3 0%, #e475f3 30%, transparent 30%);
-            }
-            progress {
-                -webkit-appearance: none;
-                &::-webkit-progress-value {
-                    background-color: var(--primary-100);
-                    border-radius: 6px;
-                }
-                &::-webkit-progress-bar {
-                    background-color: #F0F0F0;
-                    border-radius: 6px;
-                }
-            }
             .fullfilled {
                 &::-webkit-progress-value {
                     background-color: gold;

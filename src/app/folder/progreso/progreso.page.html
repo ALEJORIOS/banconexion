@@ -13,7 +13,6 @@
             <ion-title size="large">Progreso</ion-title>
         </ion-toolbar>
     </ion-header>
-    
     <div id="container">
         <button class="refresh" [disabled]="loadingBalance" (click)="refresh()">Actualizar</button>
         <div *ngFor="let camper of campersData" class="camperCard">
@@ -22,13 +21,15 @@
                 <span class="campistName">{{ camper?.NAME }}</span>
                 <span class="campistDocumentAge">{{ camper?.DOCUMENT_TYPE }} {{ camper?.DOCUMENT }} - {{ camper?.AGE }} {{ camper?.AGE === 1 ? "año" : "años" }}</span>
                 <span class="camperArea">Área de <b>{{ camper?.AREA | titlecase }}</b></span>
-                <span class="reached">Balance: <b>{{ camper?.BALANCE || 0 | currency:'':'symbol-narrow':'1.0-0':'co' }}</b></span>
-                <span class="reached">Meta: <b>{{ camper?.TOTAL | currency:'CAD':'symbol-narrow':'1.0-0':'co' }}</b></span>
+                <span class="reached">Abonado: <b>{{ camper?.BALANCE || 0 | currency:'':'symbol-narrow':'1.0-0':'co' }}</b>&nbsp;<ion-icon name="ellipse" style="color: #0077C2;"></ion-icon></span>
+                <span class="reached">Confirmado: <b>{{ camper?.CONFIRMED || 0 | currency:'':'symbol-narrow':'1.0-0':'co' }}</b>&nbsp;<ion-icon name="ellipse" style="color: #69bf51;"></ion-icon></span>
+                <span class="reached">Meta: <b>{{ camper?.GOAL | currency:'CAD':'symbol-narrow':'1.0-0':'co' }}</b></span>
             </section>
             <section class="camperProgress">
-                <span class="successPercentage">{{ (camper?.BALANCE / camper?.TOTAL) | percent }}</span>
-                <progress [ngClass]="{'fullfilled': camper?.BALANCE >= camper?.TOTAL}" [value]="(camper?.BALANCE / camper?.TOTAL || 1) * 100" max="100"></progress>
+                <span class="successPercentage">{{ (camper?.BALANCE / camper?.GOAL) | percent }}</span>
+                <pbar [value]="(camper?.BALANCE / camper?.GOAL)*100" [confirmed]="(camper?.CONFIRMED / camper?.GOAL)*100"></pbar>
                 <span class="progressLabel">Progreso</span>
+                <span class="confirmedPercentage">{{ (camper?.CONFIRMED / camper?.GOAL) | percent }}</span>
             </section>
         </div>
     </div>
