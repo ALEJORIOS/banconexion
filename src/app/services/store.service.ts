@@ -29,15 +29,15 @@ export class StoreService {
     if(age < 2) {
       return 0
     }else if(age < 5) {
-      value = +this.fees().filter((fee: any) => fee.ATTRIBUTE === "TARIFA_NINO")[0].VALUE;
+      value = +this.fees().filter((fee: any) => fee.ATTRIBUTE === "TARIFA_NINO")[0]?.VALUE;
     }else if(age < 12) {
-      value = +this.fees().filter((fee: any) => fee.ATTRIBUTE === "TARIFA_MENOR")[0].VALUE;
+      value = +this.fees().filter((fee: any) => fee.ATTRIBUTE === "TARIFA_MENOR")[0]?.VALUE;
     }else if(age >= 12) {
-      value = +this.fees().filter((fee: any) => fee.ATTRIBUTE === "TARIFA_COMPLETA")[0].VALUE;
+      value = +this.fees().filter((fee: any) => fee.ATTRIBUTE === "TARIFA_COMPLETA")[0]?.VALUE;
     }
     // Add transport
     if(transport) {
-      value += +this.fees().filter((fee: any) => fee.ATTRIBUTE === "TRANSPORTE")[0].VALUE;
+      value += +this.fees().filter((fee: any) => fee.ATTRIBUTE === "TRANSPORTE")[0]?.VALUE;
     }
     return value;
   }

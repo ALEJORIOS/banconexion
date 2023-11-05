@@ -163,7 +163,8 @@ export class PersonasComponent  implements OnInit {
       "INTERCESIÓN": "INT",
       "JÓVENES": "JCR",
       "MATRIMONIOS": "MAT",
-      "PROTEMPLO": "PRO"
+      "PROTEMPLO": "PRO",
+      "ASISTENTES": "AST"
     }
     areaEquivalent.key
     this.editUser.setValue({

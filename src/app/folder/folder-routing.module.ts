@@ -4,6 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { MetasComponent } from './metas/metas.component';
 import { PersonasComponent } from './personas/personas.component';
 import { TransaccionesComponent } from './transacciones/transacciones.component';
+import { AuthGuard } from '../guards/auth.guard';
+import { LoginGuard } from '../guards/login.guard';
 
 const routes: Routes = [
   {
@@ -13,19 +15,23 @@ const routes: Routes = [
   },
   {
     path: 'metas',
-    component: MetasComponent
+    component: MetasComponent,
+    canActivate: [LoginGuard]
   },
   {
     path: 'personas',
-    component: PersonasComponent
+    component: PersonasComponent,
+    canActivate: [LoginGuard, AuthGuard]
   },
   {
     path: 'transacciones',
-    component: TransaccionesComponent
+    component: TransaccionesComponent,
+    canActivate: [LoginGuard]
   },
   {
     path: 'progreso',
-    loadChildren: () => import('./progreso/progreso.module').then( m => m.ProgresoPageModule)
+    loadChildren: () => import('./progreso/progreso.module').then( m => m.ProgresoPageModule),
+    canActivate: [LoginGuard]
   },
   {
     path: 'inicio',
@@ -33,15 +39,29 @@ const routes: Routes = [
   },
   {
     path: 'fallas',
-    loadChildren: () => import('./fallas/fallas.module').then( m => m.FallasPageModule)
+    loadChildren: () => import('./fallas/fallas.module').then( m => m.FallasPageModule),
+    canActivate: [LoginGuard, AuthGuard]
   },
   {
     path: 'area/:area',
-    loadChildren: () => import('./area/area.module').then( m => m.AreaPageModule)
-  },  {
+    loadChildren: () => import('./area/area.module').then( m => m.AreaPageModule),
+    canActivate: [LoginGuard, AuthGuard]
+  },
+  {
     path: 'panel',
-    loadChildren: () => import('./panel/panel.module').then( m => m.PanelPageModule)
-  }
+    loadChildren: () => import('./panel/panel.module').then( m => m.PanelPageModule),
+    canActivate: [LoginGuard, AuthGuard]
+  },
+  {
+    path: 'not-allowed',
+    loadChildren: () => import('./not-llowed/not-llowed.module').then( m => m.NotLlowedPageModule),
+    canActivate: [LoginGuard]
+  },
+  {
+    path: '**',
+    loadChildren: () => import('./not-found/not-found.module').then( m => m.NotFoundPageModule),
+    canActivate: [LoginGuard]
+  },
 
 
 ];

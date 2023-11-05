@@ -6,13 +6,20 @@ import { StoreService } from './services/store.service';
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
-})
+}) 
 export class AppComponent {
   public appPages: any = [ ];
 
   currentFolder: string = "";
 
   constructor(private router: Router, private storeService: StoreService) {
+
+    window.addEventListener("visibilitychange", function () {
+      if (document.visibilityState === "visible") {
+        console.log("APP resumed");
+        window.location.reload();
+      }
+    });
 
     effect(() => {
       this.appPages = [];
