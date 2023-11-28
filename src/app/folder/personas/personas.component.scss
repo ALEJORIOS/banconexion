@@ -70,6 +70,15 @@
         label {
             margin-top: 12px;
         }
+        ion-radio-group {
+            display: flex;
+            flex-direction: column;
+            width: fit-content;
+            ion-radio {
+                display: flex;
+                justify-content: flex-start;
+            }
+        }
     }
     div.terms {
         margin-top: 12px;

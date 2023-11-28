@@ -16,11 +16,11 @@
 
     <div id="container">
         <button class="actionButton" (click)="refresh()">
-      Actualizar
-    </button>
+            Actualizar
+        </button>
         <button class="actionButton" id="open-modal" (click)="cleanModal()">
-      Registrar Campista
-    </button>
+            Registrar Campista
+        </button>
         <div *ngFor="let campist of campersData" class="camperCard" (dblclick)="setEditOpen(true, campist)">
             <div class="edit" (click)="setEditOpen(true, campist)">
                 <ion-icon name="open-outline"></ion-icon>
@@ -36,6 +36,7 @@
 </ion-content>
 <ion-toast #errorToast [message]="alertMessage" [duration]="3000" [icon]="icon"></ion-toast>
 
+<!-- Create Modal -->
 <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
     <ng-template>
         <ion-header>
@@ -140,6 +141,7 @@
     </ng-template>
 </ion-modal>
 
+<!-- Edit modal -->
 <ion-modal [isOpen]="editModalOpen" (willDismiss)="onWillDismiss($event)">
     <ng-template>
         <ion-header>
@@ -187,8 +189,15 @@
                   <option value="AST">Asistentes</option>
                 </select>
                 <label>
-        <ion-checkbox formControlName="transport">Transporte (Bus)</ion-checkbox>
-      </label>
+                    <ion-checkbox formControlName="transport">Transporte (Bus)</ion-checkbox>
+                </label>
+                <h3 *ngIf="storeService.userData()[0].ADMIN === 3">Tipo de Campista</h3>
+                <ion-radio-group *ngIf="storeService.userData()[0].ADMIN === 3" formControlName="admin">
+                    <ion-radio [value]="3" labelPlacement="start">Administrador (Admin3)</ion-radio>
+                    <ion-radio [value]="2" labelPlacement="start">Líder de Área (Admin2)</ion-radio>
+                    <ion-radio [value]="1" labelPlacement="start">Soporte (Admin1)</ion-radio>
+                    <ion-radio [value]="0" labelPlacement="start">Campista</ion-radio>
+                </ion-radio-group>
             </form>
         </div>
     </ng-template>

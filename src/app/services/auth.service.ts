@@ -7,9 +7,7 @@ import { Observable, of } from 'rxjs';
 })
 export class AuthService {
 
-  constructor(private router: Router) { 
-    
-  }
+  constructor(private router: Router) { }
 
   noLogin():Observable<boolean> {
     if(localStorage.getItem("userData")) {
@@ -23,7 +21,7 @@ export class AuthService {
   canEnter():Observable<boolean> {
     const adminStatus: any = JSON.parse(localStorage.getItem("userData") || "{}")[0]?.ADMIN;
     if(localStorage.getItem("userData")) {
-      if(adminStatus === 3) {
+      if(adminStatus === 3 || adminStatus === 2 || adminStatus === 1) {
         return of(true);
       }else{
         this.router.navigate(['/not-allowed']);

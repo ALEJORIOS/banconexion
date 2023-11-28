@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { IonModal } from '@ionic/angular';
 import { CrudService } from 'src/app/services/crud.service';
 import { StoreService } from 'src/app/services/store.service';
@@ -41,9 +41,11 @@ export class PersonasComponent  implements OnInit {
     phone: [0, Validators.required],
     transport: [true],
     area: ['', Validators.required],
+    admin: [0]
   })
 
-  constructor(private crudService: CrudService, private fb: FormBuilder, private storeService: StoreService) { }
+  constructor(private crudService: CrudService, private fb: FormBuilder, public storeService: StoreService) { 
+  }
 
   ngOnInit() {
     this.crudService.searchAllUsers().subscribe({
@@ -120,10 +122,11 @@ export class PersonasComponent  implements OnInit {
         age: this.editUser.controls.age.value,
         transport: this.editUser.controls.transport.value ? 1 : 0,
         area: this.editUser.controls.area.value,
-        phone: `${this.editUser.controls.phone.value}`
+        phone: `${this.editUser.controls.phone.value}`,
+        admin: this.editUser.controls.admin.value
       }
       this.crudService.edit(requestBody, this.currentCampist.ID).subscribe({
-        next: (res) => {
+        next: () => {
           this.icon = "checkmark-circle-outline";
           this.alertMessage = "Usuario editado correctamente";
           this.errorToast.present();
@@ -167,14 +170,16 @@ export class PersonasComponent  implements OnInit {
       "ASISTENTES": "AST"
     }
     areaEquivalent.key
+    console.log("Current User: ", this.currentCampist)
     this.editUser.setValue({
       name: this.currentCampist.NAME,
       documentType: this.currentCampist.DOCUMENT_TYPE,
-      document:   this.currentCampist.DOCUMENT,
+      document: this.currentCampist.DOCUMENT,
       age: this.currentCampist.AGE,
       phone: this.currentCampist.PHONE,
       transport: this.currentCampist.TRANSPORT === 1,
-      area: areaEquivalent[this.currentCampist.AREA]
+      area: areaEquivalent[this.currentCampist.AREA],
+      admin: this.currentCampist.ADMIN
     })
   }
 
