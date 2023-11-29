@@ -21,8 +21,11 @@
         <button class="actionButton" id="open-modal" (click)="cleanModal()">
             Registrar Campista
         </button>
-        <div *ngFor="let campist of campersData" class="camperCard" (dblclick)="setEditOpen(true, campist)">
-            <div class="edit" (click)="setEditOpen(true, campist)">
+        <button class="actionButton" [ngClass]="{'disableActionButton': relationMode}" (click)="setRelationMode()">
+            {{ relationMode ? 'Volver' : 'Relacionar Campistas' }}
+        </button>
+        <div *ngFor="let campist of campersData" class="camperCard" (click)="selectCampistRelation(campist)">
+            <div *ngIf="relationMode === false" class="edit" (click)="setEditOpen(true, campist)">
                 <ion-icon name="open-outline"></ion-icon>
             </div>
             <span class="campistLabel">Campista</span>
@@ -137,6 +140,36 @@
                     </div>
                 </section>
             </div>
+        </div>
+    </ng-template>
+</ion-modal>
+
+<!-- Relation Modal -->
+<ion-modal [isOpen]="relationModalOpen" (willDismiss)="onWillDismiss($event)">
+    <ng-template>
+        <ion-header>
+            <ion-toolbar>
+                <ion-buttons slot="start">
+                    <ion-button (click)="setRelationOpen(false)">Cancelar</ion-button>
+                </ion-buttons>
+                <ion-title>Relacionar</ion-title>
+                <ion-buttons slot="end">
+                    <ion-button (click)="confirm()" [strong]="true">Confirmar</ion-button>
+                </ion-buttons>
+            </ion-toolbar>
+        </ion-header>
+        <div class="content-body">
+            <form [formGroup]="newUser">
+                <ion-searchbar placeholder="Buscar Campista" [debounce]="200"></ion-searchbar>
+                <div class="list">
+                    <ion-list>
+                        <ion-item *ngFor="let person of campersData">
+                            <ion-checkbox labelPlacement="start">{{ person.NAME }}</ion-checkbox>
+                            <!-- <ion-label>{{ person.NAME }}</ion-label> -->
+                        </ion-item>
+                    </ion-list>
+                </div>
+            </form>
         </div>
     </ng-template>
 </ion-modal>

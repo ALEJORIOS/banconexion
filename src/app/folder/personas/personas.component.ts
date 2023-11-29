@@ -7,15 +7,17 @@ import { StoreService } from 'src/app/services/store.service';
 @Component({
   selector: 'app-personas',
   templateUrl: './personas.component.html',
-  styleUrls: ['./personas.component.scss'],
+  styleUrls: ['./personas.component.scss']
 })
-export class PersonasComponent  implements OnInit {
+export class PersonasComponent implements OnInit {
 
   campersData: any = [];
   alertMessage: string = "";
   icon: string = "";
   editModalOpen: boolean = false;
+  relationModalOpen: boolean = false;
   currentCampist: any;
+  relationMode: boolean = false;
 
   @ViewChild("errorToast") errorToast!: HTMLIonToastElement;
   @ViewChild(IonModal) modal!: IonModal;
@@ -96,7 +98,7 @@ export class PersonasComponent  implements OnInit {
         registered_by: this.storeService.userData()[0].ID
       }
       this.crudService.register(requestBody).subscribe({
-        next: (res) => {
+        next: () => {
           this.modal.dismiss(null, "register");
           this.icon = "checkmark-circle-outline";
           this.alertMessage = "Usuario registrado correctamente";
@@ -154,6 +156,10 @@ export class PersonasComponent  implements OnInit {
       agreeTerms: false,
       guest: 0
     })
+  }
+
+  cleanRelationModal() {
+
   }
 
   cleanEditModal() {
@@ -254,6 +260,27 @@ export class PersonasComponent  implements OnInit {
 
   onWillDismiss(event: Event) {
     if((event as CustomEvent).detail.role === "register") {
+      this.refresh();
+    }
+  }
+
+  selectCampistRelation(campist: any) {
+    console.log("Entra 1")
+    if(this.relationMode) {
+      this.setRelationOpen(true, campist)
+    }
+  }
+
+  setRelationMode() {
+    this.relationMode = !this.relationMode;
+  }
+
+  setRelationOpen(open: boolean, campist?: any) {
+    console.log("Entra")
+    this.relationModalOpen = open;
+    if(campist) this.currentCampist = campist;
+    this.cleanRelationModal()
+    if(!this.relationModalOpen) {
       this.refresh();
     }
   }

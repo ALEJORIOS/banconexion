@@ -15,6 +15,9 @@
             background-color: var(--primary-200);
         }
     }
+    .disableActionButton {
+        background-color: var(--primary-200);
+    }
     .camperCard {
         display: flex;
         flex-direction: column;
@@ -67,6 +70,12 @@
     form {
         display: flex;
         flex-direction: column;
+        .list {
+            height: 70dvh;
+            overflow: auto;
+            border: 1px solid #F0F0F0;
+            border-radius: 16px;
+        }
         label {
             margin-top: 12px;
         }
