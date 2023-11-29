@@ -28,7 +28,7 @@ export class AppComponent {
       this.appPages.push({ title: 'Transacciones', url: '/transacciones', icon: 'cash' });
       this.appPages.push({ title: 'Salir', url: '/inicio', icon: 'home' });
 
-      if(this.storeService.userData()[0]?.ADMIN > 0 && this.appPages.find((page: any) => page.title === "Errores") === undefined) {
+      if((this.storeService.userData()[0]?.ADMIN === 1 || this.storeService.userData()[0]?.ADMIN === 3) && this.appPages.find((page: any) => page.title === "Errores") === undefined) {
         this.appPages.splice(-1, 0, { title: 'Errores', url: '/fallas', icon: 'alert-circle' })
       }
       if(this.storeService.userData()[0]?.ADMIN > 0 && this.appPages.find((page: any) => page.title === "Personas") === undefined) {

@@ -13,26 +13,110 @@
           <ion-title size="large">Área</ion-title>
       </ion-toolbar>
   </ion-header>
+
+    <div *ngIf="area === 'all'" class="content">
+        <button class="refresh" (click)="refresh()">Actualizar</button>
+        <div class="camperCard">
+            <section class="camperData">
+                <span class="campistName">Asistentes</span>
+            </section>
+            <section class="camperProgress">
+                <span class="successPercentage">AST</span>
+            </section>
+        </div>
+        <div class="camperCard">
+            <section class="camperData">
+                <span class="campistName">Alabanza</span>
+            </section>
+            <section class="camperProgress">
+                <span class="successPercentage">ALB</span>
+            </section>
+        </div>
+        <div class="camperCard">
+            <section class="camperData">
+                <span class="campistName">Crecimiento</span>
+            </section>
+            <section class="camperProgress">
+                <span class="successPercentage">CRE</span>
+            </section>
+        </div>
+        <div class="camperCard">
+            <section class="camperData">
+                <span class="campistName">Consolidación</span>
+            </section>
+            <section class="camperProgress">
+                <span class="successPercentage">CON</span>
+            </section>
+        </div>
+        <div class="camperCard">
+            <section class="camperData">
+                <span class="campistName">Diaconado</span>
+            </section>
+            <section class="camperProgress">
+                <span class="successPercentage">DIA</span>
+            </section>
+        </div>
+        <div class="camperCard">
+            <section class="camperData">
+                <span class="campistName">Granja de Papá</span>
+            </section>
+            <section class="camperProgress">
+                <span class="successPercentage">GDP</span>
+            </section>
+        </div>
+        <div class="camperCard">
+            <section class="camperData">
+                <span class="campistName">Intercesión</span>
+            </section>
+            <section class="camperProgress">
+                <span class="successPercentage">INT</span>
+            </section>
+        </div>
+        <div class="camperCard">
+            <section class="camperData">
+                <span class="campistName">Matrimonios</span>
+            </section>
+            <section class="camperProgress">
+                <span class="successPercentage">MAT</span>
+            </section>
+        </div>
+        <div class="camperCard">
+            <section class="camperData">
+                <span class="campistName">Protemplo</span>
+            </section>
+            <section class="camperProgress">
+                <span class="successPercentage">PRO</span>
+            </section>
+        </div>
+        <div class="camperCard">
+            <section class="camperData">
+                <span class="campistName">Jóvenes</span>
+            </section>
+            <section class="camperProgress">
+                <span class="successPercentage">JCR</span>
+            </section>
+        </div>
+    </div>
   
-  <div id="container">
-      <button class="refresh" (click)="refresh()">Actualizar</button>
-      <div *ngFor="let camper of campersData" class="camperCard">
-          <section class="camperData">
-              <span class="campistLabel">Campista</span>
-              <span class="campistName">{{ camper?.NAME }}</span>
-              <span class="campistDocumentAge">{{ camper?.DOCUMENT_TYPE }} {{ camper?.DOCUMENT }} - {{ camper?.AGE }} {{ camper?.AGE === 1 ? "año" : "años" }}</span>
-              <span class="camperArea">Área de <b>{{ camper?.AREA | titlecase }}</b></span>
-              <span class="reached">Abonado: <b>{{ camper?.BALANCE || 0 | currency:'':'symbol-narrow':'1.0-0':'co' }}</b>&nbsp;<ion-icon name="ellipse" style="color: #0077C2;"></ion-icon></span>
-              <span class="reached">Confirmado: <b>{{ camper?.CONFIRMED || 0 | currency:'':'symbol-narrow':'1.0-0':'co' }}</b>&nbsp;<ion-icon name="ellipse" style="color: #69bf51;"></ion-icon></span>
-              <span class="reached">Meta: <b>{{ camper?.GOAL | currency:'CAD':'symbol-narrow':'1.0-0':'co' }}</b></span>
-          </section>
-          <section class="camperProgress">
-              <span class="successPercentage">{{ (camper?.BALANCE / camper?.GOAL) | percent }}</span>
-              <pbar [value]="(camper?.BALANCE / camper?.GOAL)*100" [confirmed]="(camper?.CONFIRMED / camper?.GOAL)*100"></pbar>
-              <span class="progressLabel">Progreso</span>
-              <span class="confirmedPercentage">{{ (camper?.CONFIRMED / camper?.GOAL) | percent }}</span>
-          </section>
-      </div>
-  </div>
+    <div *ngIf="area !== 'all'" id="container">
+        <button class="refresh" (click)="refresh()">Actualizar</button>
+        <div *ngFor="let camper of campersData" class="camperCard">
+            <section class="camperData">
+                <span class="campistLabel">Campista</span>
+                <span class="campistName">{{ camper?.NAME }}</span>
+                <span class="campistDocumentAge">{{ camper?.DOCUMENT_TYPE }} {{ camper?.DOCUMENT }} - {{ camper?.AGE }} {{ camper?.AGE === 1 ? "año" : "años" }}</span>
+                <span class="camperArea">Área de <b>{{ camper?.AREA | titlecase }}</b></span>
+                <span class="reached">Abonado: <b>{{ camper?.BALANCE || 0 | currency:'':'symbol-narrow':'1.0-0':'co' }}</b>&nbsp;<ion-icon name="ellipse" style="color: #0077C2;"></ion-icon></span>
+                <span class="reached">Confirmado: <b>{{ camper?.CONFIRMED || 0 | currency:'':'symbol-narrow':'1.0-0':'co' }}</b>&nbsp;<ion-icon name="ellipse" style="color: #69bf51;"></ion-icon></span>
+                <span class="reached">Meta: <b>{{ camper?.GOAL | currency:'CAD':'symbol-narrow':'1.0-0':'co' }}</b></span>
+            </section>
+            <section class="camperProgress">
+                <span class="successPercentage">{{ (camper?.BALANCE / camper?.GOAL) | percent }}</span>
+                <pbar [value]="(camper?.BALANCE / camper?.GOAL)*100" [confirmed]="(camper?.CONFIRMED / camper?.GOAL)*100"></pbar>
+                <span class="progressLabel">Progreso</span>
+                <span class="confirmedPercentage">{{ (camper?.CONFIRMED / camper?.GOAL) | percent }}</span>
+            </section>
+        </div>
+    </div>
 </ion-content>
 <ion-toast #errorToast [message]="alertMessage" [duration]="3000" icon="close-circle-outline"></ion-toast>
