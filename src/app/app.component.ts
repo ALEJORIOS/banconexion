@@ -35,7 +35,7 @@ export class AppComponent {
         this.appPages.splice(-4, 0, { title: 'Personas', url: '/personas', icon: 'accessibility' })
       }
       if(this.storeService.userData()[0]?.LEADER && this.appPages.find((page: any) => page.title === "Área") === undefined) {
-        const area: string = `/area/${storeService.userData()[0]?.LEADER}`
+        const area: string = `/area/${ (storeService.userData()[0]?.ADMIN === 1 || storeService.userData()[0]?.ADMIN === 3) ? 'all' : storeService.userData()[0]?.LEADER}`
         this.appPages.splice(-1, 0, { title: 'Área', url: area, icon: 'people' })
       }
       if(this.storeService.userData()[0]?.ADMIN === 3 && this.appPages.find((page: any) => page.title === "Panel de Control") === undefined) {

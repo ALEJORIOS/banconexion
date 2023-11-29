@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, effect } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 import { CrudService } from 'src/app/services/crud.service';
 import { StoreService } from 'src/app/services/store.service';
 
@@ -16,7 +17,7 @@ export class AreaPage {
   area: string = "";
 
   @ViewChild("errorToast") errorToast!: HTMLIonToastElement;
-  constructor(private storeService: StoreService, private crudService: CrudService, private route: ActivatedRoute) {
+  constructor(private storeService: StoreService, private crudService: CrudService, private route: ActivatedRoute, private router: NavController) {
     this.area = this.route.snapshot.paramMap.get("area") || "";
 
   }
@@ -36,6 +37,10 @@ export class AreaPage {
         this.errorToast.present();
       }
     })
+  }
+
+  goTo(page: string) {
+    this.router.navigateRoot([`/area/${page}`]);
   }
 
 }
