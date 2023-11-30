@@ -106,8 +106,8 @@ export class InicioPage {
       password: this.password.value
     }
     this.crudService.loginAdmin(requestBody).subscribe({
-      next: () => {
-        this.storeService.userData.set(this.saveAdminData);
+      next: (res) => {
+        this.storeService.userData.set(res);
         localStorage.setItem("userData", JSON.stringify(this.saveAdminData));
         this.router.navigateRoot(["/progreso"]);
         this.showLoadingText = false;

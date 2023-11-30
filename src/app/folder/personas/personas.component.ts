@@ -15,14 +15,18 @@ export class PersonasComponent implements OnInit {
   alertMessage: string = "";
   icon: string = "";
   editModalOpen: boolean = false;
-  relationModalOpen: boolean = false;
   currentCampist: any;
+
+  // Relation User
+  relationModalOpen: boolean = false;
   relationMode: boolean = false;
+  checkedRelations: number[] = [];
+  enableRelations: boolean = false;
 
   @ViewChild("errorToast") errorToast!: HTMLIonToastElement;
   @ViewChild(IonModal) modal!: IonModal;
 
-  // Nuevo Usuario
+  // New User
   newUser = this.fb.group({
     documentType: ['', Validators.required],
     document: ['', Validators.required],
@@ -35,6 +39,7 @@ export class PersonasComponent implements OnInit {
     guest: [0]
   })
 
+  // Edit User
   editUser = this.fb.group({
     documentType: ['', Validators.required],
     document: ['', Validators.required],
@@ -276,12 +281,20 @@ export class PersonasComponent implements OnInit {
   }
 
   setRelationOpen(open: boolean, campist?: any) {
-    console.log("Entra")
     this.relationModalOpen = open;
     if(campist) this.currentCampist = campist;
     this.cleanRelationModal()
     if(!this.relationModalOpen) {
       this.refresh();
+    }else{
+      this.checkedRelations = [];
+      this.enableRelations = false;
+      this.crudService.getRelations(this.currentCampist.DOCUMENT, this.currentCampist.DOCUMENT_TYPE).subscribe({
+        next: (res) => {
+          this.enableRelations = true;
+          this.checkedRelations = res.map((user: any) => user.id);
+        }
+      })
     }
   }
 
@@ -292,5 +305,22 @@ export class PersonasComponent implements OnInit {
     if(!this.editModalOpen) {
       this.refresh();
     }
+  }
+
+  changeRelationCheck(evn: Event, id: number) {
+    const status: any = (evn.target as any).checked;
+    if(status) {
+      this.checkedRelations.push(id);
+    }else{
+      this.checkedRelations = this.checkedRelations.filter(userId => userId !== id)
+    }
+  }
+
+  updateRelations(parentId: number) {
+    this.crudService.updateRelations(parentId, this.checkedRelations).subscribe({
+      next: (res) => {
+        this.setRelationOpen(false);
+      }
+    })
   }
 }

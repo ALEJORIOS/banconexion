@@ -76,4 +76,12 @@ export class CrudService {
   exportTransactions() {
     return this.http.post<Blob>(`${this.base_url}/export-transactions`, { observe: 'response', responseType: 'blob'});
   }
+
+  getRelations(document: number, type: string) {
+    return this.http.get<any>(`${this.base_url}/relationships`, {params: {document, type}})
+  }
+
+  updateRelations(parentId: number, childrenId: number[]) {
+    return this.http.put<any>(`${this.base_url}/relationships`, {id: parentId, children: childrenId})
+  }
 }
