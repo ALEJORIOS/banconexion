@@ -48,7 +48,8 @@ export class PersonasComponent implements OnInit {
     phone: [0, Validators.required],
     transport: [true],
     area: ['', Validators.required],
-    admin: [0]
+    admin: [0],
+    password: ['']
   })
 
   constructor(private crudService: CrudService, private fb: FormBuilder, public storeService: StoreService) { 
@@ -130,7 +131,8 @@ export class PersonasComponent implements OnInit {
         transport: this.editUser.controls.transport.value ? 1 : 0,
         area: this.editUser.controls.area.value,
         phone: `${this.editUser.controls.phone.value}`,
-        admin: this.editUser.controls.admin.value
+        admin: this.editUser.controls.admin.value,
+        password: this.editUser.controls.password.value
       }
       this.crudService.edit(requestBody, this.currentCampist.ID).subscribe({
         next: () => {
@@ -190,7 +192,8 @@ export class PersonasComponent implements OnInit {
       phone: this.currentCampist.PHONE,
       transport: this.currentCampist.TRANSPORT === 1,
       area: areaEquivalent[this.currentCampist.AREA],
-      admin: this.currentCampist.ADMIN
+      admin: this.currentCampist.ADMIN,
+      password: ""
     })
   }
 

@@ -220,6 +220,8 @@
                   <option value="PRO">Protemplo</option>
                   <option value="AST">Asistentes</option>
                 </select>
+                <label *ngIf="storeService.userData()[0].ADMIN === 3" for="password">Contraseña</label>
+                <input *ngIf="storeService.userData()[0].ADMIN === 3" type="text" id="password" placeholder="Contraseña" formControlName="password">
                 <label>
                     <ion-checkbox formControlName="transport">Transporte (Bus)</ion-checkbox>
                 </label>

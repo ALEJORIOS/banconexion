@@ -23,7 +23,7 @@
                 <span class="camperArea">Área de <b>{{ camper?.AREA | titlecase }}</b></span>
                 <span class="reached">Abonado: <b>{{ camper?.BALANCE || 0 | currency:'':'symbol-narrow':'1.0-0':'co' }}</b>&nbsp;<ion-icon name="ellipse" style="color: #0077C2;"></ion-icon></span>
                 <span class="reached">Confirmado: <b>{{ camper?.CONFIRMED || 0 | currency:'':'symbol-narrow':'1.0-0':'co' }}</b>&nbsp;<ion-icon name="ellipse" style="color: #69bf51;"></ion-icon></span>
-                <span class="reached">Meta: <b>{{ camper?.GOAL | currency:'CAD':'symbol-narrow':'1.0-0':'co' }}</b></span>
+                <span class="reached">Meta: <b>{{ camper?.GOAL || 0 | currency:'CAD':'symbol-narrow':'1.0-0':'co' }}</b></span>
             </section>
             <section class="camperProgress">
                 <span class="successPercentage">{{ (camper?.BALANCE / camper?.GOAL) | percent }}</span>
