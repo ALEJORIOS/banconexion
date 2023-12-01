@@ -42,6 +42,7 @@
         </div>
     </div>
 
+    <!-- New Transaction -->
     <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
         <ng-template>
             <ion-header>
@@ -58,7 +59,7 @@
             <div class="content-body">
                 <form>
                     <label for="type">Tipo de Documento</label>
-                    <select id="type" [formControl]="documentType">
+                    <select id="type" >
                         <option value="">Seleccione el Tipo de Documento</option>
                         <option value="CC">Cédula de Ciudadanía</option>
                         <option value="TI">Tarjeta de Identidad</option>

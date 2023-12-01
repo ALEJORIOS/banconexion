@@ -57,8 +57,6 @@ export class TransaccionesComponent  implements OnInit {
   ngOnInit() {
     this.refresh();
     this.getUsers();
-    this.documentType.disable();
-    this.documentNumber.disable();
   }
 
   cancel() {
