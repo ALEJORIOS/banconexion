@@ -6,9 +6,9 @@ import { Injectable } from '@angular/core';
 })
 export class CrudService {
 
-  // base_url: string = "http://192.168.0.23:3600";
+  base_url: string = "http://192.168.0.23:3600";
   // base_url: string = "http://192.168.0.105:3600";
-  base_url: string = "https://banconexion-back.vercel.app";
+  // base_url: string = "https://banconexion-back.vercel.app";
 
 
   constructor(private http: HttpClient) { }
@@ -74,7 +74,7 @@ export class CrudService {
   }
 
   exportTransactions() {
-    return this.http.post<Blob>(`${this.base_url}/export-transactions`, { observe: 'response', responseType: 'blob'});
+    return this.http.post<any>(`${this.base_url}/export-transactions`, { observe: 'response', responseType: 'blob'});
   }
 
   getRelations(document: number, type: string) {

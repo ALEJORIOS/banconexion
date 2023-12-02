@@ -14,6 +14,7 @@ export class PanelPage implements OnInit {
   }
 
   exportReport() {
+    console.log(2)
     this.crudService.exportReport().subscribe({
       next: (res) => {
         this.downloadFile(res);
@@ -22,6 +23,7 @@ export class PanelPage implements OnInit {
   }
 
   exportTransactions() {
+    console.log(1)
     this.crudService.exportTransactions().subscribe({
       next: (res) => {
         this.downloadFile(res);
@@ -30,6 +32,7 @@ export class PanelPage implements OnInit {
   }
 
   downloadFile(data: any) {
+    console.log("Entra a descargar")
     let fileName = data.headers.get('Content-Disposition')?.split(';')[1].split('=')[1];
     let blob:Blob = data.body as Blob;
     console.log('>>> ', blob)
@@ -38,5 +41,4 @@ export class PanelPage implements OnInit {
     a.href=window.URL.createObjectURL(blob);
     a.click();
   }
-
 }
