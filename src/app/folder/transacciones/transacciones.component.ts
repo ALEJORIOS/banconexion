@@ -8,16 +8,19 @@ import { StoreService } from 'src/app/services/store.service';
 @Component({
   selector: 'app-transacciones',
   templateUrl: './transacciones.component.html',
-  styleUrls: ['./transacciones.component.scss']
+  styleUrls: ['./transacciones.component.scss'],
 })
-export class TransaccionesComponent  implements OnInit {
-
+export class TransaccionesComponent implements OnInit {
+  @ViewChild('errorToast') errorToast!: HTMLIonToastElement;
   @ViewChild(IonModal) modal!: IonModal;
-  message = 'This modal example uses triggers to automatically open a modal when the button is clicked.';
-  name: string = "";
+  alertMessage: string = '';
+  icon: string = '';
+  message =
+    'This modal example uses triggers to automatically open a modal when the button is clicked.';
+  name: string = '';
 
-  documentType: FormControl = new FormControl("", Validators.required);
-  documentNumber: FormControl = new FormControl("", Validators.required);
+  documentType: FormControl = new FormControl('', Validators.required);
+  documentNumber: FormControl = new FormControl('', Validators.required);
   value: FormControl = new FormControl(null, Validators.required);
   donation: FormControl = new FormControl(false, Validators.required);
 
@@ -26,6 +29,7 @@ export class TransaccionesComponent  implements OnInit {
   allUsers: any = [];
   resultUser: any;
 
+  openCreateModal: boolean = false;
   openEditmodal: boolean = false;
   currentTransaction: any;
 
@@ -34,23 +38,26 @@ export class TransaccionesComponent  implements OnInit {
   editAlertButtons: any = [
     {
       text: 'Cancelar',
-      role: 'cancel', 
+      role: 'cancel',
     },
     {
       text: 'Editar',
       role: 'confirm',
-    }
-  ]
+    },
+  ];
 
   editAlertInputs: any = [
     {
       type: 'number',
-      placeholder: "Valor",
-      label: "Valor"
-    }
-  ]
+      placeholder: 'Valor',
+      label: 'Valor',
+    },
+  ];
 
-  constructor(private crudService: CrudService, public storeService: StoreService) { }
+  constructor(
+    private crudService: CrudService,
+    public storeService: StoreService
+  ) {}
 
   public transactionsData: any = [];
 
@@ -61,22 +68,25 @@ export class TransaccionesComponent  implements OnInit {
 
   cancel() {
     this.modal.dismiss(null, 'cancel');
+    this.openCreateModal = false;
     this.cleanModal();
   }
 
   refresh() {
-    if(this.storeService.userData()[0].ADMIN === 3) {
+    if (this.storeService.userData()[0].ADMIN === 3) {
       this.crudService.allTransactions().subscribe({
         next: (res) => {
           this.transactionsData = res;
-        }
-      })
-    }else{
-      this.crudService.searchTransactions(this.storeService.userData()[0].ID).subscribe({
-        next: (res) => {
-          this.transactionsData = res;
-        }
-      })
+        },
+      });
+    } else {
+      this.crudService
+        .searchTransactions(this.storeService.userData()[0].ID)
+        .subscribe({
+          next: (res) => {
+            this.transactionsData = res;
+          },
+        });
     }
   }
 
@@ -85,11 +95,41 @@ export class TransaccionesComponent  implements OnInit {
       next: (res) => {
         this.allUsers = res;
         this.resultUser = this.allUsers;
-      }
-    })
+      },
+    });
+  }
+
+  checkTransaction() {
+    this.errorToast.dismiss();
+    if (!this.documentType.value) {
+      this.icon = 'close-circle-outline';
+      this.alertMessage = 'El tipo de documento es obligatorio';
+      this.errorToast.present();
+      return false;
+    } else if (!this.documentNumber.value) {
+      this.icon = 'close-circle-outline';
+      this.alertMessage = 'El número de documento es obligatorio';
+      this.errorToast.present();
+      return false;
+    } else if (!this.value.value) {
+      this.icon = 'close-circle-outline';
+      this.alertMessage = 'El valor es requerido';
+      this.errorToast.present();
+      return false;
+    } else {
+      this.errorToast.dismiss();
+      return true;
+    }
+  }
+
+  openCreateTransactions() {
+    this.openCreateModal = true;
   }
 
   confirm() {
+    if (!this.checkTransaction()) {
+      return;
+    }
     const requestBody: any = {
       type: `${this.documentType.value}`,
       document: `${this.documentNumber.value}`,
@@ -97,18 +137,20 @@ export class TransaccionesComponent  implements OnInit {
       donation: this.donation.value ? 1 : 0,
       authorizedBy: {
         type: this.storeService.userData()[0].DOCUMENT_TYPE,
-        document: this.storeService.userData()[0].DOCUMENT
-      }
-    }
+        document: this.storeService.userData()[0].DOCUMENT,
+      },
+    };
 
     this.crudService.payment(requestBody).subscribe({
       next: () => {
         this.modal.dismiss(this.name, 'confirm');
 
         const text: string = `Se%20ha%20realizado%20un%20abono%20a%20tu%20nombre%20por%20un%20valor%20de%20%24${this.value.value}%20para%20conexi%C3%B3n%20divina%202024.%20Cada%20vez%20est%C3%A1s%20m%C3%A1s%20cerca%21`;
-        window.open(`https://api.whatsapp.com/send/?phone=%2B57${this.currentPhone}&text=${text}&type=phone_number&app_absent=0`); 
-      }
-    })
+        window.open(
+          `https://api.whatsapp.com/send/?phone=%2B57${this.currentPhone}&text=${text}&type=phone_number&app_absent=0`
+        );
+      },
+    });
   }
 
   onWillDismiss(event: Event) {
@@ -117,31 +159,32 @@ export class TransaccionesComponent  implements OnInit {
       this.refresh();
       this.cleanModal();
     }
+    this.openCreateModal = false;
   }
 
   cleanModal() {
-    this.documentType.setValue("");
-    this.documentNumber.setValue("");
+    this.documentType.setValue('');
+    this.documentNumber.setValue('');
     this.currentPhone = 0;
   }
 
   handleInput(event: any) {
     const nameQuery = event.target.value.toLowerCase();
-    this.resultUser = this.allUsers.filter((d: any) => d.NAME.toLowerCase().indexOf(nameQuery) > -1);
+    this.resultUser = this.allUsers.filter(
+      (d: any) => d.NAME.toLowerCase().indexOf(nameQuery) > -1
+    );
   }
 
   selectTransaction(id: number, confirmed: boolean) {
-    if(this.storeService.userData()[0].ADMIN === 3 && confirmed === false) {
-      if(this.selectedTransactions.includes(id)) {
-        this.selectedTransactions = this.selectedTransactions.filter((tra: any) => tra !== id);
-      }else{
+    if (this.storeService.userData()[0].ADMIN === 3 && confirmed === false) {
+      if (this.selectedTransactions.includes(id)) {
+        this.selectedTransactions = this.selectedTransactions.filter(
+          (tra: any) => tra !== id
+        );
+      } else {
         this.selectedTransactions.push(id);
       }
     }
-  }
-
-  selectName() {
-
   }
 
   donationState(event: Event) {
@@ -149,7 +192,9 @@ export class TransaccionesComponent  implements OnInit {
   }
 
   donationEditState(event: Event) {
-    this.currentTransaction.DONATION = (event as CustomEvent).detail.checked ? 1 : 0;
+    this.currentTransaction.DONATION = (event as CustomEvent).detail.checked
+      ? 1
+      : 0;
   }
 
   selectPerson(person: any) {
@@ -161,24 +206,26 @@ export class TransaccionesComponent  implements OnInit {
   edit() {
     const requestBody: any = {
       value: this.currentTransaction.VALUE,
-      donation: this.currentTransaction.DONATION
-    }
-    this.crudService.editTransaction(this.currentTransaction.ID, requestBody).subscribe({
-      next: () => {
-        this.refresh();
-        this.setEditOpen(false);
-      }
-    })
+      donation: this.currentTransaction.DONATION,
+    };
+    this.crudService
+      .editTransaction(this.currentTransaction.ID, requestBody)
+      .subscribe({
+        next: () => {
+          this.refresh();
+          this.setEditOpen(false);
+        },
+      });
   }
 
   setEditOpen(open: boolean, transaction?: any) {
-    if(transaction) this.currentTransaction = transaction;
-    if(open && transaction.CONFIRMED === 0) {
+    if (transaction) this.currentTransaction = transaction;
+    if (open && transaction.CONFIRMED === 0) {
       this.openEditmodal = true;
-    }else{
+    } else {
       this.openEditmodal = false;
     }
-    if(!this.openEditmodal) {
+    if (!this.openEditmodal) {
       this.refresh();
       this.selectedTransactions = [];
     }
@@ -189,7 +236,7 @@ export class TransaccionesComponent  implements OnInit {
       next: () => {
         this.refresh();
         this.selectedTransactions = [];
-      }
-    })
+      },
+    });
   }
 }

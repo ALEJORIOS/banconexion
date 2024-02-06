@@ -7,14 +7,16 @@ import { StoreService } from 'src/app/services/store.service';
 @Component({
   selector: 'app-personas',
   templateUrl: './personas.component.html',
-  styleUrls: ['./personas.component.scss']
+  styleUrls: ['./personas.component.scss'],
 })
 export class PersonasComponent implements OnInit {
-
   campersData: any = [];
-  alertMessage: string = "";
-  icon: string = "";
+  filteredCampersData: any = [];
+  alertMessage: string = '';
+  filterText: string = '';
+  icon: string = '';
   editModalOpen: boolean = false;
+  termsModalOpen: boolean = false;
   currentCampist: any;
 
   // Relation User
@@ -23,7 +25,7 @@ export class PersonasComponent implements OnInit {
   checkedRelations: number[] = [];
   enableRelations: boolean = false;
 
-  @ViewChild("errorToast") errorToast!: HTMLIonToastElement;
+  @ViewChild('errorToast') errorToast!: HTMLIonToastElement;
   @ViewChild(IonModal) modal!: IonModal;
 
   // New User
@@ -36,8 +38,8 @@ export class PersonasComponent implements OnInit {
     transport: [true],
     area: ['', Validators.required],
     agreeTerms: [false],
-    guest: [0]
-  })
+    guest: [0],
+  });
 
   // Edit User
   editUser = this.fb.group({
@@ -49,38 +51,44 @@ export class PersonasComponent implements OnInit {
     transport: [true],
     area: ['', Validators.required],
     admin: [0],
-    password: ['']
-  })
+    password: [''],
+  });
 
-  constructor(private crudService: CrudService, private fb: FormBuilder, public storeService: StoreService) { 
-  }
+  constructor(
+    private crudService: CrudService,
+    private fb: FormBuilder,
+    public storeService: StoreService
+  ) {}
 
   ngOnInit() {
     this.crudService.searchAllUsers().subscribe({
       next: (res) => {
         this.campersData = res;
+        this.filteredCampersData = this.campersData;
       },
       error: (err) => {
         console.error(err);
-        this.icon = "close-circle-outline";
-        this.alertMessage = "Ocurrió un error cargando los datos";
+        this.icon = 'close-circle-outline';
+        this.alertMessage = 'Ocurrió un error cargando los datos';
         this.errorToast.present();
-      }
-    })
+      },
+    });
   }
 
   refresh() {
+    this.filterText = '';
     this.crudService.searchAllUsers().subscribe({
       next: (res) => {
         this.campersData = res;
+        this.filteredCampersData = this.campersData;
       },
       error: (err) => {
         console.error(err);
-        this.icon = "close-circle-outline";
-        this.alertMessage = "Ocurrió un error cargando los datos";
+        this.icon = 'close-circle-outline';
+        this.alertMessage = 'Ocurrió un error cargando los datos';
         this.errorToast.present();
-      }
-    })
+      },
+    });
   }
 
   // Modal Crear Usuario
@@ -91,7 +99,7 @@ export class PersonasComponent implements OnInit {
 
   confirm() {
     this.errorToast.dismiss();
-    if(this.checkErrors()) {
+    if (this.checkErrors()) {
       const requestBody: any = {
         name: this.newUser.controls.name.value?.toUpperCase(),
         age: this.newUser.controls.age.value,
@@ -101,28 +109,38 @@ export class PersonasComponent implements OnInit {
         document: `${this.newUser.controls.document.value}`,
         area: this.newUser.controls.area.value,
         guest: this.newUser.controls.guest.value,
-        registered_by: this.storeService.userData()[0].ID
-      }
+        registered_by: this.storeService.userData()[0].ID,
+      };
       this.crudService.register(requestBody).subscribe({
         next: () => {
-          this.modal.dismiss(null, "register");
-          this.icon = "checkmark-circle-outline";
-          this.alertMessage = "Usuario registrado correctamente";
+          this.modal.dismiss(null, 'register');
+          this.icon = 'checkmark-circle-outline';
+          this.alertMessage = 'Usuario registrado correctamente';
           this.errorToast.present();
         },
         error: (err) => {
           console.error(err);
-          this.icon = "close-circle-outline";
-          this.alertMessage = "Ocurrió un error al intentar registrar este usuario";
+          this.icon = 'close-circle-outline';
+          this.alertMessage =
+            'Ocurrió un error al intentar registrar este usuario';
           this.errorToast.present();
-        }
-      })
+        },
+      });
     }
+  }
+
+  openTerms() {
+    this.termsModalOpen = true;
+  }
+
+  closeTerms() {
+    this.errorToast.dismiss();
+    this.termsModalOpen = false;
   }
 
   confirmEdition() {
     this.errorToast.dismiss();
-    if(this.checkEditionErrors()) {
+    if (this.checkEditionErrors()) {
       const requestBody: any = {
         name: this.editUser.controls.name.value?.toUpperCase(),
         type: this.editUser.controls.documentType.value,
@@ -132,58 +150,56 @@ export class PersonasComponent implements OnInit {
         area: this.editUser.controls.area.value,
         phone: `${this.editUser.controls.phone.value}`,
         admin: this.editUser.controls.admin.value,
-        password: this.editUser.controls.password.value
-      }
+        password: this.editUser.controls.password.value,
+      };
       this.crudService.edit(requestBody, this.currentCampist.ID).subscribe({
         next: () => {
-          this.icon = "checkmark-circle-outline";
-          this.alertMessage = "Usuario editado correctamente";
+          this.icon = 'checkmark-circle-outline';
+          this.alertMessage = 'Usuario editado correctamente';
           this.errorToast.present();
           this.setEditOpen(false);
         },
         error: (err) => {
           console.error(err);
-          this.icon = "close-circle-outline";
-          this.alertMessage = "Ocurrió un error al intentar editar este usuario";
+          this.icon = 'close-circle-outline';
+          this.alertMessage =
+            'Ocurrió un error al intentar editar este usuario';
           this.errorToast.present();
-        }
-      })
+        },
+      });
     }
   }
 
   cleanModal() {
     this.newUser.setValue({
-      name: "",
-      documentType: "",
-      document: "",
+      name: '',
+      documentType: '',
+      document: '',
       age: null,
       phone: null,
       transport: true,
-      area: "",
+      area: '',
       agreeTerms: false,
-      guest: 0
-    })
+      guest: 0,
+    });
   }
 
-  cleanRelationModal() {
-
-  }
+  cleanRelationModal() {}
 
   cleanEditModal() {
     const areaEquivalent: any = {
-      "ALABANZA": "ALB",
-      "CRECIMIENTO": "CRE",
-      "CONSOLIDACIÓN": "CON",
-      "DIÁCONOS": "DIA",
-      "GRANJA DE PAPÁ": "GDP",
-      "INTERCESIÓN": "INT",
-      "JÓVENES": "JCR",
-      "MATRIMONIOS": "MAT",
-      "PROTEMPLO": "PRO",
-      "ASISTENTES": "AST"
-    }
-    areaEquivalent.key
-    console.log("Current User: ", this.currentCampist)
+      ALABANZA: 'ALB',
+      CRECIMIENTO: 'CRE',
+      CONSOLIDACIÓN: 'CON',
+      DIÁCONOS: 'DIA',
+      'GRANJA DE PAPÁ': 'GDP',
+      INTERCESIÓN: 'INT',
+      JÓVENES: 'JCR',
+      MATRIMONIOS: 'MAT',
+      PROTEMPLO: 'PRO',
+      ASISTENTES: 'AST',
+    };
+    areaEquivalent.key;
     this.editUser.setValue({
       name: this.currentCampist.NAME,
       documentType: this.currentCampist.DOCUMENT_TYPE,
@@ -193,41 +209,42 @@ export class PersonasComponent implements OnInit {
       transport: this.currentCampist.TRANSPORT === 1,
       area: areaEquivalent[this.currentCampist.AREA],
       admin: this.currentCampist.ADMIN,
-      password: ""
-    })
+      password: '',
+    });
   }
 
   checkErrors(): boolean {
     let result: boolean = true;
     this.errorToast.dismiss();
-    this.icon = "close-circle-outline";
-    if(!this.newUser.controls.agreeTerms.value) {
-      this.alertMessage = "Es necesario aceptar los términos y condiciones para continuar"
+    this.icon = 'close-circle-outline';
+    if (!this.newUser.controls.agreeTerms.value) {
+      this.alertMessage =
+        'Es necesario aceptar los términos y condiciones para continuar';
       this.errorToast.present();
       result = false;
     }
-    if(this.newUser.controls.area.invalid) {
-      this.alertMessage = "El área es obligatoria"
-      this.errorToast.present();
-      result = false;
-    } 
-    if(this.newUser.controls.document.invalid) {
-      this.alertMessage = "El documento es obligatorio"
-      this.errorToast.present();
-      result = false;
-    } 
-    if(this.newUser.controls.documentType.invalid) {
-      this.alertMessage = "El tipo de documento es obligatorio"
-      this.errorToast.present();
-      result = false;
-    } 
-    if(this.newUser.controls.name.invalid) {
-      this.alertMessage = "El nombre es obligatorio"
+    if (this.newUser.controls.area.invalid) {
+      this.alertMessage = 'El área es obligatoria';
       this.errorToast.present();
       result = false;
     }
-    if(this.newUser.controls.phone.invalid) {
-      this.alertMessage = "El número de celular es obligatorio"
+    if (this.newUser.controls.document.invalid) {
+      this.alertMessage = 'El documento es obligatorio';
+      this.errorToast.present();
+      result = false;
+    }
+    if (this.newUser.controls.documentType.invalid) {
+      this.alertMessage = 'El tipo de documento es obligatorio';
+      this.errorToast.present();
+      result = false;
+    }
+    if (this.newUser.controls.name.invalid) {
+      this.alertMessage = 'El nombre es obligatorio';
+      this.errorToast.present();
+      result = false;
+    }
+    if (this.newUser.controls.phone.invalid) {
+      this.alertMessage = 'El número de celular es obligatorio';
       this.errorToast.present();
       result = false;
     }
@@ -237,29 +254,29 @@ export class PersonasComponent implements OnInit {
   checkEditionErrors(): boolean {
     let result: boolean = true;
     this.errorToast.dismiss();
-    this.icon = "close-circle-outline";
-    if(this.editUser.controls.area.invalid) {
-      this.alertMessage = "El área es obligatoria"
-      this.errorToast.present();
-      result = false;
-    } 
-    if(this.editUser.controls.document.invalid) {
-      this.alertMessage = "El documento es obligatorio"
-      this.errorToast.present();
-      result = false;
-    } 
-    if(this.editUser.controls.documentType.invalid) {
-      this.alertMessage = "El tipo de documento es obligatorio"
-      this.errorToast.present();
-      result = false;
-    } 
-    if(this.editUser.controls.name.invalid) {
-      this.alertMessage = "El nombre es obligatorio"
+    this.icon = 'close-circle-outline';
+    if (this.editUser.controls.area.invalid) {
+      this.alertMessage = 'El área es obligatoria';
       this.errorToast.present();
       result = false;
     }
-    if(this.editUser.controls.phone.invalid) {
-      this.alertMessage = "El número de celular es obligatorio"
+    if (this.editUser.controls.document.invalid) {
+      this.alertMessage = 'El documento es obligatorio';
+      this.errorToast.present();
+      result = false;
+    }
+    if (this.editUser.controls.documentType.invalid) {
+      this.alertMessage = 'El tipo de documento es obligatorio';
+      this.errorToast.present();
+      result = false;
+    }
+    if (this.editUser.controls.name.invalid) {
+      this.alertMessage = 'El nombre es obligatorio';
+      this.errorToast.present();
+      result = false;
+    }
+    if (this.editUser.controls.phone.invalid) {
+      this.alertMessage = 'El número de celular es obligatorio';
       this.errorToast.present();
       result = false;
     }
@@ -267,15 +284,14 @@ export class PersonasComponent implements OnInit {
   }
 
   onWillDismiss(event: Event) {
-    if((event as CustomEvent).detail.role === "register") {
+    if ((event as CustomEvent).detail.role === 'register') {
       this.refresh();
     }
   }
 
   selectCampistRelation(campist: any) {
-    console.log("Entra 1")
-    if(this.relationMode) {
-      this.setRelationOpen(true, campist)
+    if (this.relationMode) {
+      this.setRelationOpen(true, campist);
     }
   }
 
@@ -285,45 +301,61 @@ export class PersonasComponent implements OnInit {
 
   setRelationOpen(open: boolean, campist?: any) {
     this.relationModalOpen = open;
-    if(campist) this.currentCampist = campist;
-    this.cleanRelationModal()
-    if(!this.relationModalOpen) {
+    if (campist) this.currentCampist = campist;
+    this.cleanRelationModal();
+    if (!this.relationModalOpen) {
       this.refresh();
-    }else{
+    } else {
       this.checkedRelations = [];
       this.enableRelations = false;
-      this.crudService.getRelations(this.currentCampist.DOCUMENT, this.currentCampist.DOCUMENT_TYPE).subscribe({
-        next: (res) => {
-          this.enableRelations = true;
-          this.checkedRelations = res.map((user: any) => user.id);
-        }
-      })
+      this.crudService
+        .getRelations(
+          this.currentCampist.DOCUMENT,
+          this.currentCampist.DOCUMENT_TYPE
+        )
+        .subscribe({
+          next: (res) => {
+            this.enableRelations = true;
+            this.checkedRelations = res.map((user: any) => user.id);
+          },
+        });
     }
   }
 
   setEditOpen(open: boolean, campist?: any) {
     this.editModalOpen = open;
-    if(campist) this.currentCampist = campist;
+    if (campist) this.currentCampist = campist;
     this.cleanEditModal();
-    if(!this.editModalOpen) {
+    if (!this.editModalOpen) {
       this.refresh();
     }
   }
 
   changeRelationCheck(evn: Event, id: number) {
     const status: any = (evn.target as any).checked;
-    if(status) {
+    if (status) {
       this.checkedRelations.push(id);
-    }else{
-      this.checkedRelations = this.checkedRelations.filter(userId => userId !== id)
+    } else {
+      this.checkedRelations = this.checkedRelations.filter(
+        (userId) => userId !== id
+      );
     }
   }
 
   updateRelations(parentId: number) {
-    this.crudService.updateRelations(parentId, this.checkedRelations).subscribe({
-      next: (res) => {
-        this.setRelationOpen(false);
-      }
-    })
+    this.crudService
+      .updateRelations(parentId, this.checkedRelations)
+      .subscribe({
+        next: (res) => {
+          this.setRelationOpen(false);
+        },
+      });
+  }
+
+  updateCampist(event: Event) {
+    const evn: string = (event.target as HTMLInputElement).value;
+    this.filteredCampersData = this.campersData.filter((camper: any) => {
+      return camper.NAME.indexOf(evn) !== -1;
+    });
   }
 }
