@@ -353,7 +353,7 @@ export class PersonasComponent implements OnInit {
   }
 
   updateCampist(event: Event) {
-    const evn: string = (event.target as HTMLInputElement).value;
+    const evn: string = (event.target as HTMLInputElement).value.toUpperCase();
     this.filteredCampersData = this.campersData.filter((camper: any) => {
       return camper.NAME.indexOf(evn) !== -1;
     });
