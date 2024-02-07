@@ -2,35 +2,35 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CrudService {
-
   // base_url: string = "http://192.168.0.23:3600";
   // base_url: string = "http://192.168.0.105:3600";
-  base_url: string = "https://banconexion-back.vercel.app";
+  base_url: string = 'https://banconexion-back.vercel.app';
 
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   checkMaintenance() {
     return this.http.get<any>(`${this.base_url}/check-maintenance`);
   }
 
   approveTransactions(ids: number[]) {
-    return this.http.put<any>(`${this.base_url}/transaction-approval`, {ids})
+    return this.http.put<any>(`${this.base_url}/transaction-approval`, { ids });
   }
 
   searchDocument(document: string, type: string) {
-    return this.http.get<any>(`${this.base_url}/user`, {params: {document, type}});
+    return this.http.get<any>(`${this.base_url}/user`, {
+      params: { document, type },
+    });
   }
-  
+
   loginAdmin(requestBody: any) {
     return this.http.post<any>(`${this.base_url}/login`, requestBody);
   }
 
   searchAllUsers() {
-    return this.http.get<any>(`${this.base_url}/all-users`)
+    return this.http.get<any>(`${this.base_url}/all-users`);
   }
 
   allTransactions() {
@@ -38,19 +38,25 @@ export class CrudService {
   }
 
   searchTransactions(id: number) {
-    return this.http.get<any>(`${this.base_url}/filtered-transactions`, {params: {id}});
+    return this.http.get<any>(`${this.base_url}/filtered-transactions`, {
+      params: { id },
+    });
   }
 
   searchByArea(area: string) {
-    return this.http.get<any>(`${this.base_url}/area`, {params: {area}})
+    return this.http.get<any>(`${this.base_url}/area`, { params: { area } });
   }
 
   editTransaction(id: number, requestBody: any) {
-    return this.http.put<any>(`${this.base_url}/edit-transaction`, requestBody, {params: {id}});
+    return this.http.put<any>(
+      `${this.base_url}/edit-transaction`,
+      requestBody,
+      { params: { id } }
+    );
   }
 
   payment(requestBody: any) {
-    return this.http.post<any>(`${this.base_url}/payment`, requestBody)
+    return this.http.post<any>(`${this.base_url}/payment`, requestBody);
   }
 
   getFees() {
@@ -58,7 +64,9 @@ export class CrudService {
   }
 
   getFailures(skip: number, limit: number) {
-    return this.http.get<any>(`${this.base_url}/failures`, {params: {skip, limit}});
+    return this.http.get<any>(`${this.base_url}/failures`, {
+      params: { skip, limit },
+    });
   }
 
   register(requestBody: any) {
@@ -66,7 +74,9 @@ export class CrudService {
   }
 
   edit(requestBody: any, id: number) {
-    return this.http.put<any>(`${this.base_url}/edit-user`, requestBody, {params: {id}})
+    return this.http.put<any>(`${this.base_url}/edit-user`, requestBody, {
+      params: { id },
+    });
   }
 
   exportReport() {
@@ -74,14 +84,22 @@ export class CrudService {
   }
 
   exportTransactions() {
-    return this.http.post<any>(`${this.base_url}/export-transactions`, { observe: 'response', responseType: 'blob'});
+    return this.http.post<any>(`${this.base_url}/export-transactions`, {
+      observe: 'response',
+      responseType: 'blob',
+    });
   }
 
   getRelations(document: number, type: string) {
-    return this.http.get<any>(`${this.base_url}/relationships`, {params: {document, type}})
+    return this.http.get<any>(`${this.base_url}/relationships`, {
+      params: { document, type },
+    });
   }
 
   updateRelations(parentId: number, childrenId: number[]) {
-    return this.http.put<any>(`${this.base_url}/relationships`, {id: parentId, children: childrenId})
+    return this.http.put<any>(`${this.base_url}/relationships`, {
+      id: parentId,
+      children: childrenId,
+    });
   }
 }

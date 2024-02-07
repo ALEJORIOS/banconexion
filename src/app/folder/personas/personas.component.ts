@@ -33,7 +33,7 @@ export class PersonasComponent implements OnInit {
     documentType: ['', Validators.required],
     document: ['', Validators.required],
     name: ['', Validators.required],
-    age: [null],
+    birth: ['', Validators.required],
     phone: [null, Validators.required],
     transport: [true],
     area: ['', Validators.required],
@@ -46,7 +46,7 @@ export class PersonasComponent implements OnInit {
     documentType: ['', Validators.required],
     document: ['', Validators.required],
     name: ['', Validators.required],
-    age: [0],
+    birth: ['', Validators.required],
     phone: [0, Validators.required],
     transport: [true],
     area: ['', Validators.required],
@@ -100,9 +100,16 @@ export class PersonasComponent implements OnInit {
   confirm() {
     this.errorToast.dismiss();
     if (this.checkErrors()) {
+      const age: number =
+        Math.floor((new Date().getTime() -
+          new Date(
+            `${this.newUser.controls.birth.value}T00:00:00.000-05:00`
+          ).getTime()) /
+        (1000 * 3600 * 24 * 365));
       const requestBody: any = {
         name: this.newUser.controls.name.value?.toUpperCase(),
-        age: this.newUser.controls.age.value,
+        age: age,
+        birth: `${this.newUser.controls.birth.value}`,
         phone: `${this.newUser.controls.phone.value}`,
         transport: this.newUser.controls.transport.value ? 1 : 0,
         type: this.newUser.controls.documentType.value,
@@ -141,11 +148,18 @@ export class PersonasComponent implements OnInit {
   confirmEdition() {
     this.errorToast.dismiss();
     if (this.checkEditionErrors()) {
+      const age: number =
+      Math.floor((new Date().getTime() -
+        new Date(
+          `${this.editUser.controls.birth.value}T00:00:00.000-05:00`
+        ).getTime()) /
+      (1000 * 3600 * 24 * 365));
       const requestBody: any = {
         name: this.editUser.controls.name.value?.toUpperCase(),
         type: this.editUser.controls.documentType.value,
         document: `${this.editUser.controls.document.value}`,
-        age: this.editUser.controls.age.value,
+        age: age,
+        birth: this.editUser.controls.birth.value,
         transport: this.editUser.controls.transport.value ? 1 : 0,
         area: this.editUser.controls.area.value,
         phone: `${this.editUser.controls.phone.value}`,
@@ -175,7 +189,7 @@ export class PersonasComponent implements OnInit {
       name: '',
       documentType: '',
       document: '',
-      age: null,
+      birth: '',
       phone: null,
       transport: true,
       area: '',
@@ -204,7 +218,7 @@ export class PersonasComponent implements OnInit {
       name: this.currentCampist.NAME,
       documentType: this.currentCampist.DOCUMENT_TYPE,
       document: this.currentCampist.DOCUMENT,
-      age: this.currentCampist.AGE,
+      birth: this.currentCampist.BIRTH,
       phone: this.currentCampist.PHONE,
       transport: this.currentCampist.TRANSPORT === 1,
       area: areaEquivalent[this.currentCampist.AREA],

@@ -23,6 +23,7 @@ export class TransaccionesComponent implements OnInit {
   documentNumber: FormControl = new FormControl('', Validators.required);
   value: FormControl = new FormControl(null, Validators.required);
   donation: FormControl = new FormControl(false, Validators.required);
+  currentName: string = "";
 
   currentPhone: number = 0;
 
@@ -145,7 +146,7 @@ export class TransaccionesComponent implements OnInit {
       next: () => {
         this.modal.dismiss(this.name, 'confirm');
 
-        const text: string = `Se%20ha%20realizado%20un%20abono%20a%20tu%20nombre%20por%20un%20valor%20de%20%24${this.value.value}%20para%20conexi%C3%B3n%20divina%202024.%20Cada%20vez%20est%C3%A1s%20m%C3%A1s%20cerca%21`;
+        const text: string = `Hola%20${this.currentName},%20se%20ha%20realizado%20un%20abono%20a%20tu%20nombre%20por%20un%20valor%20de%20%24${this.value.value}%20para%20conexi%C3%B3n%20divina%202024.%20Cada%20vez%20est%C3%A1s%20m%C3%A1s%20cerca%21`;
         window.open(
           `https://api.whatsapp.com/send/?phone=%2B57${this.currentPhone}&text=${text}&type=phone_number&app_absent=0`
         );
@@ -201,6 +202,7 @@ export class TransaccionesComponent implements OnInit {
     this.documentType.setValue(person.DOCUMENT_TYPE);
     this.documentNumber.setValue(person.DOCUMENT);
     this.currentPhone = person.PHONE;
+    this.currentName = person.NAME;
   }
 
   edit() {

@@ -26,7 +26,12 @@
     >
       {{ relationMode ? "Volver" : "Relacionar Campistas" }}
     </button>
-    <input type="text" [(ngModel)]="filterText" placeholder="Filtrar campista" (input)="updateCampist($event)">
+    <input
+      type="text"
+      [(ngModel)]="filterText"
+      placeholder="Filtrar campista"
+      (input)="updateCampist($event)"
+    />
     <div
       *ngFor="let campist of filteredCampersData"
       class="camperCard"
@@ -116,11 +121,11 @@
         />
         <label for="age">Edad</label>
         <input
-          type="number"
+          type="date"
           name="age"
           id="age"
           placeholder="Edad"
-          formControlName="age"
+          formControlName="birth"
         />
         <label for="area">Área</label>
         <select id="area" formControlName="area">
@@ -252,13 +257,13 @@
           placeholder="Número de celular"
           formControlName="phone"
         />
-        <label for="age">Edad</label>
+        <label for="age">Fecha de Nacimiento</label>
         <input
-          type="number"
+          type="date"
           name="age"
           id="age"
           placeholder="Edad"
-          formControlName="age"
+          formControlName="birth"
         />
         <label for="area">Área</label>
         <select id="area" formControlName="area">
