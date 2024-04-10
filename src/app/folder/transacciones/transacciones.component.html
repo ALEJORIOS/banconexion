@@ -59,7 +59,7 @@
             <div class="content-body">
                 <form>
                     <label for="type">Tipo de Documento</label>
-                    <select id="type" [formControl]="documentType">
+                    <select id="type" [formControl]="documentType" [ngClass]="flashClass" (animationend)="flashClass = ''">
                         <option value="">Seleccione el Tipo de Documento</option>
                         <option value="CC">Cédula de Ciudadanía</option>
                         <option value="TI">Tarjeta de Identidad</option>
@@ -69,7 +69,7 @@
                         <option value="PPT">Permiso de Protección Temporal</option>
                     </select>
                     <label for="document">Número de Documento</label>
-                    <input type="number" id="document" placeholder="Ingrese el Número de Documento" [formControl]="documentNumber">
+                    <input type="number" id="document" placeholder="Ingrese el Número de Documento" [formControl]="documentNumber" [ngClass]="flashClass" (animationend)="flashClass = ''">
                     <label for="value">Valor</label>
                     <input type="number" id="value" placeholder="Ingrese la cantidad a abonar" [formControl]="value">
                     <div id="donation">

@@ -14,6 +14,7 @@ import { StoreService } from 'src/app/services/store.service';
 export class TransaccionesComponent implements OnInit {
   @ViewChild('errorToast') errorToast!: HTMLIonToastElement;
   @ViewChild(IonModal) modal!: IonModal;
+  flashClass: string = "";
   alertMessage: string = '';
   icon: string = '';
   message =
@@ -226,6 +227,7 @@ export class TransaccionesComponent implements OnInit {
     this.documentNumber.setValue(person.DOCUMENT);
     this.currentPhone = person.PHONE;
     this.currentName = person.NAME;
+    this.flashClass = "flash";
   }
 
   edit() {

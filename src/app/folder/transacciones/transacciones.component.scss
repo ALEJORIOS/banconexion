@@ -1,168 +1,182 @@
 #container {
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-bottom: 44px;
-    .transactionCard {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        box-shadow: 0 0 4px #a0a0a0;
-        padding: 12px;
-        border-radius: 8px;
-        position: relative;
-        .leftSide {
-            display: flex;
-            flex-direction: column;
-            .transactionActionLabel {
-                color: #a0a0a0;
-                font-size: 14px;
-            }
-            .transactionName {
-                font-size: 1.3rem;
-                font-weight: 600;
-            }
-            .transactionDocument {
-                color: #a0a0a0;
-                font-size: 14px;
-            }
-            .transactionValueInfo {
-                margin-top: 16px;
-                color: #a0a0a0;
-                font-size: 14px;
-            }
-            .transactionValue {
-                font-size: 1.5rem;
-                font-weight: 600;
-            }
-        }
-        .rightSide {
-            display: flex;
-            flex-direction: column;
-            border-left: 2px solid #f0f0f0;
-            padding-left: 1rem;
-            .edit {
-                position: absolute;
-                bottom: 8px;
-                right: 8px;
-                font-size: 1.2rem;
-                color: #a0a0a0;
-            }
-            .transactionAuthorityInfo {
-                color: #a0a0a0;
-                font-size: 14px;
-            }
-            .transactionAuthority {
-                margin-bottom: 8px;
-            }
-            .transactionDateInfo {
-                color: #a0a0a0;
-                font-size: 14px;
-            }
-            .transactionDate {
-                margin-bottom: 8px;
-            }
-            .transactionStatusInfo {
-                color: #a0a0a0;
-                font-size: 14px;
-            }
-            .transactionStatus {
-                font-weight: 600;
-                font-size: 14px;
-            }
-        }
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 44px;
+  .transactionCard {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    box-shadow: 0 0 4px #a0a0a0;
+    padding: 12px;
+    border-radius: 8px;
+    position: relative;
+    .leftSide {
+      display: flex;
+      flex-direction: column;
+      .transactionActionLabel {
+        color: #a0a0a0;
+        font-size: 14px;
+      }
+      .transactionName {
+        font-size: 1.3rem;
+        font-weight: 600;
+      }
+      .transactionDocument {
+        color: #a0a0a0;
+        font-size: 14px;
+      }
+      .transactionValueInfo {
+        margin-top: 16px;
+        color: #a0a0a0;
+        font-size: 14px;
+      }
+      .transactionValue {
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
     }
-    .selectedCard {
-        box-shadow: 0 0 10px 2px #0077C2;
+    .rightSide {
+      display: flex;
+      flex-direction: column;
+      border-left: 2px solid #f0f0f0;
+      padding-left: 1rem;
+      .edit {
+        position: absolute;
+        bottom: 8px;
+        right: 8px;
+        font-size: 1.2rem;
+        color: #a0a0a0;
+      }
+      .transactionAuthorityInfo {
+        color: #a0a0a0;
+        font-size: 14px;
+      }
+      .transactionAuthority {
+        margin-bottom: 8px;
+      }
+      .transactionDateInfo {
+        color: #a0a0a0;
+        font-size: 14px;
+      }
+      .transactionDate {
+        margin-bottom: 8px;
+      }
+      .transactionStatusInfo {
+        color: #a0a0a0;
+        font-size: 14px;
+      }
+      .transactionStatus {
+        font-weight: 600;
+        font-size: 14px;
+      }
     }
+  }
+  .selectedCard {
+    box-shadow: 0 0 10px 2px #0077c2;
+  }
 }
 
 .content-body {
-    margin: 1rem;
-    display: grid;
-    place-items: center;
-    form {
-        display: flex;
-        flex-direction: column;
-        width: 80%;
-        label,
-        #donation {
-            margin-top: 12pt;
-            margin-bottom: 4pt;
-            display: flex;
-            align-items: center;
-        }
-        .list {
-            height: 45dvh;
-            overflow-y: auto;
-            border: 2px solid #F0F0F0;
-            border-radius: 20px;
-        }
-        ion-searchbar {
-            padding-left: 0;
-            padding-right: 0;
-        }
+  margin: 1rem;
+  display: grid;
+  place-items: center;
+  form {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    label,
+    #donation {
+      margin-top: 12pt;
+      margin-bottom: 4pt;
+      display: flex;
+      align-items: center;
     }
+    .list {
+      height: 45dvh;
+      overflow-y: auto;
+      border: 2px solid #f0f0f0;
+      border-radius: 20px;
+    }
+    ion-searchbar {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
 }
 
-input[type=checkbox] {
-    border: none;
-    box-shadow: none;
+input[type="checkbox"] {
+  border: none;
+  box-shadow: none;
+}
+
+.flash {
+  animation: flash 0.2s;
+}
+
+@keyframes flash {
+  50% {
+    background-color: #0077C230;
+    border: 1px solid #0077C250;
+  }
+  100% {
+    background-color: transparent;
+  }
 }
 
 ion-toggle {
-    label {
-        justify-content: left;
-    }
+  label {
+    justify-content: left;
+  }
 }
 
 .editModal {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 1000;
-    background: #00000050;
-    display: grid;
-    place-content: center;
-    .box {
-        background-color: #fff;
-        border-radius: 8px;
-        width: 70vw;
-        max-width: 320px;
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        .header {
-            font-size: 1.4rem;
-            font-weight: 600;
-            padding: 12px;
-            padding-bottom: 0;
-        }
-        .body {
-            padding: 0 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        .actions {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            button {
-                background-color: transparent;
-                height: 44px;
-                border-top: 1px solid #a0a0a050;
-                font-weight: 600;
-                font-size: 1.1rem;
-            }
-            button.close {
-                border-right: 1px solid #a0a0a050;
-                color: #ff0000;
-            }
-            button.edit {
-                color: var(--ion-color-primary);
-            }
-        }
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  background: #00000050;
+  display: grid;
+  place-content: center;
+  .box {
+    background-color: #fff;
+    border-radius: 8px;
+    width: 70vw;
+    max-width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    .header {
+      font-size: 1.4rem;
+      font-weight: 600;
+      padding: 12px;
+      padding-bottom: 0;
     }
+    .body {
+      padding: 0 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      button {
+        background-color: transparent;
+        height: 44px;
+        border-top: 1px solid #a0a0a050;
+        font-weight: 600;
+        font-size: 1.1rem;
+      }
+      button.close {
+        border-right: 1px solid #a0a0a050;
+        color: #ff0000;
+      }
+      button.edit {
+        color: var(--ion-color-primary);
+      }
+    }
+  }
 }
