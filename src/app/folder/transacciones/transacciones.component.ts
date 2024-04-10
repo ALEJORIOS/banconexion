@@ -14,7 +14,7 @@ import { StoreService } from 'src/app/services/store.service';
 export class TransaccionesComponent implements OnInit {
   @ViewChild('errorToast') errorToast!: HTMLIonToastElement;
   @ViewChild(IonModal) modal!: IonModal;
-  flashClass: string = "";
+  flashClass: string = '';
   alertMessage: string = '';
   icon: string = '';
   message =
@@ -97,7 +97,17 @@ export class TransaccionesComponent implements OnInit {
     this.crudService.searchAllUsers().subscribe({
       next: (res) => {
         this.allUsers = res;
-        this.resultUser = this.allUsers;
+        this.resultUser = this.allUsers.sort((a: any, b: any) => {
+          const nameA = a.NAME.toUpperCase();
+          const nameB = b.NAME.toUpperCase();
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+          return 0;
+        });
       },
     });
   }
@@ -135,9 +145,12 @@ export class TransaccionesComponent implements OnInit {
       )
     )[0];
     const diff: number = user.GOAL - (+user.BALANCE + this.value.value);
-    if(diff < 0) {
+    if (diff < 0) {
       this.icon = 'close-circle-outline';
-      this.alertMessage = 'El valor de esta transacción excede el valor del campamento por $'+(diff * -1)+" pesos";
+      this.alertMessage =
+        'El valor de esta transacción excede el valor del campamento por $' +
+        diff * -1 +
+        ' pesos';
       this.errorToast.present();
     }
     return diff >= 0;
@@ -162,11 +175,11 @@ export class TransaccionesComponent implements OnInit {
           document: this.storeService.userData()[0].DOCUMENT,
         },
       };
-  
+
       this.crudService.payment(requestBody).subscribe({
         next: () => {
           this.modal.dismiss(this.name, 'confirm');
-  
+
           const text: string = `Hola%20${this.currentName},%20se%20ha%20realizado%20un%20abono%20a%20tu%20nombre%20por%20un%20valor%20de%20%24${this.value.value}%20para%20conexi%C3%B3n%20divina%202024.%20Cada%20vez%20est%C3%A1s%20m%C3%A1s%20cerca%21`;
           window.open(
             `https://api.whatsapp.com/send/?phone=%2B57${this.currentPhone}&text=${text}&type=phone_number&app_absent=0`
@@ -227,7 +240,7 @@ export class TransaccionesComponent implements OnInit {
     this.documentNumber.setValue(person.DOCUMENT);
     this.currentPhone = person.PHONE;
     this.currentName = person.NAME;
-    this.flashClass = "flash";
+    this.flashClass = 'flash';
   }
 
   edit() {
