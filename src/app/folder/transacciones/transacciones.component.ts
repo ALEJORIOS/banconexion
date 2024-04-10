@@ -136,14 +136,21 @@ export class TransaccionesComponent implements OnInit {
   }
 
   async checkLeft() {
-    const user: any = await (
-      await firstValueFrom(
-        this.crudService.searchDocument(
-          this.documentNumber.value,
-          this.documentType.value
+    let user: any;
+    try {
+      user = await (
+        await firstValueFrom(
+          this.crudService.searchDocument(
+            this.documentNumber.value,
+            this.documentType.value
+          )
         )
-      )
-    )[0];
+      )[0];
+    } catch {
+      this.icon = 'close-circle-outline';
+      this.alertMessage = "Ocurrió un error al intentar consultar este registro";
+      this.errorToast.present();
+    }
     const diff: number = user.GOAL - (+user.BALANCE + this.value.value);
     if (diff < 0) {
       this.icon = 'close-circle-outline';
@@ -179,11 +186,15 @@ export class TransaccionesComponent implements OnInit {
       this.crudService.payment(requestBody).subscribe({
         next: () => {
           this.modal.dismiss(this.name, 'confirm');
-
           const text: string = `Hola%20${this.currentName},%20se%20ha%20realizado%20un%20abono%20a%20tu%20nombre%20por%20un%20valor%20de%20%24${this.value.value}%20para%20conexi%C3%B3n%20divina%202024.%20Cada%20vez%20est%C3%A1s%20m%C3%A1s%20cerca%21`;
           window.open(
             `https://api.whatsapp.com/send/?phone=%2B57${this.currentPhone}&text=${text}&type=phone_number&app_absent=0`
           );
+        },
+        error: () => {
+          this.icon = 'close-circle-outline';
+          this.alertMessage = 'No se pudo realizar la transacción';
+          this.errorToast.present();
         },
       });
     } else {
