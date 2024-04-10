@@ -15,7 +15,8 @@
     </ion-header>
 
     <div id="container">
-        <button class="action" (click)="exportTransactions()">Descargar Transacciones</button>
-        <button class="action" (click)="exportReport()">Descargar Excel</button>
+        <button class="action" [disabled]="loadingState" (click)="exportTransactions()">Descargar Transacciones</button>
+        <button class="action" [disabled]="loadingState" (click)="exportReport()">Descargar Excel</button>
+        <i *ngIf="loadingState">Cargando...</i>
     </div>
 </ion-content>

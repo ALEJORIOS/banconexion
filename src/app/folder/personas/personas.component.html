@@ -19,55 +19,25 @@
     <button class="actionButton" id="open-modal" (click)="cleanModal()">
       Registrar Campista
     </button>
-    <button
-      class="actionButton"
-      [ngClass]="{ disableActionButton: relationMode }"
-      (click)="setRelationMode()"
-    >
+    <button class="actionButton" [ngClass]="{ disableActionButton: relationMode }" (click)="setRelationMode()">
       {{ relationMode ? "Volver" : "Relacionar Campistas" }}
     </button>
-    <input
-      type="text"
-      [(ngModel)]="filterText"
-      placeholder="Filtrar campista"
-      (input)="updateCampist($event)"
-    />
-    <div
-      *ngFor="let campist of filteredCampersData"
-      class="camperCard"
-      (click)="selectCampistRelation(campist)"
-    >
-      <div
-        *ngIf="relationMode === false"
-        class="edit"
-        (click)="setEditOpen(true, campist)"
-      >
+    <input type="text" [(ngModel)]="filterText" placeholder="Filtrar campista" (input)="updateCampist($event)" />
+    <div *ngFor="let campist of filteredCampersData" class="camperCard" (click)="selectCampistRelation(campist)">
+      <div *ngIf="relationMode === false" class="edit" (click)="setEditOpen(true, campist)">
         <ion-icon name="open-outline"></ion-icon>
       </div>
       <span class="campistLabel">Campista</span>
       <span class="campistName">{{ campist.NAME }}</span>
-      <span class="campistDocument"
-        ><ion-icon name="id-card-outline"></ion-icon>
-        {{ campist.DOCUMENT_TYPE }} {{ campist.DOCUMENT }}</span
-      >
-      <span class="campistPhone"
-        ><ion-icon name="call"></ion-icon>+57 {{ campist.PHONE }}</span
-      >
-      <span class="campistArea"
-        >Área de <b>{{ campist.AREA | titlecase }}</b></span
-      >
-      <span class="campistHost" *ngIf="campist.INVITED"
-        >Invitado de <b>{{ campist.INVITED }}</b></span
-      >
+      <span class="campistDocument"><ion-icon name="id-card-outline"></ion-icon>
+        {{ campist.DOCUMENT_TYPE }} {{ campist.DOCUMENT }}</span>
+      <span class="campistPhone"><ion-icon name="call"></ion-icon>+57 {{ campist.PHONE }}</span>
+      <span class="campistArea">Área de <b>{{ campist.AREA | titlecase }}</b></span>
+      <span class="campistHost" *ngIf="campist.INVITED">Invitado de <b>{{ campist.INVITED }}</b></span>
     </div>
   </div>
 </ion-content>
-<ion-toast
-  #errorToast
-  [message]="alertMessage"
-  [duration]="3000"
-  [icon]="icon"
-></ion-toast>
+<ion-toast #errorToast [message]="alertMessage" [duration]="3000" [icon]="icon"></ion-toast>
 
 <!-- Create Modal -->
 <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
@@ -86,12 +56,7 @@
     <div class="content-body">
       <form [formGroup]="newUser">
         <label for="name">Nombre</label>
-        <input
-          type="text"
-          id="name"
-          placeholder="Nombre Completo"
-          formControlName="name"
-        />
+        <input type="text" id="name" placeholder="Nombre Completo" formControlName="name" />
         <label for="type">Tipo de Documento</label>
         <select id="type" formControlName="documentType">
           <option value="">Seleccione el Tipo de Documento</option>
@@ -103,30 +68,11 @@
           <option value="PPT">Permiso de Protección Temporal</option>
         </select>
         <label for="document">Número de Documento</label>
-        <input
-          type="number"
-          id="document"
-          placeholder="Ingrese el Número de Documento"
-          formControlName="document"
-        />
-        <label for="phone"
-          >Número de celular (<ion-icon name="logo-whatsapp"></ion-icon
-          >Whatsapp)</label
-        >
-        <input
-          type="number"
-          id="phone"
-          placeholder="Número de celular"
-          formControlName="phone"
-        />
+        <input type="number" id="document" placeholder="Ingrese el Número de Documento" formControlName="document" />
+        <label for="phone">Número de celular (<ion-icon name="logo-whatsapp"></ion-icon>Whatsapp)</label>
+        <input type="number" id="phone" placeholder="Número de celular" formControlName="phone" />
         <label for="age">Edad</label>
-        <input
-          type="date"
-          name="age"
-          id="age"
-          placeholder="Edad"
-          formControlName="birth"
-        />
+        <input type="date" name="age" id="age" placeholder="Edad" formControlName="birth" />
         <label for="area">Área</label>
         <select id="area" formControlName="area">
           <option value="">Seleccione el Área</option>
@@ -149,15 +95,10 @@
           </option>
         </select>
         <label>
-          <ion-checkbox formControlName="transport"
-            >Transporte (Bus)</ion-checkbox
-          >
+          <ion-checkbox formControlName="transport">Transporte (Bus)</ion-checkbox>
         </label>
-        <ion-checkbox formControlName="agreeTerms"
-          >Está de acuerdo con los&nbsp;<b (click)="openTerms()"
-            >términos y condiciones</b
-          ></ion-checkbox
-        >
+        <ion-checkbox formControlName="agreeTerms">Está de acuerdo con los&nbsp;<b (click)="openTerms()">términos y
+            condiciones</b></ion-checkbox>
       </form>
     </div>
   </ng-template>
@@ -173,30 +114,19 @@
         </ion-buttons>
         <ion-title>Relacionar</ion-title>
         <ion-buttons slot="end">
-          <ion-button
-            (click)="updateRelations(currentCampist.ID)"
-            [strong]="true"
-            >Confirmar</ion-button
-          >
+          <ion-button (click)="updateRelations(currentCampist.ID)" [strong]="true">Confirmar</ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
     <div class="content-body">
       <form [formGroup]="newUser">
-        <ion-searchbar
-          placeholder="Buscar Campista"
-          [debounce]="200"
-        ></ion-searchbar>
+        <ion-searchbar placeholder="Buscar Campista" [debounce]="200"></ion-searchbar>
         <div class="list">
           <ion-list>
             <ion-item *ngFor="let person of campersData">
-              <ion-checkbox
-                labelPlacement="start"
-                [disabled]="!enableRelations"
-                [checked]="checkedRelations.includes(person.ID)"
-                (ionChange)="changeRelationCheck($event, person.ID)"
-                >{{ person.NAME }}</ion-checkbox
-              >
+              <ion-checkbox labelPlacement="start" [disabled]="!enableRelations"
+                [checked]="checkedRelations.includes(person.ID)" (ionChange)="changeRelationCheck($event, person.ID)">{{
+                person.NAME }}</ion-checkbox>
             </ion-item>
           </ion-list>
         </div>
@@ -215,21 +145,14 @@
         </ion-buttons>
         <ion-title>Editar</ion-title>
         <ion-buttons slot="end">
-          <ion-button (click)="confirmEdition()" [strong]="true"
-            >Confirmar</ion-button
-          >
+          <ion-button (click)="confirmEdition()" [strong]="true">Confirmar</ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
     <div class="content-body">
       <form [formGroup]="editUser">
         <label for="name">Nombre</label>
-        <input
-          type="text"
-          id="name"
-          placeholder="Nombre Completo"
-          formControlName="name"
-        />
+        <input type="text" id="name" placeholder="Nombre Completo" formControlName="name" />
         <label for="type">Tipo de Documento</label>
         <select id="type" formControlName="documentType">
           <option value="">Seleccione el Tipo de Documento</option>
@@ -241,30 +164,11 @@
           <option value="PPT">Permiso de Protección Temporal</option>
         </select>
         <label for="document">Número de Documento</label>
-        <input
-          type="number"
-          id="document"
-          placeholder="Ingrese el Número de Documento"
-          formControlName="document"
-        />
-        <label for="phone"
-          >Número de celular (<ion-icon name="logo-whatsapp"></ion-icon
-          >Whatsapp)</label
-        >
-        <input
-          type="number"
-          id="phone"
-          placeholder="Número de celular"
-          formControlName="phone"
-        />
+        <input type="number" id="document" placeholder="Ingrese el Número de Documento" formControlName="document" />
+        <label for="phone">Número de celular (<ion-icon name="logo-whatsapp"></ion-icon>Whatsapp)</label>
+        <input type="number" id="phone" placeholder="Número de celular" formControlName="phone" />
         <label for="age">Fecha de Nacimiento</label>
-        <input
-          type="date"
-          name="age"
-          id="age"
-          placeholder="Edad"
-          formControlName="birth"
-        />
+        <input type="date" name="age" id="age" placeholder="Edad" formControlName="birth" />
         <label for="area">Área</label>
         <select id="area" formControlName="area">
           <option value="">Seleccione el Área</option>
@@ -279,43 +183,22 @@
           <option value="PRO">Protemplo</option>
           <option value="AST">Asistentes</option>
         </select>
-        <label
-          *ngIf="
+        <label *ngIf="
             storeService.userData()[0].ADMIN === 3 ||
             storeService.userData()[0].DOCUMENT === currentCampist.DOCUMENT
-          "
-          for="password"
-          >Contraseña</label
-        >
-        <input
-          *ngIf="
+          " for="password">Contraseña</label>
+        <input *ngIf="
             storeService.userData()[0].ADMIN === 3 ||
             storeService.userData()[0].DOCUMENT === currentCampist.DOCUMENT
-          "
-          type="text"
-          id="password"
-          placeholder="Contraseña"
-          formControlName="password"
-        />
+          " type="text" id="password" placeholder="Contraseña" formControlName="password" />
         <label>
-          <ion-checkbox formControlName="transport"
-            >Transporte (Bus)</ion-checkbox
-          >
+          <ion-checkbox formControlName="transport">Transporte (Bus)</ion-checkbox>
         </label>
         <h3 *ngIf="storeService.userData()[0].ADMIN === 3">Tipo de Campista</h3>
-        <ion-radio-group
-          *ngIf="storeService.userData()[0].ADMIN === 3"
-          formControlName="admin"
-        >
-          <ion-radio [value]="3" labelPlacement="start"
-            >Administrador (Admin3)</ion-radio
-          >
-          <ion-radio [value]="2" labelPlacement="start"
-            >Líder de Área (Admin2)</ion-radio
-          >
-          <ion-radio [value]="1" labelPlacement="start"
-            >Soporte (Admin1)</ion-radio
-          >
+        <ion-radio-group *ngIf="storeService.userData()[0].ADMIN === 3" formControlName="admin">
+          <ion-radio [value]="3" labelPlacement="start">Administrador (Admin3)</ion-radio>
+          <ion-radio [value]="2" labelPlacement="start">Líder de Área (Admin2)</ion-radio>
+          <ion-radio [value]="1" labelPlacement="start">Soporte (Admin1)</ion-radio>
           <ion-radio [value]="0" labelPlacement="start">Campista</ion-radio>
         </ion-radio-group>
       </form>
@@ -351,29 +234,77 @@
             </p>
             <h3>Cookies</h3>
             <p>
-              El sitio web utiliza cookies para ayudar a personalizar tu
-              experiencia en línea. Al acceder a Banconexión, aceptaste utilizar
-              las cookies necesarias. Una cookie es un archivo de texto que un
+              Una cookie es un archivo de texto que un
               servidor de páginas web coloca en tu disco duro. Las cookies no se
               pueden utilizar para ejecutar programas o enviar virus a tu
               computadora. Las cookies se te asignan de forma exclusiva y solo
               un servidor web en el dominio que emitió la cookie puede leerlas.
-              Podemos utilizar cookies para recopilar, almacenar y rastrear
-              información con fines estadísticos o de marketing para operar
-              nuestro sitio web. Tienes la capacidad de aceptar o rechazar
-              cookies opcionales. Hay algunas cookies obligatorias que son
-              necesarias para el funcionamiento de nuestro sitio web. Estas
-              cookies no requieren tu consentimiento ya que siempre funcionan.
-              Ten en cuenta que al aceptar las cookies requeridas, también
-              aceptas las cookies de terceros, que podrían usarse a través de
-              servicios proporcionados por terceros si utilizas dichos servicios
-              en nuestro sitio web, por ejemplo, una ventana de visualización de
-              video proporcionada por terceros e integrada en nuestro sitio web.
+              Puedes navegar a través de esta aplicación sin inconvenientes debido a que no utilizamos cookies ni
+              propias ni de terceros.
+              En el caso de agregar actualizaciones que utilicen estas te será informado con anterioridad.
             </p>
+            <h3>Autorización para el tratamiento de datos personales</h3>
+            <p>La Iglesia Cristiana Cuadrangular Distrito Andin, identificada con Nit 900.192.109-1 será el Responsable
+              del
+              tratamiento de datos personales y, en tal virtud, podrá recolectar, almacenar, usar (Incluir las
+              operaciones que realizará respecto de la información personal recolectada) para las siguientes
+              finalidades:
+            </p>
+            <ul>
+              <li>Efectuar las gestiones pertinentes para tener estadísticas de los asistentes a la congregación y sus
+                actividades.</li>
+              <li>Efectuar la planificación estratégica correspondiente a cada actividad.</li>
+              <li>Contactar al titular de la cuenta vía chat para el envío de información relacionado con su cuenta de
+                Banconexión.</li>
+              <li>Para invitar via chat/llamada a participar en los diferentes eventos de la congregación.</li>
+            </ul>
+            <p>Manifiesto que me informaron que en caso de recolección de mi información sensible tengo derecho a
+              contestar o no las preguntas que me formulen y a entregar o no los datos solicitados. Entiendo que son
+              datos sensibles aquellos que afectan la intimidad del titular o cuyo uso indebido puede generar
+              discriminación tales como orientación política, convicciones religiosas o filosóficas.
+
+              Manifiesto que me informaron que los datos sensibles que se recolectarán serán utilizados para las
+              siguientes finalidades:
+            </p>
+            <ul>
+              <li>Efectuar las gestiones pertinentes para tener estadísticas de los asistentes a la congregación y sus
+                actividades.</li>
+              <li>Efectuar la planificación estratégica correspondiente a cada actividad.</li>
+              <li>Contactar al titular de la cuenta vía chat para el envío de información relacionado con su cuenta de
+                Banconexión.</li>
+              <li>Para invitar via chat/llamada a participar en los diferentes eventos de la congregación.</li>
+            </ul>
+            <h3>Derechos del titular</h3>
+            <p>
+              Sus derechos como titular del dato son los previstos en la Constitución y en la Ley 1581 de 2012,
+              especialmente los siguientes:
+            </p>
+            <ul>
+              <li>Acceder en forma gratuita a los datos proporcionados que hayan sido objeto de tratamiento. </li>
+              <li>Solicitar la actualización y rectificación de su información frente a datos parciales, inexactos,
+                incompletos, fraccionados, que induzcan a error, o a aquellos cuyo tratamiento esté prohibido o no haya
+                sido autorizado. </li>
+              <li>Solicitar prueba de la autorización otorgada. </li>
+              <li>Presentar ante la Superintendencia de Industria y Comercio (SIC) quejas por infracciones a lo
+                dispuesto en la normatividad vigente. </li>
+              <li>Revocar la autorización y/o solicitar la supresión del dato, a menos que exista un deber legal o
+                contractual que haga imperativo conservar la información. </li>
+              <li>Abstenerse de responder las preguntas sobre datos sensibles o sobre datos de las niñas y niños y
+                adolescentes.</li>
+            </ul>
+            <p>Estos derechos los podré ejercer a través de los canales o medios dispuestos por La Iglesia Cristiana
+              Cuadrangular en Espíritu y Verdad para la atención al público, el correo electrónico
+              iccchapinero&#64;gmail.com,
+              para la atención de requerimientos relacionados con el tratamiento de mis datos personales y el ejercicio
+              de los derechos mencionados en esta autorización. Por todo lo anterior, he otorgado mi consentimiento a La
+              Iglesia Cristiana Cuadrangular en Espíritu y Verdad para que trate mi información personal de acuerdo con
+              la Política de Tratamiento de Datos Personales dispuesta por la Iglesia en medio electrónico y que me dio
+              a conocer antes de recolectar mis datos personales. Manifiesto que la presente autorización me fue
+              solicitada y puesta de presente antes de entregar mis datos y que la suscribo de forma libre y voluntaria
+              una vez leída en su totalidad.</p>
             <h3>Licencia</h3>
-            <span
-              >A menos que se indique lo contrario, Iglesia Cristiana
-              Cuadrangular ENEV y/o sus licenciantes poseen los derechos de
+            <span>A menos que se indique lo contrario, La Iglesia Cristiana
+              Cuadrangular Distrito Andino y/o sus licenciantes poseen los derechos de
               propiedad intelectual de todo el material en Banconexión. Todos
               los derechos de propiedad intelectual son reservados. Puedes
               acceder desde Banconexión para tu uso personal sujeto a las
@@ -387,52 +318,6 @@
                 <li>Reproducir, duplicar o copiar material de Banconexión.</li>
                 <li>Redistribuir contenido de Banconexión.</li>
               </ul>
-
-              Este acuerdo comenzará en el día de hoy. Partes de este sitio web
-              ofrecen a los usuarios la oportunidad de publicar e intercambiar
-              opiniones e información en determinadas áreas. Iglesia Cristiana
-              Cuadrangular ENEV no filtra, edita, publica ni revisa los
-              comentarios antes de su presencia en el sitio web. Los comentarios
-              no reflejan los puntos de vista ni las opiniones de Iglesia
-              Cristiana Cuadrangular ENEV, sus agentes y/o afiliados. Los
-              comentarios reflejan los puntos de vista y opiniones de la persona
-              que publica. En la medida en que lo permitan las leyes aplicables,
-              Iglesia Cristiana Cuadrangular ENEV no será responsable de los
-              comentarios ni de ninguna responsabilidad, daños o gastos causados
-              o sufridos como resultado de cualquier uso o publicación o
-              apariencia de comentarios en este sitio web. Iglesia Cristiana
-              Cuadrangular ENEV se reserva el derecho de monitorear todos los
-              comentarios y eliminar los que puedan considerarse inapropiados,
-              ofensivos o que incumplan estos Términos y Condiciones. Garantizas
-              y declaras que:
-
-              <ul>
-                <li>
-                  Tienes derecho a publicar comentarios en nuestro sitio web y
-                  tienes todas las licencias y consentimientos necesarios para
-                  hacerlo;
-                </li>
-                <li>
-                  Los comentarios no invaden ningún derecho de propiedad
-                  intelectual, incluidos, entre otros, los derechos de autor,
-                  patentes o marcas comerciales de terceros;
-                </li>
-                <li>
-                  Los comentarios no contienen ningún material difamatorio,
-                  calumnioso, ofensivo, indecente o ilegal de otro modo, que sea
-                  una invasión de la privacidad.
-                </li>
-                <li>
-                  Los comentarios no se utilizarán para solicitar o promover
-                  negocios o actividades comerciales personalizadas o presentes
-                  o actividades ilegales.
-                </li>
-              </ul>
-
-              Por la presente, otorgas a Iglesia Cristiana Cuadrangular ENEV una
-              licencia no exclusiva para usar, reproducir, editar y autorizar a
-              otros a usar, reproducir y editar cualquiera de tus comentarios en
-              todas y cada una de las formas, formatos, o medios.
             </span>
           </div>
         </section>

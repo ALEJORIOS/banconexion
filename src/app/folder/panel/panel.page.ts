@@ -10,31 +10,50 @@ export class PanelPage implements OnInit {
 
   constructor(private crudService: CrudService) { }
 
+  loadingState: boolean = false;
+
   ngOnInit() {
   }
 
   exportReport() {
+    this.loadingState = true;
     this.crudService.exportReport().subscribe({
       next: (res) => {
-        this.downloadFile(res);
+        this.downloadFile(res, "Reporte.xlsx");
+        this.loadingState = false;
+      },
+      error: (err) => {
+        this.loadingState = false;
       }
     })
   }
 
   exportTransactions() {
+    this.loadingState = true;
     this.crudService.exportTransactions().subscribe({
       next: (res) => {
-        this.downloadFile(res);
+        this.downloadFile(res, "Transacciones.xlsx");
+        this.loadingState = false;
+      },
+      error: (err) => {
+        this.loadingState = false;
       }
     })
   }
 
-  downloadFile(data: any) {
-    let fileName = data.headers.get('Content-Disposition')?.split(';')[1].split('=')[1];
-    let blob:Blob = data.body as Blob;
-    let a = document.createElement('a');
-    a.download=fileName;
-    a.href=window.URL.createObjectURL(blob);
-    a.click();
+  downloadFile(data: any, fileName: string) {
+    const type = data.body?.type;
+    const file = new File([data.body!], fileName, { type });
+    const fileReader = new FileReader();
+    fileReader.addEventListener(
+      "load", () => {        
+        const aElement = document.createElement("a")
+        aElement.href = fileReader.result as string;
+        aElement.download = fileName || "File"; 
+        aElement.target = "_blank"
+        aElement.click();
+      }
+    )
+    fileReader.readAsDataURL(file);
   }
 }

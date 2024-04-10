@@ -130,3 +130,15 @@ ion-item.selected {
   color: var(--text-200);
 }
 
+.hod {
+  position: absolute;
+  bottom: 10px;
+  height: 60px;
+  user-select: none;
+  filter: grayscale(1);
+  &:hover {
+    transition: all 0.2s ease;
+    cursor: pointer;
+    filter: grayscale(0);
+  }
+}

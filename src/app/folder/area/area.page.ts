@@ -29,7 +29,17 @@ export class AreaPage {
   refresh() {
     this.crudService.searchByArea(this.area).subscribe({
       next: (res) => {
-        this.campersData = res;
+        this.campersData = res.sort((a: any, b: any) => {
+          const nameA = a.NAME.toUpperCase();
+          const nameB = b.NAME.toUpperCase();
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+          return 0;
+        });
       },
       error: (err) => {
         console.error(err);

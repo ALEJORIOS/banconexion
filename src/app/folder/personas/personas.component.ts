@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { IonModal } from '@ionic/angular';
+import { firstValueFrom } from 'rxjs';
 import { CrudService } from 'src/app/services/crud.service';
 import { StoreService } from 'src/app/services/store.service';
 
@@ -58,13 +59,23 @@ export class PersonasComponent implements OnInit {
     private crudService: CrudService,
     private fb: FormBuilder,
     public storeService: StoreService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.crudService.searchAllUsers().subscribe({
       next: (res) => {
         this.campersData = res;
-        this.filteredCampersData = this.campersData;
+        this.filteredCampersData = this.campersData.sort((a: any, b: any) => {
+          const nameA = a.NAME.toUpperCase();
+          const nameB = b.NAME.toUpperCase();
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+          return 0;
+        });
       },
       error: (err) => {
         console.error(err);
@@ -97,15 +108,15 @@ export class PersonasComponent implements OnInit {
     this.modal.dismiss(null, 'cancel');
   }
 
-  confirm() {
+  async confirm() {
     this.errorToast.dismiss();
-    if (this.checkErrors()) {
+    if (await this.checkErrors()) {
       const age: number =
         Math.floor((new Date().getTime() -
           new Date(
             `${this.newUser.controls.birth.value}T00:00:00.000-05:00`
           ).getTime()) /
-        (1000 * 3600 * 24 * 365));
+          (1000 * 3600 * 24 * 365));
       const requestBody: any = {
         name: this.newUser.controls.name.value?.toUpperCase(),
         age: age,
@@ -149,11 +160,11 @@ export class PersonasComponent implements OnInit {
     this.errorToast.dismiss();
     if (this.checkEditionErrors()) {
       const age: number =
-      Math.floor((new Date().getTime() -
-        new Date(
-          `${this.editUser.controls.birth.value}T00:00:00.000-05:00`
-        ).getTime()) /
-      (1000 * 3600 * 24 * 365));
+        Math.floor((new Date().getTime() -
+          new Date(
+            `${this.editUser.controls.birth.value}T00:00:00.000-05:00`
+          ).getTime()) /
+          (1000 * 3600 * 24 * 365));
       const requestBody: any = {
         name: this.editUser.controls.name.value?.toUpperCase(),
         type: this.editUser.controls.documentType.value,
@@ -198,7 +209,7 @@ export class PersonasComponent implements OnInit {
     });
   }
 
-  cleanRelationModal() {}
+  cleanRelationModal() { }
 
   cleanEditModal() {
     const areaEquivalent: any = {
@@ -227,7 +238,7 @@ export class PersonasComponent implements OnInit {
     });
   }
 
-  checkErrors(): boolean {
+  async checkErrors(): Promise<boolean> {
     let result: boolean = true;
     this.errorToast.dismiss();
     this.icon = 'close-circle-outline';
@@ -261,6 +272,17 @@ export class PersonasComponent implements OnInit {
       this.alertMessage = 'El número de celular es obligatorio';
       this.errorToast.present();
       result = false;
+    }
+    try {
+      const user = await (await firstValueFrom(this.crudService.searchDocument(this.newUser.controls.document.value!, this.newUser.controls.documentType.value!)))[0];
+      if (user) {
+        this.alertMessage = 'Este documento ya está registrado';
+        this.errorToast.present();
+        result = false;
+      }
+    }
+    catch {
+      result = true;
     }
     return result;
   }

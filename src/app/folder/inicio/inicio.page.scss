@@ -53,6 +53,15 @@ div.content {
     i.show {
         visibility: visible;
     }
+    .version {
+        position: absolute;
+        bottom: 38px;
+        left: -20px;
+        text-align: center;
+        transform: rotate(90deg);
+        color: #D0D0D0;
+        font-size: 12px;
+    }
 }
 
 i {
