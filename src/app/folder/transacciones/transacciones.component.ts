@@ -152,7 +152,8 @@ export class TransaccionesComponent implements OnInit {
         'Ocurrió un error al intentar consultar este registro';
       this.errorToast.present();
     }
-    const diff: number = user.GOAL - (+user.BALANCE + (+this.value.value));
+    const realValue: number = +this.value.value.replace(/\./g, '');
+    const diff: number = user.GOAL - (+user.BALANCE + realValue);
 
     if (diff < 0) {
       this.icon = 'close-circle-outline';
