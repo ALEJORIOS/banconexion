@@ -152,7 +152,8 @@ export class TransaccionesComponent implements OnInit {
         'Ocurrió un error al intentar consultar este registro';
       this.errorToast.present();
     }
-    const diff: number = user.GOAL - (+user.BALANCE + this.value.value);
+    const diff: number = user.GOAL - (+user.BALANCE + (+this.value.value));
+
     if (diff < 0) {
       this.icon = 'close-circle-outline';
       this.alertMessage =
@@ -181,17 +182,17 @@ export class TransaccionesComponent implements OnInit {
       return;
     }
     if (await this.checkLeft()) {
+      const value = +this.value.value.replace(/\./g, '');
       const requestBody: any = {
         type: `${this.documentType.value}`,
         document: `${this.documentNumber.value}`,
-        value: +this.value.value,
+        value: value,
         donation: this.donation.value ? 1 : 0,
         authorizedBy: {
           type: this.storeService.userData()[0].DOCUMENT_TYPE,
           document: this.storeService.userData()[0].DOCUMENT,
         },
       };
-
       this.crudService.payment(requestBody).subscribe({
         next: () => {
           this.modal.dismiss(this.name, 'confirm');
