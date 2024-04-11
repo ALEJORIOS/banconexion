@@ -23,7 +23,7 @@ export class TransaccionesComponent implements OnInit {
 
   documentType: FormControl = new FormControl('', Validators.required);
   documentNumber: FormControl = new FormControl('', Validators.required);
-  value: FormControl = new FormControl(null, Validators.required);
+  value: FormControl = new FormControl('', Validators.required);
   donation: FormControl = new FormControl(false, Validators.required);
   currentName: string = '';
 
@@ -148,7 +148,8 @@ export class TransaccionesComponent implements OnInit {
       )[0];
     } catch {
       this.icon = 'close-circle-outline';
-      this.alertMessage = "Ocurrió un error al intentar consultar este registro";
+      this.alertMessage =
+        'Ocurrió un error al intentar consultar este registro';
       this.errorToast.present();
     }
     const diff: number = user.GOAL - (+user.BALANCE + this.value.value);
@@ -167,6 +168,14 @@ export class TransaccionesComponent implements OnInit {
     this.openCreateModal = true;
   }
 
+  formatValue() {
+    const stringValue: String = String(this.value.value);
+    const removeChars: String = stringValue.replace(/[^0-9\.]/g, '');
+    const withoutDots = removeChars.replace(/\./g, '');
+    const formatted = withoutDots.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    this.value.setValue(formatted);
+  }
+
   async confirm() {
     if (!this.checkTransaction()) {
       return;
@@ -175,7 +184,7 @@ export class TransaccionesComponent implements OnInit {
       const requestBody: any = {
         type: `${this.documentType.value}`,
         document: `${this.documentNumber.value}`,
-        value: this.value.value,
+        value: +this.value.value,
         donation: this.donation.value ? 1 : 0,
         authorizedBy: {
           type: this.storeService.userData()[0].DOCUMENT_TYPE,

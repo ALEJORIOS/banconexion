@@ -71,7 +71,7 @@
                     <label for="document">Número de Documento</label>
                     <input type="number" id="document" placeholder="Ingrese el Número de Documento" [formControl]="documentNumber" [ngClass]="flashClass" (animationend)="flashClass = ''">
                     <label for="value">Valor</label>
-                    <input type="number" id="value" placeholder="Ingrese la cantidad a abonar" [formControl]="value">
+                    <input type="text" inputmode="numeric" pattern="[0-9]*" id="value" placeholder="Ingrese la cantidad a abonar" [formControl]="value" (keyup)="formatValue()">
                     <div id="donation">
                         <ion-toggle checked="false" (ionChange)="donationState($event)">Donación</ion-toggle>
                     </div>
