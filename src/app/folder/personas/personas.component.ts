@@ -246,45 +246,50 @@ export class PersonasComponent implements OnInit {
       this.alertMessage =
         'Es necesario aceptar los términos y condiciones para continuar';
       this.errorToast.present();
-      result = false;
+      return false;
     }
     if (this.newUser.controls.area.invalid) {
       this.alertMessage = 'El área es obligatoria';
       this.errorToast.present();
-      result = false;
+      return false;
     }
     if (this.newUser.controls.document.invalid) {
       this.alertMessage = 'El documento es obligatorio';
       this.errorToast.present();
-      result = false;
+      return false;
     }
     if (this.newUser.controls.documentType.invalid) {
       this.alertMessage = 'El tipo de documento es obligatorio';
       this.errorToast.present();
-      result = false;
+      return false;
     }
     if (this.newUser.controls.name.invalid) {
       this.alertMessage = 'El nombre es obligatorio';
       this.errorToast.present();
-      result = false;
+      return false;
+    }
+    if (this.newUser.controls.birth.invalid) {
+      this.alertMessage = 'La fecha de nacimiento es obligatoria';
+      this.errorToast.present();
+      return false;
     }
     if (this.newUser.controls.phone.invalid) {
       this.alertMessage = 'El número de celular es obligatorio';
       this.errorToast.present();
-      result = false;
+      return false;
     }
     try {
       const user = await (await firstValueFrom(this.crudService.searchDocument(this.newUser.controls.document.value!, this.newUser.controls.documentType.value!)))[0];
       if (user) {
         this.alertMessage = 'Este documento ya está registrado';
         this.errorToast.present();
-        result = false;
+        return false;
       }
     }
     catch {
-      result = true;
+      return true;
     }
-    return result;
+    return true;
   }
 
   checkEditionErrors(): boolean {
