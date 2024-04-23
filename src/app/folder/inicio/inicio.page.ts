@@ -38,10 +38,12 @@ export class InicioPage {
         this.maintenance = res;
       },
       error: () => {
-        this.alertMessage = "Ocurrió un error inesperado";
+        this.alertMessage = "Ocurrió un error inesperado, reintentando";
         this.errorToast.present();
-        this.maintenance = true;
         console.error("Ocurrió un error al intentar verificar si la aplicación está en mantenimiento");
+        setTimeout(() => {
+          location.reload()
+        }, 1000);
       }
     })
   }
@@ -81,8 +83,12 @@ export class InicioPage {
               }
             },
             error: (err) => {
-              console.error("Ocurrió un error: ", err);
-              this.alertMessage = "Ocurrió un error, intente nuevamente";
+              if(err.status === 409) {
+                this.alertMessage = "Número de documento incorrecto";
+              }else{
+                console.error("Ocurrió un error: ", err);
+                this.alertMessage = "Ocurrió un error, intente nuevamente";
+              }
               this.errorToast.present();
               this.showLoadingText = false;
               this.enableButton = true;
