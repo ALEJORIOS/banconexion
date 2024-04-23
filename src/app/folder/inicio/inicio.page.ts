@@ -86,8 +86,8 @@ export class InicioPage {
               if(err.status === 409) {
                 this.alertMessage = "Número de documento incorrecto";
               }else{
-                console.error("Ocurrió un error: ", err);
                 this.alertMessage = "Ocurrió un error, intente nuevamente";
+                console.error("Ocurrió un error: ", err);
               }
               this.errorToast.present();
               this.showLoadingText = false;

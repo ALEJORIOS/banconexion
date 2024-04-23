@@ -40,6 +40,7 @@ export class PersonasComponent implements OnInit {
     area: ['', Validators.required],
     agreeTerms: [false],
     guest: [0],
+    size: ['', Validators.required]
   });
 
   // Edit User
@@ -53,6 +54,7 @@ export class PersonasComponent implements OnInit {
     area: ['', Validators.required],
     admin: [0],
     password: [''],
+    size: ['', Validators.required]
   });
 
   constructor(
@@ -127,6 +129,7 @@ export class PersonasComponent implements OnInit {
         document: `${this.newUser.controls.document.value}`,
         area: this.newUser.controls.area.value,
         guest: this.newUser.controls.guest.value,
+        size: this.newUser.controls.size.value,
         registered_by: this.storeService.userData()[0].ID,
       };
       this.crudService.register(requestBody).subscribe({
@@ -175,6 +178,7 @@ export class PersonasComponent implements OnInit {
         area: this.editUser.controls.area.value,
         phone: `${this.editUser.controls.phone.value}`,
         admin: this.editUser.controls.admin.value,
+        size: this.editUser.controls.size.value,
         password: this.editUser.controls.password.value,
       };
       this.crudService.edit(requestBody, this.currentCampist.ID).subscribe({
@@ -206,12 +210,15 @@ export class PersonasComponent implements OnInit {
       area: '',
       agreeTerms: false,
       guest: 0,
+      size: ''
     });
   }
 
   cleanRelationModal() { }
 
   cleanEditModal() {
+    console.log('>>> ', this.currentCampist);
+    
     const areaEquivalent: any = {
       ALABANZA: 'ALB',
       CRECIMIENTO: 'CRE',
@@ -235,11 +242,11 @@ export class PersonasComponent implements OnInit {
       area: areaEquivalent[this.currentCampist.AREA],
       admin: this.currentCampist.ADMIN,
       password: '',
+      size: this.currentCampist.SIZE
     });
   }
 
   async checkErrors(): Promise<boolean> {
-    let result: boolean = true;
     this.errorToast.dismiss();
     this.icon = 'close-circle-outline';
     if (!this.newUser.controls.agreeTerms.value) {
@@ -275,6 +282,11 @@ export class PersonasComponent implements OnInit {
     }
     if (this.newUser.controls.phone.invalid) {
       this.alertMessage = 'El número de celular es obligatorio';
+      this.errorToast.present();
+      return false;
+    }
+    if (this.newUser.controls.size.invalid) {
+      this.alertMessage = 'La talla de camiseta es obligatoria';
       this.errorToast.present();
       return false;
     }
@@ -318,6 +330,16 @@ export class PersonasComponent implements OnInit {
     }
     if (this.editUser.controls.phone.invalid) {
       this.alertMessage = 'El número de celular es obligatorio';
+      this.errorToast.present();
+      result = false;
+    }
+    if (this.editUser.controls.size.invalid) {
+      this.alertMessage = 'La talla de camiseta es obligatoria';
+      this.errorToast.present();
+      result = false;
+    }
+    if (this.editUser.controls.birth.invalid) {
+      this.alertMessage = 'La fecha de nacimiento es obligatoria';
       this.errorToast.present();
       result = false;
     }
