@@ -1,6 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
+import * as dayjs from 'dayjs';
+import * as dayOfYear from 'dayjs/plugin/dayOfYear';
+dayjs.extend(dayOfYear);
 import { map } from 'rxjs';
 import { CrudService } from 'src/app/services/crud.service';
 import { StoreService } from 'src/app/services/store.service';
@@ -21,12 +24,15 @@ export class InicioPage {
   maintenance: boolean | null = null;
   enableAdmin: boolean = false;
   saveAdminData: any;
+  countDown: any;
+  interval: any;
 
   @ViewChild("errorToast") errorToast!: HTMLIonToastElement;
 
   constructor(private crudService: CrudService, private storeService: StoreService, private router: NavController) { }
 
   ionViewDidEnter() {
+    this.updateTime();
     localStorage.removeItem("userData");
     this.storeService.userData.set([]);
     this.crudService.checkMaintenance()
@@ -46,6 +52,14 @@ export class InicioPage {
         }, 1000);
       }
     })
+  }
+
+  updateTime() {
+    this.interval = setInterval(() => {
+      const campDate = dayjs('2024-06-08');
+      const dateNow = dayjs();
+      this.countDown = dayjs(campDate.diff(dateNow))
+    }, 1000)
   }
 
   login(): void {
