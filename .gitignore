@@ -12,6 +12,10 @@ $RECYCLE.BIN/
 *.log
 log.txt
 
+# Android
+/android
+/androidScreenshots
+
 
 /.sourcemaps
 /.versions
