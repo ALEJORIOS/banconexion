@@ -216,14 +216,12 @@ export class PersonasComponent implements OnInit {
 
   cleanRelationModal() { }
 
-  cleanEditModal() {
-    console.log('>>> ', this.currentCampist);
-    
+  cleanEditModal() {    
     const areaEquivalent: any = {
       ALABANZA: 'ALB',
       CRECIMIENTO: 'CRE',
       CONSOLIDACIÓN: 'CON',
-      DIÁCONOS: 'DIA',
+      DIACONADO: 'DIA',
       'GRANJA DE PAPÁ': 'GDP',
       INTERCESIÓN: 'INT',
       JÓVENES: 'JCR',
