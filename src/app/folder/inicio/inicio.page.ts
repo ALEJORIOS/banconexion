@@ -4,7 +4,8 @@ import { NavController } from '@ionic/angular';
 import * as dayjs from 'dayjs';
 import * as dayOfYear from 'dayjs/plugin/dayOfYear';
 dayjs.extend(dayOfYear);
-import { map } from 'rxjs';
+
+import { map } from 'rxjs/internal/operators/map';
 import { CrudService } from 'src/app/services/crud.service';
 import { StoreService } from 'src/app/services/store.service';
 
@@ -56,8 +57,8 @@ export class InicioPage {
 
   updateTime() {
     this.interval = setInterval(() => {
-      const campDate = dayjs('2024-06-08');
-      const dateNow = dayjs();
+      const campDate = dayjs('2024-06-07');
+      const dateNow = dayjs().hour(dayjs().hour()-5);
       this.countDown = dayjs(campDate.diff(dateNow))
     }, 1000)
   }
