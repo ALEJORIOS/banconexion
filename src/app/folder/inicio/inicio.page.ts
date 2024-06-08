@@ -57,9 +57,10 @@ export class InicioPage {
 
   updateTime() {
     this.interval = setInterval(() => {
-      const campDate = dayjs('2024-06-07');
-      const dateNow = dayjs().hour(dayjs().hour()-5);
+      const campDate = dayjs('2024-06-08 04:00');
+      const dateNow = dayjs();
       this.countDown = dayjs(campDate.diff(dateNow))
+      this.countDown = this.countDown.add(5, 'hour');
     }, 1000)
   }
 
