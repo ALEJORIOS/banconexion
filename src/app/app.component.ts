@@ -58,10 +58,12 @@ export class AppComponent {
           icon: 'accessibility',
         });
       }
+      console.log("?> ", this.storeService.userData()[0]);
       if (
-        this.storeService.userData()[0]?.LEADER &&
+        (this.storeService.userData()[0]?.LEADER || this.storeService.userData()[0]?.ADMIN === 3) &&
         this.appPages.find((page: any) => page.title === 'Área') === undefined
       ) {
+        console.log("Entra aquí perfectamente");
         const area: string = `/area/${
           storeService.userData()[0]?.ADMIN === 1 ||
           storeService.userData()[0]?.ADMIN === 3
