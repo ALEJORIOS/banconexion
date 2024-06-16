@@ -3,14 +3,14 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Personas</ion-title>
+    <ion-title>Listado General</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Personas</ion-title>
+      <ion-title size="large">Listado General</ion-title>
     </ion-toolbar>
   </ion-header>
 
@@ -27,7 +27,7 @@
       <div *ngIf="relationMode === false" class="edit" (click)="setEditOpen(true, campist)">
         <ion-icon name="open-outline"></ion-icon>
       </div>
-      <span class="campistLabel">Campista {{ campist.SIZE && '- Camiseta talla' }} {{ campist.SIZE }}</span>
+      <span class="campistLabel">Campista</span>
       <span class="campistName">{{ campist.NAME }}</span>
       <span class="campistDocument"><ion-icon name="id-card-outline"></ion-icon>
         {{ campist.DOCUMENT_TYPE }} {{ campist.DOCUMENT }}</span>
@@ -93,16 +93,6 @@
           <option [value]="campist.ID" *ngFor="let campist of campersData">
             {{ campist.NAME }}
           </option>
-        </select>
-        <label for="size">Talla de camiseta</label>
-        <select id="size" formControlName="size">
-          <option value="">Talla</option>
-          <option value="XS">XS</option>
-          <option value="S">S</option>
-          <option value="M">M</option>
-          <option value="L">L</option>
-          <option value="XL">XL</option>
-          <option value="XXL">XXL</option>
         </select>
         <label>
           <ion-checkbox formControlName="transport">Transporte (Bus)</ion-checkbox>
@@ -201,16 +191,6 @@
             storeService.userData()[0].ADMIN === 3 ||
             storeService.userData()[0].DOCUMENT === currentCampist.DOCUMENT
           " type="text" id="password" placeholder="Contraseña" formControlName="password" />
-        <label for="size">Talla de camiseta</label>
-        <select id="size" formControlName="size">
-          <option value="">Talla</option>
-          <option value="XS">XS</option>
-          <option value="S">S</option>
-          <option value="M">M</option>
-          <option value="L">L</option>
-          <option value="XL">XL</option>
-          <option value="XXL">XXL</option>
-        </select>
         <label>
           <ion-checkbox formControlName="transport">Transporte (Bus)</ion-checkbox>
         </label>

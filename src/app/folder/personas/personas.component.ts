@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { IonModal } from '@ionic/angular';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
 import { CrudService } from 'src/app/services/crud.service';
 import { StoreService } from 'src/app/services/store.service';
 
@@ -39,8 +39,7 @@ export class PersonasComponent implements OnInit {
     transport: [true],
     area: ['', Validators.required],
     agreeTerms: [false],
-    guest: [0],
-    size: ['', Validators.required]
+    guest: [0]
   });
 
   // Edit User
@@ -53,8 +52,7 @@ export class PersonasComponent implements OnInit {
     transport: [true],
     area: ['', Validators.required],
     admin: [0],
-    password: [''],
-    size: ['', Validators.required]
+    password: ['']
   });
 
   constructor(
@@ -129,7 +127,6 @@ export class PersonasComponent implements OnInit {
         document: `${this.newUser.controls.document.value}`,
         area: this.newUser.controls.area.value,
         guest: this.newUser.controls.guest.value,
-        size: this.newUser.controls.size.value,
         registered_by: this.storeService.userData()[0].ID,
       };
       this.crudService.register(requestBody).subscribe({
@@ -178,7 +175,6 @@ export class PersonasComponent implements OnInit {
         area: this.editUser.controls.area.value,
         phone: `${this.editUser.controls.phone.value}`,
         admin: this.editUser.controls.admin.value,
-        size: this.editUser.controls.size.value,
         password: this.editUser.controls.password.value,
       };
       this.crudService.edit(requestBody, this.currentCampist.ID).subscribe({
@@ -209,8 +205,7 @@ export class PersonasComponent implements OnInit {
       transport: true,
       area: '',
       agreeTerms: false,
-      guest: 0,
-      size: ''
+      guest: 0
     });
   }
 
@@ -239,8 +234,7 @@ export class PersonasComponent implements OnInit {
       transport: this.currentCampist.TRANSPORT === 1,
       area: areaEquivalent[this.currentCampist.AREA],
       admin: this.currentCampist.ADMIN,
-      password: '',
-      size: this.currentCampist.SIZE
+      password: ''
     });
   }
 
@@ -280,11 +274,6 @@ export class PersonasComponent implements OnInit {
     }
     if (this.newUser.controls.phone.invalid) {
       this.alertMessage = 'El número de celular es obligatorio';
-      this.errorToast.present();
-      return false;
-    }
-    if (this.newUser.controls.size.invalid) {
-      this.alertMessage = 'La talla de camiseta es obligatoria';
       this.errorToast.present();
       return false;
     }
@@ -328,11 +317,6 @@ export class PersonasComponent implements OnInit {
     }
     if (this.editUser.controls.phone.invalid) {
       this.alertMessage = 'El número de celular es obligatorio';
-      this.errorToast.present();
-      result = false;
-    }
-    if (this.editUser.controls.size.invalid) {
-      this.alertMessage = 'La talla de camiseta es obligatoria';
       this.errorToast.present();
       result = false;
     }

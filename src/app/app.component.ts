@@ -49,12 +49,12 @@ export class AppComponent {
       }
       if (
         this.storeService.userData()[0]?.ADMIN > 0 &&
-        this.appPages.find((page: any) => page.title === 'Personas') ===
+        this.appPages.find((page: any) => page.title === 'Listado General') ===
           undefined
       ) {
         this.appPages.splice(-4, 0, {
-          title: 'Personas',
-          url: '/personas',
+          title: 'Listado General',
+          url: '/listado-general',
           icon: 'accessibility',
         });
       }

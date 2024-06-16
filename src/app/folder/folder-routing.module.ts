@@ -19,7 +19,7 @@ const routes: Routes = [
     canActivate: [LoginGuard]
   },
   {
-    path: 'personas',
+    path: 'listado-general',
     component: PersonasComponent,
     canActivate: [LoginGuard, AuthGuard]
   },

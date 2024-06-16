@@ -12,10 +12,7 @@
       <ion-toolbar>
           <ion-title size="large">Área</ion-title>
       </ion-toolbar>
-  </ion-header>
-
-    
-  
+  </ion-header>  
     <div id="container">
         @if(area !== 'all') {
         <button class="refresh" (click)="refresh()">Actualizar</button>
@@ -55,7 +52,7 @@
             </div>
             <div class="camperCard" (click)="goTo('CRE')">
                 <section class="camperData">
-                    <span class="campistName">Crecimiento</span>
+                    <span class="campistName">ASISTENTES (Crecimiento)</span>
                 </section>
                 <section class="camperProgress">
                     <span class="successPercentage">CRE</span>
@@ -63,7 +60,7 @@
             </div>
             <div class="camperCard" (click)="goTo('CON')">
                 <section class="camperData">
-                    <span class="campistName">Consolidación</span>
+                    <span class="campistName">Visitas (Consolidación)</span>
                 </section>
                 <section class="camperProgress">
                     <span class="successPercentage">CON</span>
