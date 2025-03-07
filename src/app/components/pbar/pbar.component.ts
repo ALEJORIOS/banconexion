@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'pbar',
-  templateUrl: './pbar.component.html',
-  styleUrls: ['./pbar.component.scss'],
+    selector: 'pbar',
+    templateUrl: './pbar.component.html',
+    styleUrls: ['./pbar.component.scss'],
+    standalone: false
 })
 export class PbarComponent  implements OnInit {
 

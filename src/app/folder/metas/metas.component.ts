@@ -2,9 +2,10 @@ import { Component, effect } from '@angular/core';
 import { StoreService } from 'src/app/services/store.service';
 
 @Component({
-  selector: 'app-metas',
-  templateUrl: './metas.component.html',
-  styleUrls: ['./metas.component.scss'],
+    selector: 'app-metas',
+    templateUrl: './metas.component.html',
+    styleUrls: ['./metas.component.scss'],
+    standalone: false
 })
 export class MetasComponent {
 

@@ -10,9 +10,10 @@ import { CrudService } from 'src/app/services/crud.service';
 import { StoreService } from 'src/app/services/store.service';
 
 @Component({
-  selector: 'app-inicio',
-  templateUrl: './inicio.page.html',
-  styleUrls: ['./inicio.page.scss'],
+    selector: 'app-inicio',
+    templateUrl: './inicio.page.html',
+    styleUrls: ['./inicio.page.scss'],
+    standalone: false
 })
 export class InicioPage {
   alertMessage: string = '';

@@ -6,9 +6,10 @@ import localeCo from '@angular/common/locales/es-CO'
 registerLocaleData(localeCo, 'co');
 
 @Component({
-  selector: 'app-progreso',
-  templateUrl: './progreso.page.html',
-  styleUrls: ['./progreso.page.scss'],
+    selector: 'app-progreso',
+    templateUrl: './progreso.page.html',
+    styleUrls: ['./progreso.page.scss'],
+    standalone: false
 })
 export class ProgresoPage {
 

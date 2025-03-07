@@ -6,9 +6,10 @@ import { CrudService } from 'src/app/services/crud.service';
 import { StoreService } from 'src/app/services/store.service';
 
 @Component({
-  selector: 'app-personas',
-  templateUrl: './personas.component.html',
-  styleUrls: ['./personas.component.scss'],
+    selector: 'app-personas',
+    templateUrl: './personas.component.html',
+    styleUrls: ['./personas.component.scss'],
+    standalone: false
 })
 export class PersonasComponent implements OnInit {
   campersData: any = [];

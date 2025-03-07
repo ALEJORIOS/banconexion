@@ -5,9 +5,10 @@ import { CrudService } from 'src/app/services/crud.service';
 import { StoreService } from 'src/app/services/store.service';
 
 @Component({
-  selector: 'app-area',
-  templateUrl: './area.page.html',
-  styleUrls: ['./area.page.scss'],
+    selector: 'app-area',
+    templateUrl: './area.page.html',
+    styleUrls: ['./area.page.scss'],
+    standalone: false
 })
 export class AreaPage {
 

@@ -6,10 +6,11 @@ import { InfiniteScrollCustomEvent } from '@ionic/angular';
 registerLocaleData(localeCo, 'co');
 
 @Component({
-  selector: 'app-fallas',
-  templateUrl: './fallas.page.html',
-  styleUrls: ['./fallas.page.scss'],
-  providers: [{provide: LOCALE_ID, useValue: 'co'}]
+    selector: 'app-fallas',
+    templateUrl: './fallas.page.html',
+    styleUrls: ['./fallas.page.scss'],
+    providers: [{ provide: LOCALE_ID, useValue: 'co' }],
+    standalone: false
 })
 export class FallasPage implements OnInit {
 

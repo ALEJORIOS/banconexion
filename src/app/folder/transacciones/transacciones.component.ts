@@ -7,9 +7,10 @@ import { CrudService } from 'src/app/services/crud.service';
 import { StoreService } from 'src/app/services/store.service';
 
 @Component({
-  selector: 'app-transacciones',
-  templateUrl: './transacciones.component.html',
-  styleUrls: ['./transacciones.component.scss'],
+    selector: 'app-transacciones',
+    templateUrl: './transacciones.component.html',
+    styleUrls: ['./transacciones.component.scss'],
+    standalone: false
 })
 export class TransaccionesComponent implements OnInit {
   @ViewChild('errorToast') errorToast!: HTMLIonToastElement;

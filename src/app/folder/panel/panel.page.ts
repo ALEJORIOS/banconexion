@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { CrudService } from 'src/app/services/crud.service';
 
 @Component({
-  selector: 'app-panel',
-  templateUrl: './panel.page.html',
-  styleUrls: ['./panel.page.scss'],
+    selector: 'app-panel',
+    templateUrl: './panel.page.html',
+    styleUrls: ['./panel.page.scss'],
+    standalone: false
 })
 export class PanelPage implements OnInit {
 
