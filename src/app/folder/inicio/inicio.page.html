@@ -2,26 +2,60 @@
   {{ countDown?.dayOfYear() - 1 }} días, {{ countDown?.hour() }} horas, {{ countDown?.minute() }} minutos y {{ countDown?.second() }} segundos <br>
   ¿Qué esperas para registrarte?
 </div> -->
-<div class="content">
-    <img class="logo" src="assets/logo.webp">
-    <h2 class="title">Banconexión</h2>
-    <h3 class="subtitle">Conexión Divina 2024</h3>
-    <input type="number" placeholder="Número de Documento" [formControl]="document">
-    <select [formControl]="type">
-      <option value="">Tipo de Documento</option>
-      <option value="CC">Cédula de Ciudadanía</option>
-      <option value="TI">Tarjeta de Identidad</option>
-      <option value="CE">Cédula de Extranjería</option>
-      <option value="PP">Pasaporte</option>
-      <option value="RC">Registro Civil</option>
-      <option value="PPT">Permiso de Protección Temporal</option>
-    </select>
-    <input *ngIf="enableAdmin" type="password" placeholder="Contraseña" [formControl]="password">
-    <button *ngIf="!enableAdmin" class="buscar" [disabled]="!enableButton" (click)="login()">Buscar</button>
-    <button *ngIf="enableAdmin" class="buscar" [disabled]="!enableButton" (click)="loginAdmin()">Ingresar</button>
-    <strong class="church">Iglesia Cristiana Cuadrangular</strong>
-    <strong class="church">En Espíritu y En Verdad</strong>
-    <i [ngClass]="{'hide': !showLoadingText, 'show': showLoadingText}">Cargando...</i>
-    <div class="version"> Versión 1.2.4</div>
+<div class="ad">
+  <span>16, 17 y 18 de agosto de 2025</span>
+  <span>¡No lo dejes pasar!</span>
 </div>
-<ion-toast #errorToast [message]="alertMessage" [duration]="3000" icon="close-circle-outline"></ion-toast>
+<div class="content">
+  <img class="logo" src="assets/logo.webp" />
+  <h2 class="title">Banconexión</h2>
+  <h3 class="subtitle">Conexión Divina 2025</h3>
+  <input
+    type="number"
+    placeholder="Número de Documento"
+    [formControl]="document"
+  />
+  <select [formControl]="type">
+    <option value="">Tipo de Documento</option>
+    <option value="CC">Cédula de Ciudadanía</option>
+    <option value="TI">Tarjeta de Identidad</option>
+    <option value="CE">Cédula de Extranjería</option>
+    <option value="PP">Pasaporte</option>
+    <option value="RC">Registro Civil</option>
+    <option value="PPT">Permiso de Protección Temporal</option>
+  </select>
+  <input
+    *ngIf="enableAdmin"
+    type="password"
+    placeholder="Contraseña"
+    [formControl]="password"
+  />
+  <button
+    *ngIf="!enableAdmin"
+    class="buscar"
+    [disabled]="!enableButton"
+    (click)="login()"
+  >
+    Buscar
+  </button>
+  <button
+    *ngIf="enableAdmin"
+    class="buscar"
+    [disabled]="!enableButton"
+    (click)="loginAdmin()"
+  >
+    Ingresar
+  </button>
+  <strong class="church">Iglesia Cristiana Cuadrangular</strong>
+  <strong class="church">En Espíritu y En Verdad</strong>
+  <i [ngClass]="{'hide': !showLoadingText, 'show': showLoadingText}"
+    >Cargando...</i
+  >
+  <div class="version">Versión 2.0.0</div>
+</div>
+<ion-toast
+  #errorToast
+  [message]="alertMessage"
+  [duration]="3000"
+  icon="close-circle-outline"
+></ion-toast>

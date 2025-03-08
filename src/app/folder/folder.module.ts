@@ -1,5 +1,9 @@
 import { NgModule } from '@angular/core';
-import { CommonModule, registerLocaleData } from '@angular/common';
+import {
+  CommonModule,
+  registerLocaleData,
+  TitleCasePipe,
+} from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
@@ -13,7 +17,6 @@ import { TransaccionesComponent } from './transacciones/transacciones.component'
 import { ComponentsModule } from '../components/components.module';
 import { TransactionStatusPipe } from '../pipes/transaction-status.pipe';
 
-
 @NgModule({
   imports: [
     CommonModule,
@@ -22,13 +25,14 @@ import { TransactionStatusPipe } from '../pipes/transaction-status.pipe';
     IonicModule,
     FolderPageRoutingModule,
     ComponentsModule,
-    TransactionStatusPipe
+    TransactionStatusPipe,
   ],
   declarations: [
     FolderPage,
     MetasComponent,
     PersonasComponent,
-    TransaccionesComponent
-  ]
+    TransaccionesComponent,
+  ],
+  providers: [TitleCasePipe],
 })
 export class FolderPageModule {}

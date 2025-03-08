@@ -3,10 +3,10 @@ import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { StoreService } from './services/store.service';
 @Component({
-    selector: 'app-root',
-    templateUrl: 'app.component.html',
-    styleUrls: ['app.component.scss'],
-    standalone: false
+  selector: 'app-root',
+  templateUrl: 'app.component.html',
+  styleUrls: ['app.component.scss'],
+  standalone: false,
 })
 export class AppComponent {
   public appPages: any = [];
@@ -59,12 +59,13 @@ export class AppComponent {
           icon: 'accessibility',
         });
       }
-      console.log("?> ", this.storeService.userData()[0]);
+      console.log('?> ', this.storeService.userData()[0]);
       if (
-        (this.storeService.userData()[0]?.LEADER || this.storeService.userData()[0]?.ADMIN === 3) &&
+        (this.storeService.userData()[0]?.LEADER ||
+          this.storeService.userData()[0]?.ADMIN === 3) &&
         this.appPages.find((page: any) => page.title === 'Área') === undefined
       ) {
-        console.log("Entra aquí perfectamente");
+        console.log('Entra aquí perfectamente');
         const area: string = `/area/${
           storeService.userData()[0]?.ADMIN === 1 ||
           storeService.userData()[0]?.ADMIN === 3
@@ -79,13 +80,13 @@ export class AppComponent {
       }
       if (
         this.storeService.userData()[0]?.ADMIN === 3 &&
-        this.appPages.find((page: any) => page.title === 'Panel de Control') ===
+        this.appPages.find((page: any) => page.title === 'Reportes') ===
           undefined
       ) {
         this.appPages.splice(-3, 0, {
-          title: 'Panel de Control',
+          title: 'Descargar Reporte',
           url: '/panel',
-          icon: 'construct',
+          icon: 'document',
         });
       }
     });

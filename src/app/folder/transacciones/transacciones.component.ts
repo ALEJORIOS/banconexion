@@ -1,3 +1,4 @@
+import { TitleCasePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { IonModal } from '@ionic/angular';
@@ -7,10 +8,10 @@ import { CrudService } from 'src/app/services/crud.service';
 import { StoreService } from 'src/app/services/store.service';
 
 @Component({
-    selector: 'app-transacciones',
-    templateUrl: './transacciones.component.html',
-    styleUrls: ['./transacciones.component.scss'],
-    standalone: false
+  selector: 'app-transacciones',
+  templateUrl: './transacciones.component.html',
+  styleUrls: ['./transacciones.component.scss'],
+  standalone: false,
 })
 export class TransaccionesComponent implements OnInit {
   @ViewChild('errorToast') errorToast!: HTMLIonToastElement;
@@ -28,7 +29,7 @@ export class TransaccionesComponent implements OnInit {
   donation: FormControl = new FormControl(false, Validators.required);
   currentName: string = '';
 
-  currentPhone: number = 0;
+  currentPhone: string = '';
 
   allUsers: any = [];
   resultUser: any;
@@ -60,7 +61,8 @@ export class TransaccionesComponent implements OnInit {
 
   constructor(
     private crudService: CrudService,
-    public storeService: StoreService
+    public storeService: StoreService,
+    private titleCase: TitleCasePipe
   ) {}
 
   public transactionsData: any = [];
@@ -137,6 +139,20 @@ export class TransaccionesComponent implements OnInit {
   }
 
   async checkLeft() {
+    const realValue: number = +this.value.value.replace(/\./g, '');
+    const diff = await this.difference(realValue);
+    if (diff < 0) {
+      this.icon = 'close-circle-outline';
+      this.alertMessage =
+        'El valor de esta transacción excede el valor del campamento por $' +
+        diff * -1 +
+        ' pesos';
+      this.errorToast.present();
+    }
+    return diff >= 0;
+  }
+
+  async difference(payment: number): Promise<number> {
     let user: any;
     try {
       user = await (
@@ -147,24 +163,14 @@ export class TransaccionesComponent implements OnInit {
           )
         )
       )[0];
+      return user.GOAL - (+user.BALANCE + payment);
     } catch {
       this.icon = 'close-circle-outline';
       this.alertMessage =
         'Ocurrió un error al intentar consultar este registro';
       this.errorToast.present();
+      return -1;
     }
-    const realValue: number = +this.value.value.replace(/\./g, '');
-    const diff: number = user.GOAL - (+user.BALANCE + realValue);
-
-    if (diff < 0) {
-      this.icon = 'close-circle-outline';
-      this.alertMessage =
-        'El valor de esta transacción excede el valor del campamento por $' +
-        diff * -1 +
-        ' pesos';
-      this.errorToast.present();
-    }
-    return diff >= 0;
   }
 
   openCreateTransactions() {
@@ -196,12 +202,21 @@ export class TransaccionesComponent implements OnInit {
         },
       };
       this.crudService.payment(requestBody).subscribe({
-        next: () => {
+        next: async () => {
+          if ((await this.difference(value)) + value === 0) {
+            const text: string = `¡Bienvenid@ ${this.titleCase.transform(
+              this.currentName
+            )} a Conexión Divina 2025! 🥳🥳🥳 Nos vemos este 16 de agosto`;
+            window.open(
+              `https://api.whatsapp.com/send/?phone=%2B57${this.currentPhone}&text=${text}&type=phone_number&app_absent=0`
+            );
+          } else {
+            const text: string = `Hola ${this.currentName},se ha realizado un abono a tu nombre por un valor de ${this.value.value} para Conexión Divina 2025. ¡Cada vez estás más cerca!`;
+            window.open(
+              `https://api.whatsapp.com/send/?phone=%2B57${this.currentPhone}&text=${text}&type=phone_number&app_absent=0`
+            );
+          }
           this.modal.dismiss(this.name, 'confirm');
-          const text: string = `Hola%20${this.currentName},%20se%20ha%20realizado%20un%20abono%20a%20tu%20nombre%20por%20un%20valor%20de%20%24${this.value.value}%20para%20conexi%C3%B3n%20divina%202024.%20Cada%20vez%20est%C3%A1s%20m%C3%A1s%20cerca%21`;
-          window.open(
-            `https://api.whatsapp.com/send/?phone=%2B57${this.currentPhone}&text=${text}&type=phone_number&app_absent=0`
-          );
         },
         error: () => {
           this.icon = 'close-circle-outline';
@@ -226,7 +241,8 @@ export class TransaccionesComponent implements OnInit {
   cleanModal() {
     this.documentType.setValue('');
     this.documentNumber.setValue('');
-    this.currentPhone = 0;
+    this.value.setValue(0);
+    this.currentPhone = '';
   }
 
   handleInput(event: any) {

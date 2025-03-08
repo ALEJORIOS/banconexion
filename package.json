@@ -27,6 +27,7 @@
     "@capacitor/haptics": "^7.0.0",
     "@capacitor/keyboard": "^7.0.0",
     "@capacitor/status-bar": "^7.0.0",
+    "@formkit/tempo": "^0.1.2",
     "@ionic/angular": "^8.4.3",
     "@ionic/angular-server": "^8.4.3",
     "ionicons": "^7.0.0",
