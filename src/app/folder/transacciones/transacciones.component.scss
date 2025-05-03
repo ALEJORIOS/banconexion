@@ -3,7 +3,9 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-bottom: 44px;
+  margin-bottom: calc(
+    44px + env(safe-area-inset-bottom) + env(safe-area-inset-top)
+  );
   .transactionCard {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -116,8 +118,8 @@ input[type="checkbox"] {
 
 @keyframes flash {
   50% {
-    background-color: #0077C230;
-    border: 1px solid #0077C250;
+    background-color: #0077c230;
+    border: 1px solid #0077c250;
   }
   100% {
     background-color: transparent;
