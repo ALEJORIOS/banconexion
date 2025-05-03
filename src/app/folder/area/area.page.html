@@ -128,4 +128,10 @@
 		}
 	</div>
 </ion-content>
-<ion-toast #errorToast [message]="alertMessage" [duration]="3000" icon="close-circle-outline"></ion-toast>
+<ion-toast
+	position="top"
+	swipeGesture="vertical"
+	#errorToast
+	[message]="alertMessage"
+	[duration]="3000"
+	icon="close-circle-outline"></ion-toast>

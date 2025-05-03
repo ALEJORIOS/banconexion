@@ -16,6 +16,18 @@
 	align-items: center;
 	color: #1785f9;
 }
+
+@keyframes fade-in-fwd {
+	0% {
+		transform: translateZ(-80px);
+		opacity: 0;
+	}
+	100% {
+		transform: translateZ(0);
+		opacity: 1;
+	}
+}
+
 div.content {
 	display: grid;
 	place-content: center;
@@ -27,6 +39,8 @@ div.content {
 		aspect-ratio: 1;
 		width: 10rem;
 		justify-self: center;
+		animation: fade-in-fwd 0.6s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+		animation-delay: 500ms;
 	}
 	h2.title {
 		font-weight: 600;

@@ -28,4 +28,10 @@
 	<i [ngClass]="{'hide': !showLoadingText, 'show': showLoadingText}">Cargando...</i>
 	<div class="version">Versión 2.0.2</div>
 </div>
-<ion-toast #errorToast [message]="alertMessage" [duration]="3000" icon="close-circle-outline"></ion-toast>
+<ion-toast
+	position="top"
+	swipeGesture="vertical"
+	#errorToast
+	[message]="alertMessage"
+	[duration]="3000"
+	icon="close-circle-outline"></ion-toast>
