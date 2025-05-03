@@ -1,92 +1,170 @@
 <ion-header [translucent]="true">
-    <ion-toolbar>
-        <ion-buttons slot="start">
-            <ion-menu-button></ion-menu-button>
-        </ion-buttons>
-        <ion-title>Transacciones</ion-title>
-    </ion-toolbar>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Abonos</ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-    <ion-header collapse="condense">
-        <ion-toolbar>
-            <ion-title size="large">Transacciones</ion-title>
-        </ion-toolbar>
-    </ion-header>
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Abonos</ion-title>
+    </ion-toolbar>
+  </ion-header>
 
-    <div id="container">
-        <section>
-            <ion-button *ngIf="storeService.userData()[0].ADMIN === 3 || storeService.userData()[0].ADMIN === 2" class="option" expand="block" (click)="openCreateTransactions()">Nueva Transacción</ion-button>
-            <ion-button *ngIf="storeService.userData()[0].ADMIN === 3" class="option" (click)="confirmTransactions()" [disabled]="selectedTransactions.length === 0" expand="block">Confirmar transacciones</ion-button>
-        </section>
-        <div *ngFor="let transaction of transactionsData" class="transactionCard" [ngClass]="{'selectedCard': selectedTransactions.includes(transaction.ID)}" (click)="selectTransaction(transaction.ID, transaction.CONFIRMED === 1)" (dblclick)="setEditOpen(true, transaction)">
-            <div class="leftSide">
-                <span class="transactionActionLabel" *ngIf="transaction.DONATION === 0">Abono para</span>
-                <span class="transactionActionLabel" *ngIf="transaction.DONATION === 1">Donación para</span>
-                <span class="transactionName">{{ transaction.NAME }}</span>
-                <span class="transactionDocument">{{ transaction.DOCUMENT_TYPE }} {{ transaction.DOCUMENT }}</span>
-                <span class="transactionValueInfo">Valor</span>
-                <span class="transactionValue">{{ transaction.VALUE | currency:'CAD':'symbol-narrow':'1.0-0':'co' }}</span>
-            </div>
-            <div class="rightSide">
-                <div *ngIf="transaction.CONFIRMED === 0" class="edit" (click)="setEditOpen(true, transaction)">
-                    <ion-icon name="open-outline"></ion-icon>
-                </div>
-                <span class="transactionDateInfo">Fecha y Hora de la transacción</span>
-                <span class="transactionDate">{{ transaction.DATE | date:"dd/MM/YYYY HH:mm" }}</span>
-                <span class="transactionAuthorityInfo">Autorizado por</span>
-                <span class="transactionAuthority">{{ transaction.AUTHORIZED_BY }}</span>
-                <span class="transactionStatusInfo">Estado</span>
-                <span class="transactionStatus" [ngStyle]="{'color': transaction.CONFIRMED === 1 ? '#0077C2' : '#FF0000'}">{{ transaction.CONFIRMED | Status }}</span>
-            </div>
+  <div id="container">
+    <section>
+      <ion-button
+        *ngIf="
+          storeService.userData()[0].ADMIN === 3 ||
+          storeService.userData()[0].ADMIN === 2
+        "
+        class="option"
+        expand="block"
+        (click)="openCreateTransactions()"
+        >Nueva Transacción</ion-button
+      >
+      <ion-button
+        *ngIf="storeService.userData()[0].ADMIN === 3"
+        class="option"
+        (click)="confirmTransactions()"
+        [disabled]="selectedTransactions.length === 0"
+        expand="block"
+        >Confirmar transacciones</ion-button
+      >
+    </section>
+    <div
+      *ngFor="let transaction of transactionsData"
+      class="transactionCard"
+      [ngClass]="{
+        selectedCard: selectedTransactions.includes(transaction.ID)
+      }"
+      (click)="selectTransaction(transaction.ID, transaction.CONFIRMED === 1)"
+      (dblclick)="setEditOpen(true, transaction)"
+    >
+      <div class="leftSide">
+        <span class="transactionActionLabel" *ngIf="transaction.DONATION === 0"
+          >Abono para</span
+        >
+        <span class="transactionActionLabel" *ngIf="transaction.DONATION === 1"
+          >Donación para</span
+        >
+        <span class="transactionName">{{ transaction.NAME }}</span>
+        <span class="transactionDocument"
+          >{{ transaction.DOCUMENT_TYPE }} {{ transaction.DOCUMENT }}</span
+        >
+        <span class="transactionValueInfo">Valor</span>
+        <span class="transactionValue">{{
+          transaction.VALUE
+            | currency : "CAD" : "symbol-narrow" : "1.0-0" : "co"
+        }}</span>
+      </div>
+      <div class="rightSide">
+        <div
+          *ngIf="transaction.CONFIRMED === 0"
+          class="edit"
+          (click)="setEditOpen(true, transaction)"
+        >
+          <ion-icon name="open-outline"></ion-icon>
         </div>
+        <span class="transactionDateInfo">Fecha y Hora de la transacción</span>
+        <span class="transactionDate">{{
+          transaction.DATE | date : "dd/MM/YYYY HH:mm"
+        }}</span>
+        <span class="transactionAuthorityInfo">Autorizado por</span>
+        <span class="transactionAuthority">{{
+          transaction.AUTHORIZED_BY
+        }}</span>
+        <span class="transactionStatusInfo">Estado</span>
+        <span
+          class="transactionStatus"
+          [ngStyle]="{
+            color: transaction.CONFIRMED === 1 ? '#0077C2' : '#FF0000'
+          }"
+          >{{ transaction.CONFIRMED | Status }}</span
+        >
+      </div>
     </div>
+  </div>
 
-    <!-- New Transaction -->
-    <ion-modal [isOpen]="openCreateModal" (willDismiss)="onWillDismiss($event)">
-        <ng-template>
-            <ion-header>
-                <ion-toolbar>
-                    <ion-buttons slot="start">
-                        <ion-button (click)="cancel()">Cancelar</ion-button>
-                    </ion-buttons>
-                    <ion-title>Nueva transacción</ion-title>
-                    <ion-buttons slot="end">
-                        <ion-button (click)="confirm()" [strong]="true">Confirmar</ion-button>
-                    </ion-buttons>
-                </ion-toolbar>
-            </ion-header>
-            <div class="content-body">
-                <form>
-                    <label for="type">Tipo de Documento</label>
-                    <select id="type" [formControl]="documentType" [ngClass]="flashClass" (animationend)="flashClass = ''">
-                        <option value="">Seleccione el Tipo de Documento</option>
-                        <option value="CC">Cédula de Ciudadanía</option>
-                        <option value="TI">Tarjeta de Identidad</option>
-                        <option value="CE">Cédula de Extranjería</option>
-                        <option value="PP">Pasaporte</option>
-                        <option value="RC">Registro Civil</option>
-                        <option value="PPT">Permiso de Protección Temporal</option>
-                    </select>
-                    <label for="document">Número de Documento</label>
-                    <input type="number" id="document" placeholder="Ingrese el Número de Documento" [formControl]="documentNumber" [ngClass]="flashClass" (animationend)="flashClass = ''">
-                    <label for="value">Valor</label>
-                    <input type="text" inputmode="numeric" pattern="[0-9]*" id="value" placeholder="Ingrese la cantidad a abonar" [formControl]="value" (keyup)="formatValue()">
-                    <div id="donation">
-                        <ion-toggle checked="false" (ionChange)="donationState($event)">Donación</ion-toggle>
-                    </div>
-                    <ion-searchbar *ngIf="donation" placeholder="Buscar Campista" [debounce]="200" (ionInput)="handleInput($event)"></ion-searchbar>
-                    <div *ngIf="donation" class="list">
-                        <ion-list>
-                            <ion-item *ngFor="let person of resultUser">
-                                <ion-label (click)="selectPerson(person)">{{ person.NAME }}</ion-label>
-                            </ion-item>
-                        </ion-list>
-                    </div>
-                </form>
-            </div>
-        </ng-template>
-    </ion-modal>
+  <!-- New Transaction -->
+  <ion-modal [isOpen]="openCreateModal" (willDismiss)="onWillDismiss($event)">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="cancel()">Cancelar</ion-button>
+          </ion-buttons>
+          <ion-title>Nueva transacción</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="confirm()" [strong]="true"
+              >Confirmar</ion-button
+            >
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <div class="content-body">
+        <form>
+          <label for="type">Tipo de Documento</label>
+          <select
+            id="type"
+            [formControl]="documentType"
+            [ngClass]="flashClass"
+            (animationend)="flashClass = ''"
+          >
+            <option value="">Seleccione el Tipo de Documento</option>
+            <option value="CC">Cédula de Ciudadanía</option>
+            <option value="TI">Tarjeta de Identidad</option>
+            <option value="CE">Cédula de Extranjería</option>
+            <option value="PP">Pasaporte</option>
+            <option value="RC">Registro Civil</option>
+            <option value="PPT">Permiso de Protección Temporal</option>
+          </select>
+          <label for="document">Número de Documento</label>
+          <input
+            type="number"
+            id="document"
+            placeholder="Ingrese el Número de Documento"
+            [formControl]="documentNumber"
+            [ngClass]="flashClass"
+            (animationend)="flashClass = ''"
+          />
+          <label for="value">Valor</label>
+          <input
+            type="text"
+            inputmode="numeric"
+            pattern="[0-9]*"
+            id="value"
+            placeholder="Ingrese la cantidad a abonar"
+            [formControl]="value"
+            (keyup)="formatValue()"
+          />
+          <div id="donation">
+            <ion-toggle checked="false" (ionChange)="donationState($event)"
+              >Donación</ion-toggle
+            >
+          </div>
+          <ion-searchbar
+            *ngIf="donation"
+            placeholder="Buscar Campista"
+            [debounce]="200"
+            (ionInput)="handleInput($event)"
+          ></ion-searchbar>
+          <div *ngIf="donation" class="list">
+            <ion-list>
+              <ion-item *ngFor="let person of resultUser">
+                <ion-label (click)="selectPerson(person)">{{
+                  person.NAME
+                }}</ion-label>
+              </ion-item>
+            </ion-list>
+          </div>
+        </form>
+      </div>
+    </ng-template>
+  </ion-modal>
 </ion-content>
 <ion-toast
   #errorToast
@@ -96,15 +174,24 @@
 ></ion-toast>
 
 <div class="editModal" *ngIf="openEditmodal">
-    <div class="box">
-        <span class="header">Editar transacción</span>
-        <div class="body">
-            <label>Valor&nbsp;&nbsp;<input type="number" [(ngModel)]="currentTransaction.VALUE"></label>
-            <ion-toggle justify="start" [checked]="currentTransaction.DONATION === 1" (ionChange)="donationEditState($event)">Donación</ion-toggle>
-        </div>
-        <div class="actions">
-            <button class="close" (click)="setEditOpen(false)">Cerrar</button>
-            <button class="edit" (click)="edit()">Editar</button>
-        </div>
+  <div class="box">
+    <span class="header">Editar transacción</span>
+    <div class="body">
+      <label
+        >Valor&nbsp;&nbsp;<input
+          type="number"
+          [(ngModel)]="currentTransaction.VALUE"
+      /></label>
+      <ion-toggle
+        justify="start"
+        [checked]="currentTransaction.DONATION === 1"
+        (ionChange)="donationEditState($event)"
+        >Donación</ion-toggle
+      >
     </div>
+    <div class="actions">
+      <button class="close" (click)="setEditOpen(false)">Cerrar</button>
+      <button class="edit" (click)="edit()">Editar</button>
+    </div>
+  </div>
 </div>

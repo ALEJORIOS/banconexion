@@ -9,17 +9,25 @@
  * https://ionicframework.com/docs/layout/global-stylesheets
  */
 
-
 /* Core CSS required for Ionic components to work properly */
 
 // @import "@ionic/angular/css/core.css";
 
 /* Basic CSS for apps built with Ionic */
+.layout {
+  max-width: 100vmin;
+  margin: 0 auto;
+}
+
+html {
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+}
 
 @import "@ionic/angular/css/normalize.css";
 @import "@ionic/angular/css/structure.css";
 @import "@ionic/angular/css/typography.css";
-@import '@ionic/angular/css/display.css';
+@import "@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
 
@@ -32,82 +40,86 @@
 /* Font */
 
 @font-face {
-    font-family: "InterThin";
-    src: url("assets/font/Inter-ExtraLight.ttf") format("TrueType");
-    font-weight: 200;
+  font-family: "InterThin";
+  src: url("assets/font/Inter-ExtraLight.ttf") format("TrueType");
+  font-weight: 200;
 }
 
 @font-face {
-    font-family: "InterRegular";
-    src: url("assets/font/Inter-Regular.ttf") format("TrueType");
-    font-weight: 400;
+  font-family: "InterRegular";
+  src: url("assets/font/Inter-Regular.ttf") format("TrueType");
+  font-weight: 400;
 }
 
 @font-face {
-    font-family: "InterBold";
-    src: url("assets/font/Inter-Bold.ttf") format("TrueType");
-    font-weight: 700;
+  font-family: "InterBold";
+  src: url("assets/font/Inter-Bold.ttf") format("TrueType");
+  font-weight: 700;
 }
 
 :root {
-    font-family: "InterRegular";
+  font-family: "InterRegular";
 }
 
 html {
-    font-size: 3vmin;
+  font-size: 3vmin;
 }
-
 
 /* Chrome, Safari, Edge, Opera */
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
-
 
 /* Firefox */
 
-input[type=number] {
-    -moz-appearance: textfield;
-    appearance: none;
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: none;
 }
 
 input,
 select {
-    -webkit-appearance: none;
-    appearance: none;
-    border: none;
-    outline: none;
-    color: var(--text-200);
-    border-radius: 10px;
-    background-color: var(--bg-100);
-    -webkit-box-shadow: inset 0 0 6px var(--bg-300);
-    box-shadow: inset 0 0 6px var(--bg-300);
-    height: 2.4rem;
-    text-align: center;
-    text-align: -webkit-center;
-    text-align: -moz-center;
-    &:focus {
-        border: 2px solid var(--primary-200);
-    }
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  outline: none;
+  color: var(--text-200);
+  border-radius: 10px;
+  background-color: var(--bg-100);
+  -webkit-box-shadow: inset 0 0 6px var(--bg-300);
+  box-shadow: inset 0 0 6px var(--bg-300);
+  height: 2.4rem;
+  text-align: center;
+  text-align: -webkit-center;
+  text-align: -moz-center;
+  &:focus {
+    border: 2px solid var(--primary-200);
+  }
 }
 
 select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    cursor: pointer;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
 }
 
 .header-md {
-    -webkit-box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
-    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.05), 0 4px 5px 0 rgba(0, 0, 0, 0.01), 0 1px 10px 0 rgba(0, 0, 0, 0.05);
+  -webkit-box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.05),
+    0 4px 5px 0 rgba(0, 0, 0, 0.01), 0 1px 10px 0 rgba(0, 0, 0, 0.05);
 }
 
 @supports (-webkit-touch-callout: none) {
-    select {
-        padding-left: 5rem;
-    }
+  select {
+    padding-left: 5rem;
+  }
+}
+
+body.native-app ion-content {
+  --padding-top: env(safe-area-inset-top);
 }

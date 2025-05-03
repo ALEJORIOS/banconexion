@@ -1,20 +1,11 @@
-<!-- <div *ngIf="countDown" class="count">
-  {{ countDown?.dayOfYear() - 1 }} días, {{ countDown?.hour() }} horas, {{ countDown?.minute() }} minutos y {{ countDown?.second() }} segundos <br>
-  ¿Qué esperas para registrarte?
-</div> -->
 <div class="ad">
   <span>16, 17 y 18 de agosto de 2025</span>
-  <span>¡No lo dejes pasar!</span>
+  <span>¡No lo dejes pasar!2</span>
 </div>
 <div class="content">
   <img class="logo" src="assets/logo.webp" />
   <h2 class="title">Banconexión</h2>
-  <h3 class="subtitle">Conexión Divina 2025</h3>
-  <input
-    type="number"
-    placeholder="Número de Documento"
-    [formControl]="document"
-  />
+  <h3 class="subtitle">Haciendo la voluntad de Dios</h3>
   <select [formControl]="type">
     <option value="">Tipo de Documento</option>
     <option value="CC">Cédula de Ciudadanía</option>
@@ -24,6 +15,11 @@
     <option value="RC">Registro Civil</option>
     <option value="PPT">Permiso de Protección Temporal</option>
   </select>
+  <input
+    type="number"
+    placeholder="Número de Documento"
+    [formControl]="document"
+  />
   <input
     *ngIf="enableAdmin"
     type="password"
@@ -36,7 +32,7 @@
     [disabled]="!enableButton"
     (click)="login()"
   >
-    Buscar
+    Ingresar
   </button>
   <button
     *ngIf="enableAdmin"
@@ -51,7 +47,7 @@
   <i [ngClass]="{'hide': !showLoadingText, 'show': showLoadingText}"
     >Cargando...</i
   >
-  <div class="version">Versión 2.0.0</div>
+  <div class="version">Versión 2.0.1</div>
 </div>
 <ion-toast
   #errorToast

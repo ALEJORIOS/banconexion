@@ -5,22 +5,22 @@
   position: absolute;
   font-size: 1.4rem;
 }
+
 .ad {
   position: absolute;
-  top: 1rem;
+  top: 4rem;
   font-size: 1.4rem;
   display: flex;
   flex-direction: column;
   width: 100dvw;
   align-items: center;
-  //   font-weight: 600;
-  color: #a0a0a0;
+  color: #1785f9;
 }
 div.content {
   display: grid;
   place-content: center;
   text-align: center;
-  height: 100dvh;
+  height: calc(100% - env(safe-area-inset-top) - env(safe-area-inset-bottom));
   width: 100dvw;
   background-color: var(--bg-100);
   img.logo {
@@ -36,7 +36,7 @@ div.content {
   }
   h3.subtitle {
     font-size: 1.2rem;
-    color: var(--bg-300);
+    color: #1785f9;
     margin: 0;
   }
   input[type="number"],
@@ -63,7 +63,7 @@ div.content {
   }
   strong.church {
     font-family: "InterThin";
-    color: var(--bg-300);
+    color: #1785f9;
   }
   i.hide {
     visibility: hidden;
@@ -73,7 +73,7 @@ div.content {
   }
   .version {
     position: absolute;
-    bottom: 38px;
+    bottom: calc(98px + env(safe-area-inset-bottom));
     left: -20px;
     text-align: center;
     transform: rotate(90deg);

@@ -3,14 +3,14 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Área</ion-title>
+    <ion-title>Áreas</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Área</ion-title>
+      <ion-title size="large">Áreas</ion-title>
     </ion-toolbar>
   </ion-header>
   <div id="container">
@@ -81,7 +81,7 @@
     </div>
     <div class="camperCard" (click)="goTo('CRE')">
       <section class="camperData">
-        <span class="campistName">Asistentes (Crecimiento)</span>
+        <span class="campistName">Crecimiento (Asistentes)</span>
       </section>
       <section class="camperProgress">
         <span class="successPercentage">CRE</span>
@@ -89,7 +89,7 @@
     </div>
     <div class="camperCard" (click)="goTo('CON')">
       <section class="camperData">
-        <span class="campistName">Visitas (Consolidación)</span>
+        <span class="campistName">Consolidación (Visitas)</span>
       </section>
       <section class="camperProgress">
         <span class="successPercentage">CON</span>
@@ -119,6 +119,14 @@
         <span class="successPercentage">INT</span>
       </section>
     </div>
+    <div class="camperCard" (click)="goTo('JCR')">
+      <section class="camperData">
+        <span class="campistName">Jóvenes</span>
+      </section>
+      <section class="camperProgress">
+        <span class="successPercentage">JCR</span>
+      </section>
+    </div>
     <div class="camperCard" (click)="goTo('MAT')">
       <section class="camperData">
         <span class="campistName">Matrimonios</span>
@@ -135,14 +143,7 @@
         <span class="successPercentage">PRO</span>
       </section>
     </div>
-    <div class="camperCard" (click)="goTo('JCR')">
-      <section class="camperData">
-        <span class="campistName">Jóvenes</span>
-      </section>
-      <section class="camperProgress">
-        <span class="successPercentage">JCR</span>
-      </section>
-    </div>
+
     }
   </div>
 </ion-content>

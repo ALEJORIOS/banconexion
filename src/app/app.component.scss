@@ -118,21 +118,19 @@ ion-item.selected {
   --color: var(--ion-color-primary);
 }
 
-.no-menu{
+.no-menu {
   display: none;
 }
 
-.version{
+.version {
   float: left;
-  font-family: 'InterThin';
+  font-family: "InterThin";
   margin-top: 1rem;
   margin-left: 1rem;
   color: var(--text-200);
 }
 
 .hod {
-  position: absolute;
-  bottom: 10px;
   height: 60px;
   user-select: none;
   filter: grayscale(1);

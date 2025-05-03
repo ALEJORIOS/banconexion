@@ -10,10 +10,10 @@ import { CrudService } from 'src/app/services/crud.service';
 import { StoreService } from 'src/app/services/store.service';
 
 @Component({
-    selector: 'app-inicio',
-    templateUrl: './inicio.page.html',
-    styleUrls: ['./inicio.page.scss'],
-    standalone: false
+  selector: 'app-inicio',
+  templateUrl: './inicio.page.html',
+  styleUrls: ['./inicio.page.scss'],
+  standalone: false,
 })
 export class InicioPage {
   alertMessage: string = '';
@@ -28,13 +28,28 @@ export class InicioPage {
   countDown: any;
   interval: any;
 
+  innheight: number = 0;
+  outheight: number = 0;
+  clientHeight: number = 0;
+
   @ViewChild('errorToast') errorToast!: HTMLIonToastElement;
 
   constructor(
     private crudService: CrudService,
     private storeService: StoreService,
     private router: NavController
-  ) {}
+  ) {
+    this.innheight = window.innerHeight;
+    this.outheight = window.outerHeight;
+    this.clientHeight = window.document.documentElement.clientHeight;
+    document
+      .getElementsByClassName('redbar')
+      .item(0)
+      ?.setAttribute(
+        'style',
+        'bottom: ' + innerHeight + this.outheight + this.clientHeight + 'px;'
+      );
+  }
 
   ionViewDidEnter() {
     this.updateTime();

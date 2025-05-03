@@ -2,6 +2,8 @@ import { Component, OnInit, effect } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { StoreService } from './services/store.service';
+import { Platform } from '@ionic/angular';
+import { StatusBar, Style } from '@capacitor/status-bar';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -13,7 +15,12 @@ export class AppComponent {
 
   currentFolder: string = '';
 
-  constructor(private router: Router, private storeService: StoreService) {
+  constructor(
+    router: Router,
+    private storeService: StoreService,
+    private platform: Platform
+  ) {
+    this.initializeApp();
     window.addEventListener('visibilitychange', function () {
       if (document.visibilityState === 'visible') {
         console.log('APP resumed');
@@ -28,9 +35,9 @@ export class AppComponent {
         url: '/progreso',
         icon: 'bar-chart',
       });
-      this.appPages.push({ title: 'Metas', url: '/metas', icon: 'ribbon' });
+      this.appPages.push({ title: 'Tarifas', url: '/metas', icon: 'ribbon' });
       this.appPages.push({
-        title: 'Transacciones',
+        title: 'Abonos',
         url: '/transacciones',
         icon: 'cash',
       });
@@ -73,7 +80,7 @@ export class AppComponent {
             : storeService.userData()[0]?.LEADER
         }`;
         this.appPages.splice(-1, 0, {
-          title: 'Área',
+          title: 'Áreas',
           url: area,
           icon: 'people',
         });
@@ -102,5 +109,11 @@ export class AppComponent {
         JSON.parse(localStorage.getItem('userData') || '')
       );
     }
+  }
+
+  async initializeApp() {
+    await this.platform.ready();
+    await StatusBar.setStyle({ style: Style.Light });
+    await StatusBar.setBackgroundColor({ color: '#ffffff' });
   }
 }
