@@ -47,10 +47,7 @@
 				</span>
 			</section>
 			<section class="camperProgress">
-				<span class="successPercentage">{{ (camper?.CONFIRMED / camper?.GOAL) | percentPipe }}</span>
 				<pbar [value]="(camper?.CONFIRMED/ camper?.GOAL)*100"></pbar>
-				<span class="progressLabel">Progreso</span>
-				<!-- <span class="confirmedPercentage">{{ (camper?.CONFIRMED / camper?.GOAL) | percent }}</span> -->
 			</section>
 		</div>
 	</div>

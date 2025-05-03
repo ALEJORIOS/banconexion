@@ -1,4 +1,12 @@
+<span class="percent" [style]="{ color: value < 100 ? 'var(--primary-100)' : 'var(--third-100)' }">
+	{{ value / 100 | percentPipe }}
+</span>
 <div class="progress">
-  <div class="value" [style.width.%]="value"></div>
-  <div class="confirmed" [style.width.%]="confirmed"></div>
+	@if (value < 100) {
+	<div class="value" [style.width.%]="value"></div>
+	} @else{
+	<div class="full" [style.width.%]="value"></div>
+	}
+	<div class="confirmed" [style.width.%]="confirmed"></div>
 </div>
+<span class="progressLabel" [style]="{ 'font-size': value === 100 ? '24px' : 'auto' }">{{ progressLabel(value) }}</span>

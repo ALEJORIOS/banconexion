@@ -48,9 +48,7 @@
 				</span>
 			</section>
 			<section class="camperProgress">
-				<span class="successPercentage">{{ (camper?.BALANCE / camper?.GOAL) | percent }}</span>
 				<pbar [value]="(camper?.CONFIRMED / camper?.GOAL)*100"></pbar>
-				<span class="progressLabel">Progreso</span>
 			</section>
 		</div>
 		} @else {
