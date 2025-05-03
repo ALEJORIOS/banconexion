@@ -8,15 +8,10 @@ import { AreaPageRoutingModule } from './area-routing.module';
 
 import { AreaPage } from './area.page';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { PercentPipe } from 'src/app/pipes/percent.pipe';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    AreaPageRoutingModule,
-    ComponentsModule
-  ],
-  declarations: [AreaPage]
+	imports: [CommonModule, FormsModule, IonicModule, AreaPageRoutingModule, ComponentsModule, PercentPipe],
+	declarations: [AreaPage],
 })
 export class AreaPageModule {}

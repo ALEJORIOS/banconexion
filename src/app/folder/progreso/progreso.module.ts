@@ -8,15 +8,10 @@ import { ProgresoPageRoutingModule } from './progreso-routing.module';
 
 import { ProgresoPage } from './progreso.page';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { PercentPipe } from 'src/app/pipes/percent.pipe';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    ProgresoPageRoutingModule,
-    ComponentsModule
-  ],
-  declarations: [ProgresoPage]
+	imports: [CommonModule, FormsModule, IonicModule, ProgresoPageRoutingModule, ComponentsModule, PercentPipe],
+	declarations: [ProgresoPage],
 })
 export class ProgresoPageModule {}
