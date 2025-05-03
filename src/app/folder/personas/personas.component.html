@@ -16,12 +16,7 @@
 
   <div id="container">
     <button class="actionButton" (click)="refresh()">Actualizar</button>
-    <button
-      class="actionButton"
-      [disabled]="true"
-      id="open-modal"
-      (click)="cleanModal()"
-    >
+    <button class="actionButton" id="open-modal" (click)="cleanModal()">
       Registrar Campista
     </button>
     <button
@@ -50,7 +45,7 @@
         <ion-icon name="open-outline"></ion-icon>
       </div>
       <span class="campistLabel">Campista</span>
-      <span class="campistName">{{ campist.NAME }}</span>
+      <span class="campistName">{{ campist.NAME | titlecase }}</span>
       <span class="campistDocument"
         ><ion-icon name="id-card-outline"></ion-icon>
         {{ campist.DOCUMENT_TYPE }} {{ campist.DOCUMENT }}</span

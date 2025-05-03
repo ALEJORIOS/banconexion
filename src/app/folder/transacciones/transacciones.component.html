@@ -49,7 +49,7 @@
         <span class="transactionActionLabel" *ngIf="transaction.DONATION === 1"
           >Donación para</span
         >
-        <span class="transactionName">{{ transaction.NAME }}</span>
+        <span class="transactionName">{{ transaction.NAME | titlecase }}</span>
         <span class="transactionDocument"
           >{{ transaction.DOCUMENT_TYPE }} {{ transaction.DOCUMENT }}</span
         >
