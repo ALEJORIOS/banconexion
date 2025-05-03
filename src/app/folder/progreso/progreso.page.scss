@@ -1,78 +1,67 @@
 #container {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 64px;
+  .camperCard {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    box-shadow: 0 0 4px #a0a0a0;
     padding: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 64px;
-    .refresh {
-        width: 100%;
-        padding: 12px;
-        font-size: 1.2rem;
-        color: white;
-        background-color: var(--primary-100);
-        border-radius: 8px;
-        &:disabled {
-            background-color: var(--primary-200);
+    border-radius: 8px;
+    .camperData {
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid #c0c0c0;
+      .campistLabel {
+        font-size: 1rem;
+      }
+      .campistName {
+        font-size: clamp(10px, 5vw, 1.6rem);
+        font-family: "InterBold";
+        line-height: 2.2rem;
+      }
+      .campistDocumentAge {
+        font-size: 1.1rem;
+      }
+      .camperArea {
+        font-size: 1.1rem;
+        b {
+          color: var(--primary-100);
         }
+        margin-bottom: 8px;
+      }
+      .reached {
+        font-size: 1.1rem;
+      }
     }
-    .camperCard {
-        display: grid;
-        grid-template-columns: 3fr 1fr;
-        box-shadow: 0 0 4px #a0a0a0;
-        padding: 12px;
-        border-radius: 8px;
-        .camperData {
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid #C0C0C0;
-            .campistLabel {
-                font-size: 1rem;
-            }
-            .campistName {
-                font-size: clamp(10px, 5vw, 1.6rem);
-                font-family: "InterBold";
-                line-height: 2.2rem;
-            }
-            .campistDocumentAge {
-                font-size: 1.1rem;
-            }
-            .camperArea {
-                font-size: 1.1rem;
-                b {
-                    color: var(--primary-100);
-                }
-                margin-bottom: 8px;
-            }
-            .reached {
-                font-size: 1.1rem;
-            }
+    .camperProgress {
+      display: grid;
+      place-content: center;
+      padding-left: 12px;
+      .successPercentage {
+        text-align: center;
+        font-size: 1.6rem;
+        font-family: "InterBold";
+        color: var(--primary-100);
+      }
+      .confirmedPercentage {
+        text-align: center;
+        font-size: 1.6rem;
+        font-family: "InterBold";
+        color: #69bf51;
+      }
+      .progressLabel {
+        text-align: center;
+        font-size: 1.1rem;
+      }
+      .fullfilled {
+        &::-webkit-progress-value {
+          background-color: gold;
+          border-radius: 6px;
         }
-        .camperProgress {
-            display: grid;
-            place-content: center;
-            padding-left: 12px;
-            .successPercentage {
-                text-align: center;
-                font-size: 1.6rem;
-                font-family: "InterBold";
-                color: var(--primary-100);
-            }
-            .confirmedPercentage {
-                text-align: center;
-                font-size: 1.6rem;
-                font-family: "InterBold";
-                color: #69bf51;
-            }
-            .progressLabel {
-                text-align: center;
-                font-size: 1.1rem;
-            }
-            .fullfilled {
-                &::-webkit-progress-value {
-                    background-color: gold;
-                    border-radius: 6px;
-                }
-            }
-        }
+      }
     }
+  }
 }

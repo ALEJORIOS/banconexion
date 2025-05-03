@@ -15,26 +15,24 @@
   </ion-header>
 
   <div id="container">
-    <section>
-      <ion-button
-        *ngIf="
-          storeService.userData()[0].ADMIN === 3 ||
-          storeService.userData()[0].ADMIN === 2
-        "
-        class="option"
-        expand="block"
-        (click)="openCreateTransactions()"
-        >Nueva Transacción</ion-button
-      >
-      <ion-button
-        *ngIf="storeService.userData()[0].ADMIN === 3"
-        class="option"
-        (click)="confirmTransactions()"
-        [disabled]="selectedTransactions.length === 0"
-        expand="block"
-        >Confirmar transacciones</ion-button
-      >
-    </section>
+    <button
+      *ngIf="
+        storeService.userData()[0].ADMIN === 3 ||
+        storeService.userData()[0].ADMIN === 2
+      "
+      class="actionButton"
+      (click)="openCreateTransactions()"
+    >
+      Nueva Transacción
+    </button>
+    <button
+      *ngIf="storeService.userData()[0].ADMIN === 3"
+      class="actionButton"
+      (click)="confirmTransactions()"
+      [disabled]="selectedTransactions.length === 0"
+    >
+      Confirmar transacciones
+    </button>
     <div
       *ngFor="let transaction of transactionsData"
       class="transactionCard"

@@ -15,7 +15,7 @@
   </ion-header>
   <div id="container">
     @if(area !== 'all') {
-    <button class="refresh" (click)="refresh()">Actualizar</button>
+    <button class="actionButton" (click)="refresh()">Actualizar</button>
     <div *ngFor="let camper of campersData" class="camperCard">
       <section class="camperData">
         <span class="campistLabel">Campista</span>
@@ -63,14 +63,6 @@
       </section>
     </div>
     } @else {
-    <!-- <div class="camperCard" (click)="goTo('AST')">
-      <section class="camperData">
-        <span class="campistName">Asistentes</span>
-      </section>
-      <section class="camperProgress">
-        <span class="successPercentage">AST</span>
-      </section>
-    </div> -->
     <div class="camperCard" (click)="goTo('ALB')">
       <section class="camperData">
         <span class="campistName">Alabanza</span>
