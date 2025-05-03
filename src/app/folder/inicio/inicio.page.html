@@ -1,6 +1,6 @@
 <div class="ad">
 	<span>16, 17 y 18 de agosto de 2025</span>
-	<span>¡No lo dejes pasar!2</span>
+	<span>¡No lo dejes pasar!</span>
 </div>
 <div class="content">
 	<img class="logo" src="assets/logo.webp" />
@@ -17,8 +17,12 @@
 	</select>
 	<input type="number" placeholder="Número de Documento" [formControl]="document" />
 	<input *ngIf="enableAdmin" type="password" placeholder="Contraseña" [formControl]="password" />
-	<button *ngIf="!enableAdmin" class="buscar" [disabled]="!enableButton" (click)="login()">Ingresar</button>
-	<button *ngIf="enableAdmin" class="buscar" [disabled]="!enableButton" (click)="loginAdmin()">Ingresar</button>
+	<button *ngIf="!enableAdmin" class="actionButton buscar" [disabled]="!enableButton" (click)="login()">
+		Ingresar
+	</button>
+	<button *ngIf="enableAdmin" class="actionButton buscar" [disabled]="!enableButton" (click)="loginAdmin()">
+		Ingresar
+	</button>
 	<strong class="church">Iglesia Cristiana Cuadrangular</strong>
 	<strong class="church">En Espíritu y En Verdad</strong>
 	<i [ngClass]="{'hide': !showLoadingText, 'show': showLoadingText}">Cargando...</i>
