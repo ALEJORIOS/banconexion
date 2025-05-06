@@ -1,8 +1,8 @@
-<div class="ad">
-	<span>16, 17 y 18 de agosto de 2025</span>
-	<span>¡No lo dejes pasar!</span>
-</div>
 <div class="content">
+	<div class="ad">
+		<span>16, 17 y 18 de agosto de 2025</span>
+		<span>¡No lo dejes pasar!</span>
+	</div>
 	<img class="logo" src="assets/logo.webp" />
 	<h2 class="title">Banconexión</h2>
 	<h3 class="subtitle">Haciendo la voluntad de Dios</h3>
@@ -15,8 +15,14 @@
 		<option value="RC">Registro Civil</option>
 		<option value="PPT">Permiso de Protección Temporal</option>
 	</select>
-	<input type="number" placeholder="Número de Documento" [formControl]="document" />
-	<input *ngIf="enableAdmin" type="password" placeholder="Contraseña" [formControl]="password" />
+	<input type="number" placeholder="Número de Documento" (keydown.enter)="login()" [formControl]="document" />
+	<input
+		*ngIf="enableAdmin"
+		#adminPassword
+		type="password"
+		(keydown.enter)="loginAdmin()"
+		placeholder="Contraseña"
+		[formControl]="password" />
 	<button *ngIf="!enableAdmin" class="actionButton buscar" [disabled]="!enableButton" (click)="login()">
 		Ingresar
 	</button>
@@ -26,8 +32,8 @@
 	<strong class="church">Iglesia Cristiana Cuadrangular</strong>
 	<strong class="church">En Espíritu y En Verdad</strong>
 	<i [ngClass]="{'hide': !showLoadingText, 'show': showLoadingText}">Cargando...</i>
-	<div class="version">Versión 2.0.2</div>
 </div>
+<div class="version">Versión 2.0.2</div>
 <ion-toast
 	position="top"
 	swipeGesture="vertical"

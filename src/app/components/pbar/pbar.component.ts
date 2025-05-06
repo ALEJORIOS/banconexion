@@ -15,7 +15,7 @@ export class PbarComponent implements OnInit {
 	ngOnInit() {}
 
 	progressLabel(value: number) {
-		if (value <= 0) return '¡Tu puedes!';
+		if (value <= 0) return '¡Tú puedes!';
 		if (value > 0 && value < 25) return '¡Buen comienzo!';
 		if (value >= 25 && value < 75) return 'Sigue así';
 		if (value >= 75 && value < 100) return 'Falta poco';

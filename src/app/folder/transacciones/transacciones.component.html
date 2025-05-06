@@ -53,7 +53,7 @@
 				<span class="transactionDateInfo">Fecha y Hora de la transacción</span>
 				<span class="transactionDate">{{ transaction.DATE | date : 'dd/MM/YYYY HH:mm' }}</span>
 				<span class="transactionAuthorityInfo">Autorizado por</span>
-				<span class="transactionAuthority">{{ transaction.AUTHORIZED_BY }}</span>
+				<span class="transactionAuthority">{{ transaction.AUTHORIZED_BY | titlecase }}</span>
 				<span class="transactionStatusInfo">Estado</span>
 				<span
 					class="transactionStatus"

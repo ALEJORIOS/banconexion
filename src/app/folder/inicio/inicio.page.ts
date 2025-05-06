@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
 
@@ -27,6 +27,7 @@ export class InicioPage {
 	outheight: number = 0;
 	clientHeight: number = 0;
 
+	@ViewChild('adminPassword') adminPassword!: ElementRef<HTMLInputElement>;
 	@ViewChild('errorToast') errorToast!: HTMLIonToastElement;
 
 	constructor(private crudService: CrudService, private storeService: StoreService, private router: NavController) {
@@ -90,6 +91,9 @@ export class InicioPage {
 									this.enableButton = true;
 									this.showLoadingText = false;
 									this.saveAdminData = res;
+									setTimeout(() => {
+										this.adminPassword.nativeElement.focus();
+									}, 1);
 								} else {
 									this.enableAdmin = false;
 									this.storeService.userData.set(res);

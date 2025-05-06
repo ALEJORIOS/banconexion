@@ -41,7 +41,7 @@
 			</span>
 			<span class="campistHost" *ngIf="campist.INVITED">
 				Invitado de
-				<b>{{ campist.INVITED }}</b>
+				<b>{{ campist.INVITED | titlecase }}</b>
 			</span>
 		</div>
 	</div>
@@ -90,11 +90,19 @@
 					Whatsapp)
 				</label>
 				<input type="number" id="phone" placeholder="Número de celular" formControlName="phone" />
-				<label for="age">Edad</label>
+				<label for="document">Correo Electrónico</label>
+				<input type="text" id="email" placeholder="Correo Electrónico" formControlName="email" />
+				<label for="age">Fecha de nacimiento</label>
 				<input type="date" name="age" id="age" placeholder="Edad" formControlName="birth" />
+				<label for="sex">Sexo</label>
+				<select id="sex" formControlName="sex">
+					<option value=""></option>
+					<option value="1">Masculino</option>
+					<option value="2">Femenino</option>
+				</select>
 				<label for="area">Área</label>
 				<select id="area" formControlName="area">
-					<option value="">Seleccione el Área</option>
+					<option value="">Seleccione un área</option>
 					<option value="ALB">Alabanza</option>
 					<option value="CRE">Crecimiento</option>
 					<option value="CON">Consolidación</option>
@@ -109,7 +117,7 @@
 				<select id="guestBy" formControlName="guest">
 					<option [value]="0">Nadie</option>
 					<option [value]="campist.ID" *ngFor="let campist of campersData">
-						{{ campist.NAME }}
+						{{ campist.NAME | titlecase }}
 					</option>
 				</select>
 				<label>
@@ -195,8 +203,16 @@
 					Whatsapp)
 				</label>
 				<input type="number" id="phone" placeholder="Número de celular" formControlName="phone" />
+				<label for="email">Email</label>
+				<input type="text" id="email" placeholder="Correo Electrónico" formControlName="email" />
 				<label for="age">Fecha de Nacimiento</label>
 				<input type="date" name="age" id="age" placeholder="Edad" formControlName="birth" />
+				<label for="sex">Sexo</label>
+				<select id="sex" formControlName="sex">
+					<option value=""></option>
+					<option value="1">Masculino</option>
+					<option value="2">Femenino</option>
+				</select>
 				<label for="area">Área</label>
 				<select id="area" formControlName="area">
 					<option value="">Seleccione el Área</option>

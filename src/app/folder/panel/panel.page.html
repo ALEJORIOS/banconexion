@@ -1,32 +1,134 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>Reportes</ion-title>
-  </ion-toolbar>
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-menu-button></ion-menu-button>
+		</ion-buttons>
+		<ion-title>Reportes</ion-title>
+	</ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Reportes</ion-title>
-    </ion-toolbar>
-  </ion-header>
+	<ion-header collapse="condense">
+		<ion-toolbar>
+			<ion-title size="large">Reportes</ion-title>
+		</ion-toolbar>
+	</ion-header>
 
-  <div id="container">
-    <button
-      class="action"
-      [disabled]="loadingState"
-      (click)="exportTransactions()"
-    >
-      <span>Transacciones</span>
-      <span>({{ date }})</span>
-    </button>
-    <button class="action" [disabled]="loadingState" (click)="exportReport()">
-      <span>Listado</span>
-      <span>({{ date }})</span>
-    </button>
-    <i *ngIf="loadingState">Cargando...</i>
-  </div>
+	<div id="container">
+		<button class="action" [disabled]="loadingState" (click)="exportTransactions()">
+			<span>Transacciones</span>
+			<span>({{ date }})</span>
+		</button>
+		<button class="action" [disabled]="loadingState" (click)="exportReport()">
+			<span>Listado</span>
+			<span>({{ date }})</span>
+		</button>
+		<i *ngIf="loadingState">Cargando...</i>
+		<h1>Resumen</h1>
+		<div class="summary">
+			@if(false) {
+			<div class="threshold">
+				<input type="range" min="0" max="100" step="1" [(ngModel)]="threshold" (change)="onRangeChange($event)" />
+				<div class="thresholdPerc">
+					<input type="number" class="thresholdInput" [(ngModel)]="threshold" (change)="onRangeChange($event)" />
+					%
+				</div>
+			</div>
+			}
+			<table>
+				<tr>
+					<h3>Recaudo</h3>
+				</tr>
+				<tr>
+					<td>Objetivo</td>
+					<td>{{ loadingSummary ? 'Cargando...' : data.total | currency: 'COP' : 'symbol-narrow' : '1.0-0' }}</td>
+				</tr>
+				<tr>
+					<td>Actual</td>
+					<td>{{ loadingSummary ? 'Cargando...' : data.current | currency: 'COP' : 'symbol-narrow' : '1.0-0' }}</td>
+				</tr>
+				<tr>
+					<td>Actual %</td>
+					<td><b>({{(data.current / data.total) | percent: '1.2-2' }})</b></td>
+				</tr>
+				<tr>
+					<h3>Campistas</h3>
+				</tr>
+				<tr>
+					<td>Registrados</td>
+					<td><b>{{ loadingSummary ? 'Cargando...' : data.count }}</b></td>
+				</tr>
+				<tr>
+					<td>Hombres</td>
+					<td>{{ loadingSummary ? 'Cargando...' : data.men }}</td>
+				</tr>
+				<tr>
+					<td>Mujeres</td>
+					<td>{{ loadingSummary ? 'Cargando...' : data.women }}</td>
+				</tr>
+				<tr>
+					<td>Sin establecer</td>
+					<td>{{ loadingSummary ? 'Cargando...' : data.und }}</td>
+				</tr>
+				<tr>
+					<h3>Por Edad</h3>
+				</tr>
+				<tr>
+					<td>Niños (< 12)</td>
+					<td>{{ loadingSummary ? 'Cargando...' : data.kids }}</td>
+				</tr>
+				<tr>
+					<td>Jóvenes (12 a 23)</td>
+					<td>{{ loadingSummary ? 'Cargando...' : data.youth }}</td>
+				</tr>
+				<tr>
+					<td>Adultos (> 23)</td>
+					<td>{{ loadingSummary ? 'Cargando...' : data.adults }}</td>
+				</tr>
+				<tr>
+					<h3>Por Área</h3>
+				</tr>
+				<tr>
+					<td>Protemplo</td>
+					<td>{{ loadingSummary ? 'Cargando...' : data.area.pro | percent: '1.2-2'}}</td>
+				</tr>
+				<tr>
+					<td>Alabanza</td>
+					<td>{{ loadingSummary ? 'Cargando...' : data.area.alb | percent: '1.2-2'}}</td>
+				</tr>
+				<tr>
+					<td>Crecimiento</td>
+					<td>{{ loadingSummary ? 'Cargando...' : data.area.cre | percent: '1.2-2'}}</td>
+				</tr>
+				<tr>
+					<td>Consolidación</td>
+					<td>{{ loadingSummary ? 'Cargando...' : data.area.con | percent: '1.2-2'}}</td>
+				</tr>
+				<tr>
+					<td>Diaconado</td>
+					<td>{{ loadingSummary ? 'Cargando...' : data.area.dia | percent: '1.2-2'}}</td>
+				</tr>
+				<tr>
+					<td>Intercesión</td>
+					<td>{{ loadingSummary ? 'Cargando...' : data.area.int | percent: '1.2-2'}}</td>
+				</tr>
+				<tr>
+					<td>Matrimonios</td>
+					<td>{{ loadingSummary ? 'Cargando...' : data.area.mat | percent: '1.2-2'}}</td>
+				</tr>
+				<tr>
+					<td>Jóvenes</td>
+					<td>{{ loadingSummary ? 'Cargando...' : data.area.jcr | percent: '1.2-2'}}</td>
+				</tr>
+				<!-- <tr>
+					<td>Asistentes</td>
+					<td>{{ loadingSummary ? 'Cargando...' : data.area.ast | percent: '1.2-2'}}</td>
+				</tr> -->
+				<tr>
+					<td>Granja De Papá</td>
+					<td>{{ loadingSummary ? 'Cargando...' : data.area.gdp | percent: '1.2-2'}}</td>
+				</tr>
+			</table>
+		</div>
+	</div>
 </ion-content>

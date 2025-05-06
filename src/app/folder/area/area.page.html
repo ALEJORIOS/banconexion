@@ -48,7 +48,11 @@
 				</span>
 			</section>
 			<section class="camperProgress">
+				@if (camper?.GOAL === 0) {
+				<pbar [value]="100"></pbar>
+				}@else {
 				<pbar [value]="(camper?.CONFIRMED / camper?.GOAL)*100"></pbar>
+				}
 			</section>
 		</div>
 		} @else {
