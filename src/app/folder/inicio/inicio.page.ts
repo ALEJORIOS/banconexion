@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
+import { firstValueFrom } from 'rxjs';
 
 import { map } from 'rxjs/internal/operators/map';
 import { CrudService } from 'src/app/services/crud.service';
@@ -23,6 +24,10 @@ export class InicioPage {
 	enableAdmin: boolean = false;
 	saveAdminData: any;
 
+	// Variables
+	title: string = '';
+	dates: string = '';
+
 	innheight: number = 0;
 	outheight: number = 0;
 	clientHeight: number = 0;
@@ -30,7 +35,11 @@ export class InicioPage {
 	@ViewChild('adminPassword') adminPassword!: ElementRef<HTMLInputElement>;
 	@ViewChild('errorToast') errorToast!: HTMLIonToastElement;
 
-	constructor(private crudService: CrudService, private storeService: StoreService, private router: NavController) {
+	constructor(
+		private crudService: CrudService,
+		private storeService: StoreService,
+		private router: NavController,
+	) {
 		this.innheight = window.innerHeight;
 		this.outheight = window.outerHeight;
 		this.clientHeight = window.document.documentElement.clientHeight;
@@ -40,7 +49,9 @@ export class InicioPage {
 			?.setAttribute('style', 'bottom: ' + innerHeight + this.outheight + this.clientHeight + 'px;');
 	}
 
-	ionViewDidEnter() {
+	async ionViewDidEnter() {
+		this.title = await this.getVariables('title');
+		this.dates = await this.getVariables('dates');
 		localStorage.removeItem('userData');
 		this.storeService.userData.set([]);
 		this.crudService
@@ -48,7 +59,7 @@ export class InicioPage {
 			.pipe(
 				map((res) => {
 					return res[0].VALUE === '1' ? true : false;
-				})
+				}),
 			)
 			.subscribe({
 				next: (res) => {
@@ -63,6 +74,14 @@ export class InicioPage {
 					}, 1000);
 				},
 			});
+	}
+
+	async getVariables(variableName: string) {
+		try {
+			return (await firstValueFrom(this.crudService.getVariables(variableName))).value;
+		} catch (err) {
+			console.error('Ocurrió un error al intentar obtener la variable: ', err);
+		}
 	}
 
 	login(): void {

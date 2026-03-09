@@ -108,4 +108,10 @@ export class CrudService {
 			params: { threshold },
 		});
 	}
+
+	getVariables(variableName: string) {
+		return this.http.get<any>(`${this.base_url}/variable`, {
+			params: { name: variableName },
+		});
+	}
 }

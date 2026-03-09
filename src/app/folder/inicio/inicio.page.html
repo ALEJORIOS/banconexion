@@ -1,11 +1,12 @@
 <div class="content">
 	<div class="ad">
-		<span>16, 17 y 18 de agosto de 2025</span>
+		<!-- <span>27, 28 y 29 de junio de 2026</span> -->
+		<span>{{ dates }}</span>
 		<span>¡No lo dejes pasar!</span>
 	</div>
 	<img class="logo" src="assets/logo.webp" />
 	<h2 class="title">Banconexión</h2>
-	<h3 class="subtitle">Haciendo la voluntad de Dios</h3>
+	<h3 class="subtitle">{{ title }}</h3>
 	<select [formControl]="type">
 		<option value="">Tipo de Documento</option>
 		<option value="CC">Cédula de Ciudadanía</option>
@@ -33,7 +34,7 @@
 	<strong class="church">En Espíritu y En Verdad</strong>
 	<i [ngClass]="{'hide': !showLoadingText, 'show': showLoadingText}">Cargando...</i>
 </div>
-<div class="version">Versión 2.0.2</div>
+<div class="version">Versión 3.0.0</div>
 <ion-toast
 	position="top"
 	swipeGesture="vertical"

@@ -1,74 +1,88 @@
 #container {
-    padding: 12px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto 1fr 1fr;
-    gap: 12px;
-    overflow: auto;
-    margin-bottom: 44px;
-    div.card:not(.transportCard) {
-        display: grid;
-        grid-template-rows: auto 1fr;
-        box-shadow: 0 0 4px #a0a0a0;
-        border-radius: 8px;
-        img {
-            height: 110px;
-            width: 100%;
-            object-fit: cover;
-            object-position: 0 10%;
-            border-radius: 8px 8px 0 0;
-        }
-        .info {
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-            .title {
-                font-family: "InterBold";
-                font-size: 20px;
-            }
-            .value {
-                font-size: 18px;
-                color: var(--primary-100);
-            }
-            .desc {
-                margin: 6px 0;
-            }
-        }
-    }
-    div.transportCard {
-        box-shadow: 0 0 4px #a0a0a0;
-        border-radius: 8px;
-        display: grid;
-        grid-column: 1/3;
-        grid-template-columns: 1fr 3fr;
-        .info {
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-            .title {
-                font-family: "InterBold";
-                font-size: 22px;
-            }
-            .value {
-                font-size: 18px;
-                color: var(--primary-100);
-            }
-            .desc {
-                margin: 6px 0;
-            }
-        }
-        img {
-            place-self: center;
-            width: 110px;
-            height: 110px;
-            object-fit: cover;
-            object-position: 85%;
-            -webkit-transform: scaleX(-1);
-            transform: scaleX(-1);
-        }
-    }
-    div.babyCard {}
-    div.kidCard {}
-    div.minorCard {}
-    div.completeCard {}
+	padding: 12px;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: auto 1fr 1fr;
+	gap: 12px;
+	overflow: auto;
+	margin-bottom: 44px;
+	div.card:not(.transportCard) {
+		display: grid;
+		grid-template-rows: auto 1fr;
+		box-shadow: 0 0 4px #a0a0a0;
+		border-radius: 8px;
+		img {
+			height: 110px;
+			width: 100%;
+			object-fit: cover;
+			object-position: 0 10%;
+			border-radius: 8px 8px 0 0;
+		}
+		.info {
+			padding: 12px;
+			display: flex;
+			flex-direction: column;
+			.title {
+				font-family: 'InterBold';
+				font-size: 20px;
+			}
+			.value {
+				font-size: 18px;
+				color: var(--primary-100);
+			}
+			.desc {
+				margin: 6px 0;
+			}
+		}
+	}
+	div.transportCard {
+		box-shadow: 0 0 4px #a0a0a0;
+		border-radius: 8px;
+		display: grid;
+		grid-column: 1/3;
+		grid-template-columns: 1fr 3fr;
+		.info {
+			padding: 12px;
+			display: flex;
+			flex-direction: column;
+			.title {
+				font-family: 'InterBold';
+				font-size: 22px;
+			}
+			.value {
+				font-size: 18px;
+				color: var(--primary-100);
+			}
+			.desc {
+				margin: 6px 0;
+			}
+		}
+		img {
+			place-self: center;
+			width: 110px;
+			height: 110px;
+			object-fit: cover;
+			object-position: 85%;
+			-webkit-transform: scaleX(-1);
+			transform: scaleX(-1);
+		}
+	}
+	div.babyCard {
+		img {
+			object-position: inherit !important;
+		}
+	}
+	div.kidCard {
+		img {
+			object-fit: cover !important;
+			object-position: 50% 50% !important;
+		}
+	}
+	div.minorCard {
+		img {
+			// transform: scale(1.1);
+		}
+	}
+	div.completeCard {
+	}
 }
