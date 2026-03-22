@@ -58,7 +58,11 @@ export class TransaccionesComponent implements OnInit {
 		},
 	];
 
-	constructor(private crudService: CrudService, public storeService: StoreService, private titleCase: TitleCasePipe) {}
+	constructor(
+		private crudService: CrudService,
+		public storeService: StoreService,
+		private titleCase: TitleCasePipe,
+	) {}
 
 	public transactionsData: any = [];
 
@@ -189,15 +193,15 @@ export class TransaccionesComponent implements OnInit {
 				next: async () => {
 					if ((await this.difference(value)) + value === 0) {
 						const text: string = `¡Bienvenid@ ${this.titleCase.transform(
-							this.currentName
-						)} a Conexión Divina 2025! 🥳🥳🥳 Nos vemos este 16 de agosto`;
+							this.currentName,
+						)} a Conexión Divina 2026! 🥳🥳🥳 Nos vemos este 27 de junio`;
 						window.open(
-							`https://api.whatsapp.com/send/?phone=%2B57${this.currentPhone}&text=${text}&type=phone_number&app_absent=0`
+							`https://api.whatsapp.com/send/?phone=%2B57${this.currentPhone}&text=${text}&type=phone_number&app_absent=0`,
 						);
 					} else {
-						const text: string = `Hola ${this.currentName},se ha realizado un abono a tu nombre por un valor de ${this.value.value} para Conexión Divina 2025. ¡Cada vez estás más cerca!`;
+						const text: string = `Hola ${this.currentName},se ha realizado un abono a tu nombre por un valor de ${this.value.value} para Conexión Divina 2026. ¡Cada vez estás más cerca!`;
 						window.open(
-							`https://api.whatsapp.com/send/?phone=%2B57${this.currentPhone}&text=${text}&type=phone_number&app_absent=0`
+							`https://api.whatsapp.com/send/?phone=%2B57${this.currentPhone}&text=${text}&type=phone_number&app_absent=0`,
 						);
 					}
 					this.modal.dismiss(this.name, 'confirm');

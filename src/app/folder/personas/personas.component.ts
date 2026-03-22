@@ -60,7 +60,11 @@ export class PersonasComponent implements OnInit {
 		password: [''],
 	});
 
-	constructor(private crudService: CrudService, private fb: FormBuilder, public storeService: StoreService) {}
+	constructor(
+		private crudService: CrudService,
+		private fb: FormBuilder,
+		public storeService: StoreService,
+	) {}
 
 	ngOnInit() {
 		this.crudService.searchAllUsers().subscribe({
@@ -114,7 +118,7 @@ export class PersonasComponent implements OnInit {
 		if (await this.checkErrors()) {
 			const age: number = Math.floor(
 				(new Date().getTime() - new Date(`${this.newUser.controls.birth.value}T00:00:00.000-05:00`).getTime()) /
-					(1000 * 3600 * 24 * 365)
+					(1000 * 3600 * 24 * 365),
 			);
 			const requestBody: any = {
 				name: this.newUser.controls.name.value?.toUpperCase(),
@@ -161,7 +165,7 @@ export class PersonasComponent implements OnInit {
 		if (this.checkEditionErrors()) {
 			const age: number = Math.floor(
 				(new Date().getTime() - new Date(`${this.editUser.controls.birth.value}T00:00:00.000-05:00`).getTime()) /
-					(1000 * 3600 * 24 * 365)
+					(1000 * 3600 * 24 * 365),
 			);
 			const requestBody: any = {
 				name: this.editUser.controls.name.value?.toUpperCase(),
@@ -219,6 +223,7 @@ export class PersonasComponent implements OnInit {
 			CONSOLIDACIÓN: 'CON',
 			DIACONADO: 'DIA',
 			'GRANJA DE PAPÁ': 'GDP',
+			'CIUDAD CELESTIAL': 'GDP',
 			INTERCESIÓN: 'INT',
 			JÓVENES: 'JCR',
 			MATRIMONIOS: 'MAT',
@@ -289,8 +294,8 @@ export class PersonasComponent implements OnInit {
 				await firstValueFrom(
 					this.crudService.searchDocument(
 						this.newUser.controls.document.value!,
-						this.newUser.controls.documentType.value!
-					)
+						this.newUser.controls.documentType.value!,
+					),
 				)
 			)[0];
 			if (user) {
